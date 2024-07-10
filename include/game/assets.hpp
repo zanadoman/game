@@ -12,6 +12,7 @@ class assets final {
   public:
     /* asset neve után típus suffix következzen */
 
+    static std::shared_ptr<wze::texture> const& placeholder_texture();
     static std::shared_ptr<wze::texture> const& laser_texture();
 };
 
