@@ -1,3 +1,4 @@
+#include "wizard_engine/sprite.hpp"
 #include <game/assets.hpp>
 #include <game/button.hpp>
 #include <game/laser.hpp>
@@ -22,6 +23,9 @@ wze_main(2560, 1440) {
                          assets::placeholder_texture());
     float joylength;
     float joyangle;
+
+    wze::sprite joystick_center(0, 0, 0, 0, 5, 5, false,
+                                assets::placeholder_texture(), 255, 0, 0);
 
     for (size_t i = 0; i != 10000; ++i) {
         asteroids.push_back({(float)wze::math::random(-10000, 10000),
@@ -74,16 +78,21 @@ wze_main(2560, 1440) {
             wze::camera::set_angle(wze::camera::angle() +
                                    0.001f * wze::timer::delta_time());
         }
-        wze::camera::set_x(
-            wze::camera::x() +
-            0.01f *
-                wze::math::move_x(joylength, joyangle + wze::camera::angle()) *
-                wze::timer::delta_time());
-        wze::camera::set_y(
-            wze::camera::y() +
-            0.01f *
-                wze::math::move_y(joylength, joyangle + wze::camera::angle()) *
-                wze::timer::delta_time());
+
+        if (joylength > 20) {
+            wze::camera::set_x(
+                wze::camera::x() +
+                0.01f *
+                    wze::math::move_x(joylength,
+                                      joyangle + wze::camera::angle()) *
+                    wze::timer::delta_time());
+            wze::camera::set_y(
+                wze::camera::y() +
+                0.01f *
+                    wze::math::move_y(joylength,
+                                      joyangle + wze::camera::angle()) *
+                    wze::timer::delta_time());
+        }
 
         /* frissítés */
         for (std::shared_ptr<updateable> const& updateable : updateables) {
