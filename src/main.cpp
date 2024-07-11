@@ -15,6 +15,7 @@ wze_main(2560, 1440) {
     last_time = 0;
 
     wze_while(true) {
+        /* lövés */
         if (wze::input::key(wze::KEY_MOUSE_LEFT) &&
             last_time + 200 < wze::timer::current_time()) {
             std::tie(cursor_x, cursor_y) = wze::input::cursor_spatial(
@@ -30,6 +31,7 @@ wze_main(2560, 1440) {
             last_time = wze::timer::current_time();
         }
 
+        /* kamera mozgatás */
         if (wze::input::key(wze::KEY_W)) {
             wze::camera::set_z(wze::camera::z() + wze::timer::delta_time());
         }
@@ -43,6 +45,7 @@ wze_main(2560, 1440) {
             wze::camera::set_x(wze::camera::x() + wze::timer::delta_time());
         }
 
+        /* frissítés */
         for (std::shared_ptr<updateable> const& updateable : updateables) {
             updateable->update();
         }

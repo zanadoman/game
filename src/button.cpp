@@ -94,10 +94,10 @@ void button::update() {
         _minimum_y <= wze::input::cursor_absolute_y() &&
         wze::input::cursor_absolute_y() <= _maximum_y) { /* rajta van az egér */
         state |= BUTTON_STATE_HOVERED;
-        if (wze::input::key(wze::KEY_MOUSE_LEFT)) { /* kattintva van - 3*/
+        if (wze::input::key(wze::KEY_MOUSE_LEFT)) { /* kattintva van - 3 */
             state |= BUTTON_STATE_ONCLICK;
             state &= ~BUTTON_STATE_POSTCLICK;
-        } else if (state & BUTTON_STATE_ONCLICK) { /* kattintva volt - 5*/
+        } else if (state & BUTTON_STATE_ONCLICK) { /* kattintva volt - 5 */
             state &= ~BUTTON_STATE_ONCLICK;
             state |= BUTTON_STATE_POSTCLICK;
         } else { /* nincs kattintva és nem volt kattintva - 1*/
