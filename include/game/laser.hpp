@@ -7,13 +7,15 @@
 class laser final : public wze::entity, public updateable {
   private:
     float _z;
+    float _x_angle;
+    float _y_angle;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
 
   public:
     float z() const;
     void set_z(float z);
 
-    laser(float x, float y, float z);
+    laser(float x, float y, float z, float x_angle, float y_angle);
     void update() final;
 };
 
