@@ -29,7 +29,7 @@ namespace wze {
 /**
  * @file entity.hpp
  * @author Zana Domán
- * @brief Composes components together.
+ * @brief Composes composable objects.
  */
 class entity : public component {
   private:
@@ -52,23 +52,31 @@ class entity : public component {
      * @author Zana Domán
      * @brief Updates the x position of a component instance.
      */
-    void update_x(component& instance);
+    void update_x(component& instance) const;
 
     /**
      * @file entity.hpp
      * @author Zana Domán
      * @brief Updates the y position of a component instance.
      */
-    void update_y(component& instance);
+    void update_y(component& instance) const;
 
     /**
      * @file entity.hpp
      * @author Zana Domán
      * @brief Updates the angle of a component instance.
      */
-    void update_angle(component& instance);
+    void update_angle(component& instance) const;
 
   public:
+    /**
+     * @file entity.hpp
+     * @author Zana Domán
+     * @brief Returns the components of the entity.
+     * @return Components of the entity.
+     */
+    virtual std::vector<std::weak_ptr<component>> const& components() const;
+
     /**
      * @file entity.hpp
      * @author Zana Domán
@@ -279,8 +287,8 @@ class entity : public component {
     /**
      * @file entity.hpp
      * @author Zana Domán
-     * @brief Explicitly updates the components of the entity and erases expired
-     * ones.
+     * @brief Explicitly composes the components of the entity and erases
+     * expired ones.
      */
     virtual void recompose();
 

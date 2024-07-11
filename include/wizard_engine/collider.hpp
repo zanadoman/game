@@ -86,16 +86,18 @@ class collider : public entity {
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Statically resolves a collision with another collider on x axis.
-     * @param other Other collider.
+     * @brief Statically resolves a collision with another collider instance on
+     * x axis.
+     * @param other Other collider instance.
      */
     void resolve_x(collider const& other);
 
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Dynamically resolves a collision with another collider on x axis.
-     * @param other Other collider.
+     * @brief Dynamically resolves a collision with another collider instance on
+     * x axis.
+     * @param other Other collider instance.
      * @return Whether the collision is resolved or not.
      */
     bool resolve_x(collider& other, float force);
@@ -103,16 +105,18 @@ class collider : public entity {
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Statically resolves a collision with another collider on y axis.
-     * @param other Other collider.
+     * @brief Statically resolves a collision with another collider instance on
+     * y axis.
+     * @param other Other collider instance.
      */
     void resolve_y(collider const& other);
 
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Dynamically resolves a collision with another collider on y axis.
-     * @param other Other collider.
+     * @brief Dynamically resolves a collision with another collider instance on
+     * y axis.
+     * @param other Other collider instance.
      * @return Whether the collision is resolved or not.
      */
     bool resolve_y(collider& other, float force);
@@ -120,18 +124,18 @@ class collider : public entity {
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Statically resolves a collision with another collider on both x
-     * and y axis.
-     * @param other Other collider.
+     * @brief Statically resolves a collision with another collider instance on
+     * both x and y axis.
+     * @param other Other collider instance.
      */
     void resolve_xy(collider const& other);
 
     /**
      * @file collider.hpp
      * @author Zana Domán
-     * @brief Dynamically resolves a collision with another collider on both x
-     * and y axis.
-     * @param other Other collider.
+     * @brief Dynamically resolves a collision with another collider instance on
+     * both x and y axis.
+     * @param other Other collider instance.
      * @return Whether the collision is resolved or not.
      */
     bool resolve_xy(collider& other, float force);
@@ -420,9 +424,26 @@ class collider : public entity {
     /**
      * @file collider.hpp
      * @author Zana Domán
+     * @brief Copy constructor.
+     * @param other Other collider instance.
+     */
+    collider(collider const& other);
+
+    /**
+     * @file collider.hpp
+     * @author Zana Domán
      * @brief Destroy the collider intance and erases from it's world.
      */
     ~collider();
+
+    /**
+     * @file collider.hpp
+     * @author Zana Domán
+     * @brief Copy assignment operator.
+     * @param other Other collider instance.
+     * @return Self reference.
+     */
+    collider& operator=(collider const& other);
 };
 } /* namespace wze */
 
