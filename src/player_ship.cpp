@@ -1,3 +1,5 @@
+#include "wizard_engine/input.hpp"
+#include "wizard_engine/timer.hpp"
 #include <cmath>
 #include <game/player_ship.hpp>
 
@@ -38,8 +40,10 @@ void player_ship::set_angle(float angle) {
 void player_ship::shoot() {
     if ((_active_cannon = !_active_cannon)) {
         /* left cannon */
+        
     } else {
         /* right cannon */
+
     }
 }
 
@@ -51,8 +55,9 @@ player_ship::player_ship() {
 }
 
 void player_ship::update() {
-    if (_last_shot + _reload_time <= wze::timer::current_time()) {
+    if (wze::input::key(wze::key::KEY_MOUSE_LEFT) && _last_shot + _reload_time <= wze::timer::current_time()) {
         shoot();
+        _last_shot = wze::timer::current_time();
     }
 
     std::ranges::for_each(

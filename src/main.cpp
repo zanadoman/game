@@ -1,4 +1,5 @@
 #include "wizard_engine/camera.hpp"
+#include "wizard_engine/math.hpp"
 #include "wizard_engine/sprite.hpp"
 #include "wizard_engine/window.hpp"
 #include <game/assets.hpp>
@@ -64,7 +65,8 @@ wze_main(2560, 1440) {
                 wze::math::angle(wze::camera::focus(),
                                  cursor_y - wze::camera::y()),
                 wze::math::angle(cursor_x - wze::camera::x(),
-                                 wze::camera::focus()))));
+                                 wze::camera::focus())
+                )));
 
             gun_switch *= -1;
             last_time = wze::timer::current_time();

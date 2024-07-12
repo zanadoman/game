@@ -23,6 +23,7 @@ laser::laser(float x, float y, float z, float x_angle, float y_angle)
                             std::numeric_limits<uint8_t>::max(), 0)));
         _sprites.back()->set_x_offset(i * cosf(_y_angle));
         _sprites.back()->set_y_offset(i * sinf(_x_angle));
+        //_sprites.back()->set_z(z+i);
     }
 
     /* komponensek hozzáadása az entity base-hez */
