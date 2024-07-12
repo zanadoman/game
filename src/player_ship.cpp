@@ -1,6 +1,4 @@
-#include "wizard_engine/input.hpp"
-#include "wizard_engine/timer.hpp"
-#include <cmath>
+#include <game/assets.hpp>
 #include <game/player_ship.hpp>
 
 void player_ship::update_cannons_x() {
@@ -8,13 +6,13 @@ void player_ship::update_cannons_x() {
         x() + wze::math::transform_x(-_cannons_x_offset, _cannons_y_offset,
                                      transformation_matrix());
     _right_cannon.first =
-        x() + wze::math::transform_x(-_cannons_x_offset, _cannons_y_offset,
+        x() + wze::math::transform_x(_cannons_x_offset, _cannons_y_offset,
                                      transformation_matrix());
 }
 
 void player_ship::update_cannons_y() {
     _left_cannon.second =
-        y() + wze::math::transform_y(_cannons_x_offset, _cannons_y_offset,
+        y() + wze::math::transform_y(-_cannons_x_offset, _cannons_y_offset,
                                      transformation_matrix());
     _right_cannon.second =
         y() + wze::math::transform_y(_cannons_x_offset, _cannons_y_offset,
@@ -24,30 +22,50 @@ void player_ship::update_cannons_y() {
 void player_ship::set_x(float x) {
     entity::set_x(x);
     update_cannons_x();
+    wze::camera::set_x(this->x());
 }
 
 void player_ship::set_y(float y) {
     entity::set_y(y);
     update_cannons_y();
+    wze::camera::set_y(this->y());
+}
+
+float player_ship::z() const {
+    return _z;
+}
+
+void player_ship::set_z(float z) {
+    _z = z;
+    wze::camera::set_z(this->z());
 }
 
 void player_ship::set_angle(float angle) {
     entity::set_angle(angle);
     update_cannons_x();
     update_cannons_y();
+    wze::camera::set_angle(this->angle());
 }
 
 void player_ship::shoot() {
-    if ((_active_cannon = !_active_cannon)) {
-        /* left cannon */
-        
-    } else {
-        /* right cannon */
+    std::pair<float, float> cannon;
 
-    }
+    cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
+    _lasers.push_back(std::unique_ptr<laser>(
+        new laser(cannon.first, cannon.second, z(), wze::math::to_radians(0),
+                  wze::math::to_radians(90))));
 }
 
 player_ship::player_ship() {
+    _z = 0;
+    _cockpit = {0,
+                0,
+                0,
+                0,
+                (float)wze::window::width(),
+                (float)wze::window::height(),
+                false,
+                assets::player_ship_texture()};
     _left_cannon = {x() - _cannons_x_offset, y() + _cannons_y_offset};
     _left_cannon = {x() + _cannons_x_offset, y() + _cannons_y_offset};
     _active_cannon = false;
@@ -55,7 +73,8 @@ player_ship::player_ship() {
 }
 
 void player_ship::update() {
-    if (wze::input::key(wze::key::KEY_MOUSE_LEFT) && _last_shot + _reload_time <= wze::timer::current_time()) {
+    if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
+        _last_shot + _reload_time <= wze::timer::current_time()) {
         shoot();
         _last_shot = wze::timer::current_time();
     }
