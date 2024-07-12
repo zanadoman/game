@@ -14,7 +14,7 @@ wze_main(2560, 1440) {
     uint64_t last_time;
     float cursor_x;
     float cursor_y;
-    bool is_left = true;
+    float gun_switch;
 
     wze::sprite player_ship(0, 0, 0, 0, 2560, 1440, false,
                             assets::player_ship_texture());
@@ -40,6 +40,8 @@ wze_main(2560, 1440) {
                              assets::asteroid_texture()});
     }
 
+    gun_switch = 1;
+
     wze_while(true) {
         /* lövés */
         if (wze::input::key(wze::KEY_MOUSE_LEFT) &&
@@ -47,28 +49,15 @@ wze_main(2560, 1440) {
             std::tie(cursor_x, cursor_y) = wze::input::cursor_spatial(
                 wze::camera::z() + wze::camera::focus());
 
-            if (is_left) {
-                is_left = false;
+            updateables.push_back(std::shared_ptr<laser>(
+                new laser(wze::camera::x() - 100 * gun_switch,
+                          wze::camera::y() + 100, wze::camera::z(),
+                          wze::math::angle(wze::camera::focus(),
+                                           cursor_y - wze::camera::y()),
+                          wze::math::angle(cursor_x - wze::camera::x(),
+                                           wze::camera::focus()))));
 
-                updateables.push_back(std::shared_ptr<laser>(new laser(
-                    wze::camera::x()-100, wze::camera::y()+100, wze::camera::z(),
-                    wze::math::angle(wze::camera::focus(),
-                                     cursor_y - wze::camera::y()),
-                    wze::math::angle(cursor_x - wze::camera::x(),
-                                     wze::camera::focus()))));
-            }
-            else{
-                is_left = true;
-
-                updateables.push_back(std::shared_ptr<laser>(new laser(
-                    wze::camera::x()+wze::window::width()/25.0f, wze::camera::y()+wze::window::height()/14.0f, wze::camera::z(),
-                    wze::math::angle(wze::camera::focus(),
-                                     cursor_y - wze::camera::y()),
-                    wze::math::angle(cursor_x - wze::camera::x(),
-                                     wze::camera::focus()))));
-
-            }
-
+            gun_switch *= -1;
             last_time = wze::timer::current_time();
         }
 
