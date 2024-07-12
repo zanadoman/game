@@ -39,10 +39,10 @@ wze_main(2560, 1440) {
             wze::math::move_y(joy_stick_value, joy_stick_angle));
 
         if (wze::input::key(wze::KEY_W)) {
-            player_ship.set_z(player_ship.z() - wze::timer::delta_time());
+            player_ship.set_z(player_ship.z() + wze::timer::delta_time());
         }
         if (wze::input::key(wze::KEY_S)) {
-            player_ship.set_z(player_ship.z() + wze::timer::delta_time());
+            player_ship.set_z(player_ship.z() - wze::timer::delta_time());
         }
         if (wze::input::key(wze::KEY_A)) {
             player_ship.set_angle(player_ship.angle() -
