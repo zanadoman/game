@@ -49,13 +49,22 @@ wze_main(2560, 1440) {
             std::tie(cursor_x, cursor_y) = wze::input::cursor_spatial(
                 wze::camera::z() + wze::camera::focus());
 
-            updateables.push_back(std::shared_ptr<laser>(
-                new laser(wze::camera::x() - 100 * gun_switch,
-                          wze::camera::y() + 100, wze::camera::z(),
-                          wze::math::angle(wze::camera::focus(),
-                                           cursor_y - wze::camera::y()),
-                          wze::math::angle(cursor_x - wze::camera::x(),
-                                           wze::camera::focus()))));
+            updateables.push_back(std::shared_ptr<laser>(new laser(
+                wze::camera::x() +
+                    wze::math::move_x(100, wze::camera::angle() +
+                                               wze::math::to_radians(45) *
+                                                   gun_switch) *
+                        gun_switch,
+                wze::camera::y() +
+                    wze::math::move_y(100, wze::camera::angle() +
+                                               wze::math::to_radians(45) *
+                                                   gun_switch) *
+                        gun_switch,
+                wze::camera::z(),
+                wze::math::angle(wze::camera::focus(),
+                                 cursor_y - wze::camera::y()),
+                wze::math::angle(cursor_x - wze::camera::x(),
+                                 wze::camera::focus()))));
 
             gun_switch *= -1;
             last_time = wze::timer::current_time();
