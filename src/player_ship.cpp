@@ -55,9 +55,7 @@ void player_ship::update() {
         shoot();
     }
 
-    std::ranges::for_each(_lasers,
-                          [](std::unique_ptr<laser> const& laser) -> void {
-                              laser->update();
-                              ;
-                          });
+    std::ranges::for_each(
+        _lasers,
+        [](std::unique_ptr<laser> const& laser) -> void { laser->update(); });
 }
