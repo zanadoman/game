@@ -1,111 +1,96 @@
 #include <game/button.hpp>
 
+wze::sprite const& button::appearance() const {
+    return _appearance;
+}
+
+wze::polygon const& button::hitbox() const {
+    return _hitbox;
+}
+
 button_state button::state() const {
     return _state;
 }
 
-float button::x() const {
-    return _x;
+std::shared_ptr<wze::texture> const& button::texture_none() const {
+    return _texture_none;
 }
 
-float button::y() const {
-    return _y;
+void button::set_texture_none(
+    std::shared_ptr<wze::texture> const& texture_none) {
+    _texture_none = texture_none;
 }
 
-float button::z() const {
-    return 0;
+std::shared_ptr<wze::texture> const& button::texture_hovered() const {
+    return _texture_hovered;
 }
 
-float button::angle() const {
-    return 0;
+void button::set_texture_hovered(
+    std::shared_ptr<wze::texture> const& texture_hovered) {
+    _texture_hovered = texture_hovered;
 }
 
-float button::width() const {
-    return _width;
+std::shared_ptr<wze::texture> const& button::texture_onclick() const {
+    return _texture_onclick;
 }
 
-float button::height() const {
-    return _height;
+void button::set_texture_onclick(
+    std::shared_ptr<wze::texture> const& texture_onclick) {
+    _texture_onclick = texture_onclick;
 }
 
-bool button::spatial() const {
-    return false;
-}
-
-std::shared_ptr<wze::texture> const& button::texture() const {
-    return _texture;
-}
-
-uint8_t button::color_r() const {
-    return std::numeric_limits<uint8_t>::max();
-}
-
-uint8_t button::color_g() const {
-    return std::numeric_limits<uint8_t>::max();
-}
-
-uint8_t button::color_b() const {
-    return std::numeric_limits<uint8_t>::max();
-}
-
-uint8_t button::color_a() const {
-    return std::numeric_limits<uint8_t>::max();
-}
-
-wze::flip button::flip() const {
-    return wze::FLIP_NONE;
-}
-
-bool button::visible() const {
-    return true;
-}
-
-uint8_t button::priority() const {
-    return std::numeric_limits<uint8_t>::max() / 2;
-}
-
-button::button(float x, float y, float width, float height,
-               std::shared_ptr<wze::texture> const& texture) {
+button::button(float x, float y, float angle, float width, float height,
+               uint8_t priority,
+               std::vector<std::pair<float, float>> const& hitbox,
+               std::shared_ptr<wze::texture> const& texture_none,
+               std::shared_ptr<wze::texture> const& texture_hovered,
+               std::shared_ptr<wze::texture> const& texture_onclick)
+    : _appearance(x, y, 0, angle, width, height, false, texture_none,
+                  std::numeric_limits<uint8_t>::max(),
+                  std::numeric_limits<uint8_t>::max(),
+                  std::numeric_limits<uint8_t>::max(),
+                  std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
+                  priority),
+      _hitbox(hitbox, x, y, angle) {
     _state = BUTTON_STATE_NONE;
-    _x = x;
-    _y = y;
-    _width = width;
-    _height = height;
-    _texture = texture;
-
-    /* sarkok kiszámítása */
-    _minimum_x = _x - _width / 2;
-    _maximum_x = _x + _width / 2;
-    _minimum_y = _y - _height / 2;
-    _maximum_y = _y + _height / 2;
+    set_texture_none(texture_none);
+    set_texture_hovered(texture_hovered);
+    set_texture_onclick(texture_onclick);
 }
 
 void button::update() {
+    float cursor_x;
+    float cursor_y;
     uint8_t state;
 
-    /**
-     * valid állapotok: 0 - NONE, 1 - HOVERED,
-     * 3 - HOVERED & ONCLICK, 5 - HOVERED & POSTCLICK
-     */
+    if (appearance().spatial() && wze::camera::z() < appearance().z()) {
+        std::tie(cursor_x, cursor_y) =
+            wze::input::cursor_spatial(appearance().z());
+    } else {
+        cursor_x = wze::input::cursor_absolute_x();
+        cursor_y = wze::input::cursor_absolute_y();
+    }
 
-    state = _state; /* uint8_t alias bitműveletek miatt */
-    if (_minimum_x <= wze::input::cursor_absolute_x() &&
-        wze::input::cursor_absolute_x() <= _maximum_x &&
-        _minimum_y <= wze::input::cursor_absolute_y() &&
-        wze::input::cursor_absolute_y() <= _maximum_y) { /* rajta van az egér */
+    state = this->state();
+
+    if (hitbox().inside(cursor_x, cursor_y)) {
         state |= BUTTON_STATE_HOVERED;
-        if (wze::input::key(wze::KEY_MOUSE_LEFT)) { /* kattintva van - 3 */
+        if (wze::input::key(wze::KEY_MOUSE_LEFT)) {
             state |= BUTTON_STATE_ONCLICK;
             state &= ~BUTTON_STATE_POSTCLICK;
-        } else if (state & BUTTON_STATE_ONCLICK) { /* kattintva volt - 5 */
+            _appearance.set_texture(texture_onclick());
+        } else if (state & BUTTON_STATE_ONCLICK) {
             state &= ~BUTTON_STATE_ONCLICK;
             state |= BUTTON_STATE_POSTCLICK;
-        } else { /* nincs kattintva és nem volt kattintva - 1*/
+            _appearance.set_texture(texture_onclick());
+        } else {
             state &= ~BUTTON_STATE_ONCLICK;
             state &= ~BUTTON_STATE_POSTCLICK;
+            _appearance.set_texture(texture_hovered());
         }
     } else {
-        state = BUTTON_STATE_NONE; /* nincs rajta az egér - 0*/
+        state = BUTTON_STATE_NONE;
+        _appearance.set_texture(texture_none());
     }
 
     _state = (button_state)state;
