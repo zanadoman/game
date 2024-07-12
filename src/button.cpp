@@ -59,21 +59,12 @@ button::button(float x, float y, float angle, float width, float height,
 }
 
 void button::update() {
-    float cursor_x;
-    float cursor_y;
     uint8_t state;
-
-    if (appearance().spatial() && wze::camera::z() < appearance().z()) {
-        std::tie(cursor_x, cursor_y) =
-            wze::input::cursor_spatial(appearance().z());
-    } else {
-        cursor_x = wze::input::cursor_absolute_x();
-        cursor_y = wze::input::cursor_absolute_y();
-    }
 
     state = this->state();
 
-    if (hitbox().inside(cursor_x, cursor_y)) {
+    if (hitbox().inside(wze::input::cursor_absolute_x(),
+                        wze::input::cursor_absolute_y())) {
         state |= BUTTON_STATE_HOVERED;
         if (wze::input::key(wze::KEY_MOUSE_LEFT)) {
             state |= BUTTON_STATE_ONCLICK;
