@@ -1,6 +1,30 @@
 #include <game/assets.hpp>
 #include <game/player_ship.hpp>
 
+void player_ship::update_movement() {
+    if (wze::input::key(wze::KEY_W) && !wze::input::key(wze::KEY_S)) {
+        set_z(z() + wze::timer::delta_time());
+    } else if (wze::input::key(wze::KEY_S)) {
+        set_z(z() - wze::timer::delta_time());
+    }
+
+    if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
+        set_angle(angle() - 0.001f * wze::timer::delta_time());
+    } else if (wze::input::key(wze::KEY_D)) {
+        set_angle(angle() + 0.001f * wze::timer::delta_time());
+    }
+
+    _joy_stick.update();
+    set_x(x() + 0.01f *
+                    wze::math::move_x(_joy_stick.value(),
+                                      _joy_stick.direction() + angle()) *
+                    wze::timer::delta_time());
+    set_y(y() + 0.01f *
+                    wze::math::move_y(_joy_stick.value(),
+                                      _joy_stick.direction() + angle()) *
+                    wze::timer::delta_time());
+}
+
 void player_ship::update_cannons_x() {
     _left_cannon.first =
         x() + wze::math::transform_x(-_cannons_x_offset, _cannons_y_offset,
@@ -17,6 +41,15 @@ void player_ship::update_cannons_y() {
     _right_cannon.second =
         y() + wze::math::transform_y(_cannons_x_offset, _cannons_y_offset,
                                      transformation_matrix());
+}
+
+void player_ship::shoot() {
+    std::pair<float, float> cannon;
+
+    cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
+    _lasers.push_back(std::unique_ptr<laser>(
+        new laser(cannon.first, cannon.second, z(), wze::math::to_radians(0),
+                  wze::math::to_radians(90))));
 }
 
 void player_ship::set_x(float x) {
@@ -47,15 +80,6 @@ void player_ship::set_angle(float angle) {
     wze::camera::set_angle(this->angle());
 }
 
-void player_ship::shoot() {
-    std::pair<float, float> cannon;
-
-    cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
-    _lasers.push_back(std::unique_ptr<laser>(
-        new laser(cannon.first, cannon.second, z(), wze::math::to_radians(0),
-                  wze::math::to_radians(90))));
-}
-
 player_ship::player_ship() {
     _z = 0;
     _cockpit = {0,
@@ -73,6 +97,8 @@ player_ship::player_ship() {
 }
 
 void player_ship::update() {
+    update_movement();
+
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time <= wze::timer::current_time()) {
         shoot();
