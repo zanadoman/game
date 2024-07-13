@@ -10,6 +10,7 @@ class joy_stick final : public updateable {
     static constexpr float _edge_zone = 150;
     float _value;
     float _direction;
+    wze::sprite _crosshair;
 
   public:
     float value() const;
