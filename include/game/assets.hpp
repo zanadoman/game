@@ -16,6 +16,7 @@ class assets final {
     static std::shared_ptr<wze::texture> const& laser_texture();
     static std::shared_ptr<wze::texture> const& player_ship_texture();
     static std::shared_ptr<wze::texture> const& asteroid_texture();
+    static std::shared_ptr<wze::texture> const& space_texture();
 };
 
 #endif

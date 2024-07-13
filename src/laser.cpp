@@ -38,7 +38,7 @@ void laser::update() {
     /* entity mozgatása */
     set_x(x() + cosf(_y_angle) * wze::timer::delta_time());
     set_y(y() + sinf(_x_angle) * wze::timer::delta_time());
-    set_z(z() + sinf(_y_angle) * cosf(_x_angle) * wze::timer::delta_time());
+    set_z(z() + sinf(_y_angle) * cosf(_x_angle) * wze::timer::delta_time() * 8);
     /* ***somehow fixed itself*** */
 
     /* sprite-ok mozgatása */

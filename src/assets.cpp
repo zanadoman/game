@@ -23,3 +23,9 @@ std::shared_ptr<wze::texture> const& assets::asteroid_texture() {
         wze::assets::load_image("./assets/asteroid.png"));
     return asset;
 }
+
+std::shared_ptr<wze::texture> const& assets::space_texture() {
+    static auto asset = wze::assets::create_texture(
+        wze::assets::load_image("./assets/space.png"));
+    return asset;
+}

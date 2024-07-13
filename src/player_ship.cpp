@@ -3,9 +3,9 @@
 
 void player_ship::update_movement() {
     if (wze::input::key(wze::KEY_W) && !wze::input::key(wze::KEY_S)) {
-        set_z(z() + wze::timer::delta_time());
+        set_z(z() + wze::timer::delta_time() * 5);
     } else if (wze::input::key(wze::KEY_S)) {
-        set_z(z() - wze::timer::delta_time());
+        set_z(z() - wze::timer::delta_time() * 5);
     }
 
     if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
@@ -15,11 +15,11 @@ void player_ship::update_movement() {
     }
 
     _joy_stick.update();
-    set_x(x() + 0.01f *
+    set_x(x() + 0.075f *
                     wze::math::move_x(_joy_stick.value(),
                                       _joy_stick.direction() + angle()) *
                     wze::timer::delta_time());
-    set_y(y() + 0.01f *
+    set_y(y() + 0.075f *
                     wze::math::move_y(_joy_stick.value(),
                                       _joy_stick.direction() + angle()) *
                     wze::timer::delta_time());
