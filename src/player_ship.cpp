@@ -1,27 +1,34 @@
 #include <game/assets.hpp>
 #include <game/player_ship.hpp>
 
+void player_ship::update_joy_stick() {
+    _joy_stick.update();
+    _joy_stick_x =
+        wze::math::move_x(_joy_stick.value(), _joy_stick.direction() + angle());
+    _joy_stick_y =
+        wze::math::move_y(_joy_stick.value(), _joy_stick.direction() + angle());
+}
+
 void player_ship::update_movement() {
     if (wze::input::key(wze::KEY_W) && !wze::input::key(wze::KEY_S)) {
-        set_z(z() + wze::timer::delta_time() * 5);
-    } else if (wze::input::key(wze::KEY_S)) {
-        set_z(z() - wze::timer::delta_time() * 5);
+        set_z(z() + _movement_speed * wze::timer::delta_time());
+    } else if (wze::input::key(wze::KEY_S) && !wze::input::key(wze::KEY_W)) {
+        set_z(z() - _movement_speed * wze::timer::delta_time());
     }
 
     if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
         set_angle(angle() - 0.001f * wze::timer::delta_time());
-    } else if (wze::input::key(wze::KEY_D)) {
+    } else if (wze::input::key(wze::KEY_D) && !wze::input::key(wze::KEY_A)) {
         set_angle(angle() + 0.001f * wze::timer::delta_time());
     }
 
-    _joy_stick.update();
-    _x_speed =
-        wze::math::move_x(_joy_stick.value(), _joy_stick.direction() + angle());
-    _y_speed =
-        wze::math::move_y(_joy_stick.value(), _joy_stick.direction() + angle());
-
-    set_x(x() + _x_speed * 0.075f * wze::timer::delta_time());
-    set_y(y() + _y_speed * 0.075f * wze::timer::delta_time());
+    update_joy_stick();
+    if (_joy_stick_deadzone < _joy_stick.value()) {
+        set_x(x() +
+              _joy_stick_x * _movement_speed / 75 * wze::timer::delta_time());
+        set_y(y() +
+              _joy_stick_y * _movement_speed / 75 * wze::timer::delta_time());
+    }
 }
 
 void player_ship::update_cannons_x() {
@@ -44,16 +51,18 @@ void player_ship::update_cannons_y() {
 
 void player_ship::shoot(std::vector<laser>& lasers) {
     std::pair<float, float> cannon;
-    [[maybe_unused]] float normalization;
+    float normalization;
 
     cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
-    normalization = sqrtf(powf(_x_speed, 2) + powf(_y_speed, 2) +
+    normalization = sqrtf(powf(_joy_stick_x, 2) + powf(_joy_stick_y, 2) +
                           powf(wze::camera::focus(), 2));
 
     lasers.push_back({cannon.first, cannon.second, z(),
-                      _x_speed / normalization * 15,
-                      _y_speed / normalization * 15,
-                      wze::camera::focus() / normalization * 15});
+                      _joy_stick_x / normalization * _laser_speed,
+                      _joy_stick_y / normalization * _laser_speed,
+                      wze::camera::focus() / normalization * _laser_speed,
+                      _laser_length, _laser_diameter, _laser_color_r,
+                      _laser_color_g, _laser_color_b});
 }
 
 void player_ship::set_x(float x) {

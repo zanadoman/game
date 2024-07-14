@@ -16,16 +16,11 @@ joy_stick::joy_stick() {
 }
 
 void joy_stick::update() {
-    _value = wze::math::length(wze::input::cursor_absolute_x(),
-                               wze::input::cursor_absolute_y());
+    _value = std::min(wze::math::length(wze::input::cursor_absolute_x(),
+                                        wze::input::cursor_absolute_y()),
+                      _maximum);
     _direction = wze::math::angle(wze::input::cursor_absolute_x(),
                                   wze::input::cursor_absolute_y());
-
-    if (value() < _dead_zone) {
-        _value = 0;
-    } else if (_edge_zone < value()) {
-        _value = _edge_zone;
-    }
 
     _crosshair.set_x(wze::math::move_x(value(), direction()));
     _crosshair.set_y(wze::math::move_y(value(), direction()));
