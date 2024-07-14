@@ -6,15 +6,16 @@
 class laser final : public wze::entity {
   private:
     float _z;
-    float _x_angle;
-    float _y_angle;
+    float _x_speed;
+    float _y_speed;
+    float _z_speed;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
 
   public:
     float z() const;
-    void set_z(float z);
 
-    laser(float x, float y, float z, float x_angle, float y_angle);
+    laser(float x, float y, float z, float x_speed, float y_speed,
+          float z_speed);
     void update();
 };
 

@@ -15,14 +15,13 @@ void player_ship::update_movement() {
     }
 
     _joy_stick.update();
-    set_x(x() + 0.075f *
-                    wze::math::move_x(_joy_stick.value(),
-                                      _joy_stick.direction() + angle()) *
-                    wze::timer::delta_time());
-    set_y(y() + 0.075f *
-                    wze::math::move_y(_joy_stick.value(),
-                                      _joy_stick.direction() + angle()) *
-                    wze::timer::delta_time());
+    _x_speed =
+        wze::math::move_x(_joy_stick.value(), _joy_stick.direction() + angle());
+    _y_speed =
+        wze::math::move_y(_joy_stick.value(), _joy_stick.direction() + angle());
+
+    set_x(x() + _x_speed * 0.075f * wze::timer::delta_time());
+    set_y(y() + _y_speed * 0.075f * wze::timer::delta_time());
 }
 
 void player_ship::update_cannons_x() {
@@ -45,10 +44,16 @@ void player_ship::update_cannons_y() {
 
 void player_ship::shoot(std::vector<laser>& lasers) {
     std::pair<float, float> cannon;
+    [[maybe_unused]] float normalization;
 
     cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
+    normalization = sqrtf(powf(_x_speed, 2) + powf(_y_speed, 2) +
+                          powf(wze::camera::focus(), 2));
+
     lasers.push_back({cannon.first, cannon.second, z(),
-                      wze::math::to_radians(0), wze::math::to_radians(90)});
+                      _x_speed / normalization * 15,
+                      _y_speed / normalization * 15,
+                      wze::camera::focus() / normalization * 15});
 }
 
 void player_ship::set_x(float x) {

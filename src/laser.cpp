@@ -5,45 +5,39 @@ float laser::z() const {
     return _z;
 }
 
-void laser::set_z(float z) {
-    _z = z;
-}
-
-laser::laser(float x, float y, float z, float x_angle, float y_angle)
+laser::laser(float x, float y, float z, float x_speed, float y_speed,
+             float z_speed)
     : entity({}, x, y) {
-    set_z(z);
-    _x_angle = x_angle;
-    _y_angle = y_angle;
+    float i;
 
-    /* eltolt sprite generálás */
-    for (int8_t i = -100; i <= 100; i += 10) {
+    _z = z;
+    _x_speed = x_speed;
+    _y_speed = y_speed;
+    _z_speed = z_speed;
+
+    for (i = -1; i <= 1; i += 0.1f) {
         _sprites.push_back(std::shared_ptr<wze::sprite>(
-            new wze::sprite(this->x(), this->y(), this->z(), 0, 40, 40, true,
+            new wze::sprite(this->x(), this->y(), this->z(), 0, 100, 100, true,
                             assets::laser_texture(), 0,
                             std::numeric_limits<uint8_t>::max(), 0)));
-        _sprites.back()->set_x_offset(i * cosf(_y_angle));
-        _sprites.back()->set_y_offset(i * sinf(_x_angle));
-        //_sprites.back()->set_z(z+i);
+        _sprites.back()->set_x_offset(i * x_speed / 2);
+        _sprites.back()->set_y_offset(i * y_speed / 2);
     }
 
-    /* komponensek hozzáadása az entity base-hez */
-    for (std::shared_ptr<wze::sprite> const& sprite : _sprites) {
-        components().push_back(sprite);
-    }
+    std::ranges::for_each(
+        _sprites, [this](std::shared_ptr<wze::sprite> const& sprite) -> void {
+            components().push_back(sprite);
+        });
 
-    recompose(); /* frissíti az új komponenseket */
+    recompose();
 }
 
 void laser::update() {
-    /* entity mozgatása */
-    set_x(x() + cosf(_y_angle) * wze::timer::delta_time());
-    set_y(y() + sinf(_x_angle) * wze::timer::delta_time());
-    set_z(z() + sinf(_y_angle) * cosf(_x_angle) * wze::timer::delta_time() * 10);
-    /* ***somehow fixed itself*** */
+    set_x(x() + _x_speed * wze::timer::delta_time());
+    set_y(y() + _y_speed * wze::timer::delta_time());
+    _z = z() + _z_speed * wze::timer::delta_time();
 
-    /* sprite-ok mozgatása */
     for (size_t i = 0; i < _sprites.size(); ++i) {
-        _sprites.at(i)->set_z(z() - 100 +
-                              i * 10 * sinf(_y_angle) * cosf(_x_angle));
+        _sprites.at(i)->set_z(z() - 300 + i * 30);
     }
 }

@@ -8,9 +8,11 @@
 
 class player_ship final : public wze::entity {
   private:
-    static constexpr float _cannons_x_offset = 150;
-    static constexpr float _cannons_y_offset = 75;
+    static constexpr float _cannons_x_offset = 300;
+    static constexpr float _cannons_y_offset = 150;
     static constexpr uint8_t _reload_time = 200;
+    float _x_speed;
+    float _y_speed;
     joy_stick _joy_stick;
     float _z;
     wze::sprite _cockpit;
