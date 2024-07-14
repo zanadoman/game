@@ -8,8 +8,8 @@
 
 class player_ship final : public updateable, public wze::entity {
   private:
-    static constexpr float _cannons_x_offset = 100;
-    static constexpr float _cannons_y_offset = 50;
+    static constexpr float _cannons_x_offset = 150;
+    static constexpr float _cannons_y_offset = 75;
     static constexpr uint8_t _reload_time = 200;
     joy_stick _joy_stick;
     float _z;

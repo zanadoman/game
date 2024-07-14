@@ -16,9 +16,9 @@ laser::laser(float x, float y, float z, float x_angle, float y_angle)
     _y_angle = y_angle;
 
     /* eltolt sprite generálás */
-    for (int8_t i = -50; i <= 50; i += 5) {
+    for (int8_t i = -100; i <= 100; i += 10) {
         _sprites.push_back(std::shared_ptr<wze::sprite>(
-            new wze::sprite(this->x(), this->y(), this->z(), 0, 15, 15, true,
+            new wze::sprite(this->x(), this->y(), this->z(), 0, 40, 40, true,
                             assets::laser_texture(), 0,
                             std::numeric_limits<uint8_t>::max(), 0)));
         _sprites.back()->set_x_offset(i * cosf(_y_angle));
@@ -38,12 +38,12 @@ void laser::update() {
     /* entity mozgatása */
     set_x(x() + cosf(_y_angle) * wze::timer::delta_time());
     set_y(y() + sinf(_x_angle) * wze::timer::delta_time());
-    set_z(z() + sinf(_y_angle) * cosf(_x_angle) * wze::timer::delta_time() * 8);
+    set_z(z() + sinf(_y_angle) * cosf(_x_angle) * wze::timer::delta_time() * 10);
     /* ***somehow fixed itself*** */
 
     /* sprite-ok mozgatása */
     for (size_t i = 0; i < _sprites.size(); ++i) {
-        _sprites.at(i)->set_z(z() - 50 +
-                              i * 5 * sinf(_y_angle) * cosf(_x_angle));
+        _sprites.at(i)->set_z(z() - 100 +
+                              i * 10 * sinf(_y_angle) * cosf(_x_angle));
     }
 }
