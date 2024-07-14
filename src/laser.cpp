@@ -36,7 +36,7 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
 void laser::update() {
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());
-    _z = z() + _z_speed * wze::timer::delta_time();
+    _z += _z_speed * wze::timer::delta_time();
 
     for (size_t i = 0; i < _sprites.size(); ++i) {
         _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);

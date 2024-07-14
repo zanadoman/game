@@ -41,7 +41,8 @@ void space::update_asteroids() {
     std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
         if (_asteroid_far < sqrtf(powf(asteroid.x() - _player.x(), 2) +
                                   powf(asteroid.y() - _player.y(), 2) +
-                                  powf(asteroid.z() - _player.z(), 2))) {
+                                  powf(asteroid.z() - _player.z(), 2)) ||
+            !asteroid.update()) {
             asteroid.~asteroid();
             std::apply(
                 [this, &asteroid](float x, float y, float z) -> void {
@@ -49,8 +50,6 @@ void space::update_asteroids() {
                         _player.x() + x, _player.y() + y, _player.z() + z);
                 },
                 sphere_coordinate(_asteroid_near, _asteroid_far));
-        } else {
-            asteroid.update();
         }
     });
 }

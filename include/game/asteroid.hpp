@@ -7,9 +7,13 @@ enum material { MATERIAL_IRON, MATERIAL_GOLD, MATERIAL_COUNT };
 
 class asteroid final {
   private:
+    static constexpr float _minimum_size = 3000;
+    static constexpr float _maximum_size = 6000;
     enum material _material;
-    wze::sprite _appearance;
+    std::shared_ptr<wze::sprite> _appearance;
     wze::polygon _hitbox;
+    wze::animator _explosion;
+    float _hitpoints;
     float _minimum_z;
     float _maximum_z;
 
@@ -23,7 +27,8 @@ class asteroid final {
     float maximum_z() const;
 
     asteroid(float x, float y, float z);
-    void update();
+    bool update();
+    void damage(float hitpoints);
 };
 
 #endif
