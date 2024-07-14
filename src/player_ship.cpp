@@ -17,9 +17,9 @@ void player_ship::update_movement() {
     }
 
     if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
-        set_angle(angle() - 0.001f * wze::timer::delta_time());
+        set_angle(angle() - _rotation_speed * wze::timer::delta_time());
     } else if (wze::input::key(wze::KEY_D) && !wze::input::key(wze::KEY_A)) {
-        set_angle(angle() + 0.001f * wze::timer::delta_time());
+        set_angle(angle() + _rotation_speed * wze::timer::delta_time());
     }
 
     update_joy_stick();
@@ -63,6 +63,7 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                       wze::camera::focus() / normalization * _laser_speed,
                       _laser_length, _laser_diameter, _laser_color_r,
                       _laser_color_g, _laser_color_b});
+    _last_shot = wze::timer::current_time();
 }
 
 void player_ship::set_x(float x) {
@@ -94,7 +95,6 @@ void player_ship::set_angle(float angle) {
 }
 
 player_ship::player_ship() {
-    _z = 0;
     _cockpit = {0,
                 0,
                 0,
@@ -103,8 +103,12 @@ player_ship::player_ship() {
                 (float)wze::window::height(),
                 false,
                 assets::player_ship_texture()};
+    _joy_stick = {};
+    _joy_stick_x = 0;
+    _joy_stick_y = 0;
+    _z = 0;
     _left_cannon = {x() - _cannons_x_offset, y() + _cannons_y_offset};
-    _left_cannon = {x() + _cannons_x_offset, y() + _cannons_y_offset};
+    _right_cannon = {x() + _cannons_x_offset, y() + _cannons_y_offset};
     _active_cannon = false;
     _last_shot = 0;
 }
@@ -115,6 +119,5 @@ void player_ship::update(std::vector<laser>& lasers) {
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time <= wze::timer::current_time()) {
         shoot(lasers);
-        _last_shot = wze::timer::current_time();
     }
 }

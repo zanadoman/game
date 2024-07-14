@@ -10,7 +10,7 @@ class space final {
   private:
     player_ship _player;
 
-    static constexpr float _laser_far = 100'000;
+    static constexpr float _laser_far = 200'000;
     std::vector<laser> _lasers;
 
     static constexpr size_t _asteroid_count = 1000;

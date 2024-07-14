@@ -13,7 +13,6 @@ class joy_stick final {
   public:
     float value() const;
     float direction() const;
-
     joy_stick();
     void update();
 };

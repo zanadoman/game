@@ -58,7 +58,7 @@ void space::update_asteroids() {
 space::space() {
     size_t i;
 
-    // wze::renderer::set_space_texture(assets::space_texture());
+    wze::renderer::set_space_texture(assets::space_texture());
 
     for (i = 0; i != _asteroid_count; ++i) {
         std::apply(

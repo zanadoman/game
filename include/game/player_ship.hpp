@@ -16,6 +16,7 @@ class player_ship final : public wze::entity {
     void update_joy_stick();
 
     static constexpr float _movement_speed = 5;
+    static constexpr float _rotation_speed = 0.001;
     float _z;
     void update_movement();
 
@@ -38,11 +39,11 @@ class player_ship final : public wze::entity {
     void shoot(std::vector<laser>& lasers);
 
   public:
-    void set_x(float x) override;
-    void set_y(float y) override;
+    void set_x(float x) final;
+    void set_y(float y) final;
     float z() const;
     void set_z(float z);
-    void set_angle(float angle) override;
+    void set_angle(float angle) final;
 
     player_ship();
     void update(std::vector<laser>& lasers);
