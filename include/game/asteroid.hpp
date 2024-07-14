@@ -3,7 +3,15 @@
 
 #include <wizard_engine/wizard_engine.hpp>
 
-enum material { MATERIAL_IRON, MATERIAL_GOLD, MATERIAL_COUNT };
+enum material {
+    MATERIAL_PYRITE,
+    MATERIAL_WOLFRAMITE,
+    MATERIAL_CARNEOL,
+    MATERIAL_MOLDAVITE,
+    MATERIAL_RUBY,
+    MATERIAL_SAPPHIRE,
+    MATERIAL_COUNT
+};
 
 class asteroid final {
   private:

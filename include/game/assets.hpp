@@ -12,7 +12,14 @@ class assets final {
     static std::shared_ptr<wze::texture> const& laser_texture();
     static std::shared_ptr<wze::texture> const& player_ship_texture();
     static std::shared_ptr<wze::texture> const& space_texture();
-    static std::shared_ptr<wze::texture> const& asteroids_iron_texture();
+
+    static std::shared_ptr<wze::texture> const& asteroids_pyrite_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_wolframite_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_carneol_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_moldavite_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_ruby_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_sapphire_texture();
+
     static std::vector<std::shared_ptr<wze::texture>> const&
     asteroids_iron_explosion_animation();
 };

@@ -15,7 +15,7 @@ class space final {
 
     static constexpr size_t _asteroid_count = 1000;
     static constexpr float _asteroid_near = 50'000;
-    static constexpr float _asteroid_far = 200'000;
+    static constexpr float _asteroid_far = 300'000;
     std::vector<asteroid> _asteroids;
 
     std::tuple<float, float, float> sphere_coordinate(float minimum,
