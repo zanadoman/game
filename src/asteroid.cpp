@@ -32,7 +32,7 @@ float asteroid::maximum_z() const {
 }
 
 asteroid::asteroid(float x, float y, float z)
-    : _explosion(assets::asteroids_iron_explosion_animation(), 50, {}) {
+    : _explosion(assets::asteroids_iron_explosion_animation(), 40, {}) {
     _material =
         (enum material)wze::math::random((int64_t)0, (int64_t)MATERIAL_COUNT);
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite{
