@@ -7,8 +7,8 @@ enum material { MATERIAL_IRON, MATERIAL_GOLD, MATERIAL_COUNT };
 
 class asteroid final {
   private:
-    static constexpr float _minimum_size = 3000;
-    static constexpr float _maximum_size = 6000;
+    static constexpr float _minimum_size = 4'000;
+    static constexpr float _maximum_size = 8'000;
     enum material _material;
     std::shared_ptr<wze::sprite> _appearance;
     wze::polygon _hitbox;

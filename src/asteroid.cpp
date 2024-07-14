@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
+#include <game/player_ship.hpp>
 
 enum material asteroid::material() const {
     return _material;
@@ -30,19 +31,26 @@ float asteroid::maximum_z() const {
     return _maximum_z;
 }
 
-asteroid::asteroid(float x, float y, float z) : _explosion({}, 100, {}) {
+asteroid::asteroid(float x, float y, float z)
+    : _explosion(assets::asteroids_iron_explosion_animation(), 50, {}) {
     _material =
         (enum material)wze::math::random((int64_t)0, (int64_t)MATERIAL_COUNT);
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite{
         x, y, z, wze::math::random(0, wze::math::to_radians(360)),
         wze::math::random(_minimum_size, _maximum_size),
         wze::math::random(_maximum_size, _maximum_size), true,
-        assets::asteroid_texture(), std::numeric_limits<uint8_t>::max(),
+        assets::asteroids_iron_texture(), std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), 0});
-    _hitbox = {{}, this->x(), this->y(), this->z()};
+    _hitbox = {{{-_appearance->width() / 2, -_appearance->height() / 2},
+                {-_appearance->width() / 2, _appearance->height() / 2},
+                {_appearance->width() / 2, _appearance->height() / 2},
+                {_appearance->width() / 2, -_appearance->height() / 2}},
+               this->x(),
+               this->y(),
+               this->z()};
     _explosion.targets().push_back(_appearance);
-    _hitpoints = 100;
+    _hitpoints = 40;
     _minimum_z = this->z() - 100;
     _maximum_z = this->z() + 100;
 }

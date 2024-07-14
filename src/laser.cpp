@@ -33,7 +33,7 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
         });
 }
 
-void laser::update() {
+bool laser::update(std::vector<asteroid>& asteroids) {
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());
     _z += _z_speed * wze::timer::delta_time();
@@ -41,4 +41,14 @@ void laser::update() {
     for (size_t i = 0; i < _sprites.size(); ++i) {
         _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
     }
+
+    for (asteroid& asteroid : asteroids) {
+        if (asteroid.minimum_z() <= z() && z() <= asteroid.maximum_z() &&
+            asteroid.hitbox().inside(x(), y())) {
+            asteroid.damage(10);
+            return false;
+        }
+    }
+
+    return true;
 }

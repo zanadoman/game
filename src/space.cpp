@@ -27,12 +27,11 @@ void space::update_lasers() {
     std::vector<laser>::iterator iterator;
 
     for (iterator = _lasers.begin(); iterator != _lasers.end(); ++iterator) {
-        if (_laser_far < sqrtf(powf(iterator->x() - _player.x(), 2) +
+        if (!iterator->update(_asteroids) ||
+            _laser_far < sqrtf(powf(iterator->x() - _player.x(), 2) +
                                powf(iterator->y() - _player.y(), 2) +
                                powf(iterator->z() - _player.z(), 2))) {
             _lasers.erase(iterator--);
-        } else {
-            iterator->update();
         }
     }
 }
