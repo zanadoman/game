@@ -1,6 +1,5 @@
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
-#include <immintrin.h>
 
 enum material asteroid::material() const {
     return _material;
@@ -35,7 +34,6 @@ asteroid::asteroid(float x, float y, float z) {
                    std::numeric_limits<uint8_t>::max(),
                    std::numeric_limits<uint8_t>::max(),
                    0};
-    _hitbox = {{}, x, y, z};
     _transparency = 0;
 }
 

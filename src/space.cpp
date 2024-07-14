@@ -1,42 +1,44 @@
-#include <game/space.hpp>
 #include <game/assets.hpp>
+#include <game/space.hpp>
 
-asteroid space::create_asteroid() {
+std::tuple<float, float, float> space::sphere_coordinate(float minimum,
+                                                         float maximum) {
     float x;
     float y;
     float z;
-    float v;
-    float r;
+    float normalization;
+    float radius;
 
-    x = wze::math::random(-100, 100);
-    y = wze::math::random(-100, 100);
-    z = wze::math::random(-100, 100);
+    x = wze::math::random(-1, 1);
+    y = wze::math::random(-1, 1);
+    z = wze::math::random(-1, 1);
 
-    if ((v = sqrt(powf(x, 2) + powf(y, 2) + powf(z, 2)))) {
-        x /= v;
-        y /= v;
-        z /= v;
+    if ((normalization = sqrt(powf(x, 2) + powf(y, 2) + powf(z, 2)))) {
+        x /= normalization;
+        y /= normalization;
+        z /= normalization;
     }
 
-    r = wze::math::random(50000, 200000);
-    printf("%f %f %f\n", (double)(x * r), (double)(y * r), (double)(z * r));
-
-    return {_player.x() + x * r, _player.y() + y * r, _player.z() + z * r};
+    radius = wze::math::random(minimum, maximum);
+    return {x * radius, y * radius, z * radius};
 }
 
 void space::update_asteroids() {
-    size_t i;
-
-    for (i = 0; i != _asteroids.size(); ++i) {
-        if (200000 <
-            sqrtf(powf(_asteroids.at(i).appearance().x() - _player.x(), 2) +
-                  powf(_asteroids.at(i).appearance().y() - _player.y(), 2) +
-                  powf(_asteroids.at(i).appearance().z() - _player.z(), 2))) {
-            _asteroids.at(i).~asteroid();
-            new (&_asteroids.at(i)) asteroid(create_asteroid());
+    std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
+        if (_asteroid_far <
+            sqrtf(powf(asteroid.appearance().x() - _player.x(), 2) +
+                  powf(asteroid.appearance().y() - _player.y(), 2) +
+                  powf(asteroid.appearance().z() - _player.z(), 2))) {
+            asteroid.~asteroid();
+            std::apply(
+                [&asteroid](float x, float y, float z) -> void {
+                    new (&asteroid) class asteroid(x, y, z);
+                },
+                sphere_coordinate(_asteroid_near, _asteroid_far));
+        } else {
+            asteroid.update();
         }
-        _asteroids.at(i).update();
-    }
+    });
 }
 
 space::space() {
@@ -44,9 +46,15 @@ space::space() {
 
     wze::renderer::set_space_texture(assets::space_texture());
 
-    for (i = 0; i != 1000; ++i) {
-        _asteroids.push_back(create_asteroid());
+    for (i = 0; i != _asteroid_count; ++i) {
+        std::apply([this](float x, float y,
+                          float z) -> void { _asteroids.push_back({x, y, z}); },
+                   sphere_coordinate(_asteroid_near, _asteroid_far));
     }
+}
+
+space::~space() {
+    wze::renderer::set_space_texture({});
 }
 
 void space::update() {
