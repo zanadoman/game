@@ -1,7 +1,6 @@
 #ifndef GAME_BUTTON_HPP
 #define GAME_BUTTON_HPP
 
-#include <game/updateable.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 enum button_state {
@@ -11,7 +10,7 @@ enum button_state {
     BUTTON_STATE_POSTCLICK = 0b0100
 };
 
-class button final : public updateable {
+class button final {
   private:
     wze::sprite _appearance;
     wze::polygon _hitbox;
@@ -44,7 +43,7 @@ class button final : public updateable {
            std::shared_ptr<wze::texture> const& texture_hovered,
            std::shared_ptr<wze::texture> const& texture_onclick);
 
-    void update() final;
+    void update();
 };
 
 #endif

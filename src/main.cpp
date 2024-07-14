@@ -6,7 +6,7 @@ wze_main(2560, 1440) {
 
     wze_while(true) {
         space.update();
-        // printf("%f\n", (double)wze::timer::delta_time());
+        printf("%f\n", (double)wze::timer::delta_time());
     };
 
     return 0;

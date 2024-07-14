@@ -9,9 +9,9 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
     float normalization;
     float radius;
 
-    x = wze::math::random(-1, 1);
-    y = wze::math::random(-1, 1);
-    z = wze::math::random(-1, 1);
+    x = wze::math::random(-1.f, 1.f);
+    y = wze::math::random(-1.f, 1.f);
+    z = wze::math::random(-1.f, 1.f);
 
     if ((normalization = sqrt(powf(x, 2) + powf(y, 2) + powf(z, 2)))) {
         x /= normalization;
@@ -39,14 +39,14 @@ void space::update_lasers() {
 
 void space::update_asteroids() {
     std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
-        if (_asteroid_far <
-            sqrtf(powf(asteroid.appearance().x() - _player.x(), 2) +
-                  powf(asteroid.appearance().y() - _player.y(), 2) +
-                  powf(asteroid.appearance().z() - _player.z(), 2))) {
+        if (_asteroid_far < sqrtf(powf(asteroid.x() - _player.x(), 2) +
+                                  powf(asteroid.y() - _player.y(), 2) +
+                                  powf(asteroid.z() - _player.z(), 2))) {
             asteroid.~asteroid();
             std::apply(
-                [&asteroid](float x, float y, float z) -> void {
-                    new (&asteroid) class asteroid(x, y, z);
+                [this, &asteroid](float x, float y, float z) -> void {
+                    new (&asteroid) class asteroid(
+                        _player.x() + x, _player.y() + y, _player.z() + z);
                 },
                 sphere_coordinate(_asteroid_near, _asteroid_far));
         } else {
@@ -61,9 +61,12 @@ space::space() {
     wze::renderer::set_space_texture(assets::space_texture());
 
     for (i = 0; i != _asteroid_count; ++i) {
-        std::apply([this](float x, float y,
-                          float z) -> void { _asteroids.push_back({x, y, z}); },
-                   sphere_coordinate(_asteroid_near, _asteroid_far));
+        std::apply(
+            [this](float x, float y, float z) -> void {
+                _asteroids.push_back(
+                    {_player.x() + x, _player.y() + y, _player.z() + z});
+            },
+            sphere_coordinate(_asteroid_near, _asteroid_far));
     }
 }
 
@@ -72,7 +75,7 @@ space::~space() {
 }
 
 void space::update() {
-    _player.update(_lasers, _asteroids);
+    _player.update(_lasers);
     update_lasers();
     update_asteroids();
 }

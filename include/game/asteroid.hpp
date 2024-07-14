@@ -12,12 +12,13 @@ class asteroid final {
     wze::polygon _hitbox;
     float _minimum_z;
     float _maximum_z;
-    float _transparency;
 
   public:
     enum material material() const;
-    wze::sprite const& appearance() const;
     wze::polygon const& hitbox() const;
+    float x() const;
+    float y() const;
+    float z() const;
     float minimum_z() const;
     float maximum_z() const;
 
