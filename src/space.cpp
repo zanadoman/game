@@ -23,6 +23,20 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
     return {x * radius, y * radius, z * radius};
 }
 
+void space::update_lasers() {
+    std::vector<laser>::iterator iterator;
+
+    for (iterator = _lasers.begin(); iterator != _lasers.end(); ++iterator) {
+        if (_laser_far < sqrtf(powf(iterator->x() - _player.x(), 2) +
+                               powf(iterator->y() - _player.y(), 2) +
+                               powf(iterator->z() - _player.z(), 2))) {
+            _lasers.erase(iterator--);
+        } else {
+            iterator->update();
+        }
+    }
+}
+
 void space::update_asteroids() {
     std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
         if (_asteroid_far <
@@ -58,6 +72,7 @@ space::~space() {
 }
 
 void space::update() {
-    _player.update();
+    _player.update(_lasers, _asteroids);
+    update_lasers();
     update_asteroids();
 }

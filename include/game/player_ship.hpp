@@ -1,12 +1,12 @@
 #ifndef GAME_PLAYER_SHIP_HPP
 #define GAME_PLAYER_SHIP_HPP
 
+#include <game/asteroid.hpp>
 #include <game/joy_stick.hpp>
 #include <game/laser.hpp>
-#include <game/updateable.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
-class player_ship final : public updateable, public wze::entity {
+class player_ship final : public wze::entity {
   private:
     static constexpr float _cannons_x_offset = 150;
     static constexpr float _cannons_y_offset = 75;
@@ -14,7 +14,6 @@ class player_ship final : public updateable, public wze::entity {
     joy_stick _joy_stick;
     float _z;
     wze::sprite _cockpit;
-    std::vector<std::unique_ptr<laser>> _lasers;
     std::pair<float, float> _left_cannon;
     std::pair<float, float> _right_cannon;
     bool _active_cannon;
@@ -23,7 +22,7 @@ class player_ship final : public updateable, public wze::entity {
     void update_movement();
     void update_cannons_x();
     void update_cannons_y();
-    void shoot();
+    void shoot(std::vector<laser>& lasers);
 
   public:
     void set_x(float x) override;
@@ -33,7 +32,7 @@ class player_ship final : public updateable, public wze::entity {
     void set_angle(float angle) override;
 
     player_ship();
-    void update() final;
+    void update(std::vector<laser>& lasers);
 };
 
 #endif

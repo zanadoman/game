@@ -34,6 +34,8 @@ asteroid::asteroid(float x, float y, float z) {
                    std::numeric_limits<uint8_t>::max(),
                    std::numeric_limits<uint8_t>::max(),
                    0};
+    _minimum_z = appearance().z() - 100;
+    _maximum_z = appearance().z() + 100;
     _transparency = 0;
 }
 

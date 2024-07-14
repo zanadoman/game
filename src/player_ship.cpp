@@ -43,13 +43,12 @@ void player_ship::update_cannons_y() {
                                      transformation_matrix());
 }
 
-void player_ship::shoot() {
+void player_ship::shoot(std::vector<laser>& lasers) {
     std::pair<float, float> cannon;
 
     cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
-    _lasers.push_back(std::unique_ptr<laser>(
-        new laser(cannon.first, cannon.second, z(), wze::math::to_radians(0),
-                  wze::math::to_radians(90))));
+    lasers.push_back({cannon.first, cannon.second, z(),
+                      wze::math::to_radians(0), wze::math::to_radians(90)});
 }
 
 void player_ship::set_x(float x) {
@@ -96,16 +95,12 @@ player_ship::player_ship() {
     _last_shot = 0;
 }
 
-void player_ship::update() {
+void player_ship::update(std::vector<laser>& lasers) {
     update_movement();
 
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time <= wze::timer::current_time()) {
-        shoot();
+        shoot(lasers);
         _last_shot = wze::timer::current_time();
     }
-
-    std::ranges::for_each(
-        _lasers,
-        [](std::unique_ptr<laser> const& laser) -> void { laser->update(); });
 }

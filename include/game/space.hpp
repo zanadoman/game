@@ -9,6 +9,8 @@
 class space final {
   private:
     player_ship _player;
+
+    static constexpr float _laser_far = 100'000;
     std::vector<laser> _lasers;
 
     static constexpr size_t _asteroid_count = 1000;
@@ -18,6 +20,7 @@ class space final {
 
     std::tuple<float, float, float> sphere_coordinate(float minimum,
                                                       float maximum);
+    void update_lasers();
     void update_asteroids();
 
   public:

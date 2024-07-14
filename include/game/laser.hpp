@@ -1,10 +1,9 @@
 #ifndef GAME_LASER_HPP
 #define GAME_LASER_HPP
 
-#include <game/updateable.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
-class laser final : public wze::entity, public updateable {
+class laser final : public wze::entity {
   private:
     float _z;
     float _x_angle;
@@ -16,7 +15,7 @@ class laser final : public wze::entity, public updateable {
     void set_z(float z);
 
     laser(float x, float y, float z, float x_angle, float y_angle);
-    void update() final;
+    void update();
 };
 
 #endif
