@@ -23,7 +23,7 @@ void player_ship::update_movement() {
     }
 
     update_joy_stick();
-    if (_joy_stick_deadzone < _joy_stick.value()) {
+    if (50 < _joy_stick.value()) {
         set_x(x() +
               _joy_stick_x * _movement_speed / 75 * wze::timer::delta_time());
         set_y(y() +

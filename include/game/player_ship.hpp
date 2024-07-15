@@ -9,7 +9,6 @@ class player_ship final : public wze::entity {
   private:
     wze::sprite _cockpit;
 
-    static constexpr float _joy_stick_deadzone = 50;
     joy_stick _joy_stick;
     float _joy_stick_x;
     float _joy_stick_y;

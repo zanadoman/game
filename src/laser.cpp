@@ -38,16 +38,16 @@ bool laser::update(std::vector<asteroid>& asteroids) {
     set_y(y() + _y_speed * wze::timer::delta_time());
     _z += _z_speed * wze::timer::delta_time();
 
-    for (size_t i = 0; i < _sprites.size(); ++i) {
-        _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
-    }
-
     for (asteroid& asteroid : asteroids) {
         if (asteroid.minimum_z() <= z() && z() <= asteroid.maximum_z() &&
             asteroid.hitbox().inside(x(), y())) {
             asteroid.damage(10);
             return false;
         }
+    }
+
+    for (size_t i = 0; i < _sprites.size(); ++i) {
+        _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
     }
 
     return true;

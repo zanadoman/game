@@ -8,19 +8,19 @@
 
 class space final {
   private:
+    std::tuple<float, float, float> sphere_coordinate(float minimum,
+                                                      float maximum);
+
     player_ship _player;
 
-    static constexpr float _laser_far = 200'000;
+    static constexpr float _laser_far = 300'000;
     std::vector<laser> _lasers;
+    void update_lasers();
 
     static constexpr size_t _asteroid_count = 1000;
     static constexpr float _asteroid_near = 50'000;
     static constexpr float _asteroid_far = 300'000;
     std::vector<asteroid> _asteroids;
-
-    std::tuple<float, float, float> sphere_coordinate(float minimum,
-                                                      float maximum);
-    void update_lasers();
     void update_asteroids();
 
   public:
