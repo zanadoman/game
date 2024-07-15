@@ -3,21 +3,8 @@
 
 #include <wizard_engine/wizard_engine.hpp>
 
-enum material {
-    MATERIAL_PYRITE,
-    MATERIAL_WOLFRAMITE,
-    MATERIAL_CARNEOL,
-    MATERIAL_MOLDAVITE,
-    MATERIAL_RUBY,
-    MATERIAL_SAPPHIRE,
-    MATERIAL_COUNT
-};
-
 class asteroid final {
   private:
-    static constexpr float _minimum_size = 4'000;
-    static constexpr float _maximum_size = 8'000;
-    enum material _material;
     std::shared_ptr<wze::sprite> _appearance;
     wze::polygon _hitbox;
     wze::animator _explosion;
@@ -26,7 +13,6 @@ class asteroid final {
     float _maximum_z;
 
   public:
-    enum material material() const;
     wze::polygon const& hitbox() const;
     float x() const;
     float y() const;
