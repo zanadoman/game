@@ -1,7 +1,9 @@
 #include <game/space.hpp>
+#include <game/assets.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 wze_main(2560, 1440) {
+    assets::initialize();
     space space;
 
     wze_while(true) {

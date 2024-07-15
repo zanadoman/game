@@ -33,7 +33,7 @@ float asteroid::maximum_z() const {
 }
 
 asteroid::asteroid(float x, float y, float z)
-    : _explosion(assets::asteroids_iron_explosion_animation(), 40, {}) {
+    : _explosion(assets::asteroids_wolframite_explosion_animation(), 40, {}) {
     std::shared_ptr<wze::texture> texture;
     float roll;
 

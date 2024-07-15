@@ -5,6 +5,20 @@
 
 class assets final {
   private:
+    static std::shared_ptr<wze::texture> _placeholder_texture;
+    static std::shared_ptr<wze::texture> _laser_texture;
+    static std::shared_ptr<wze::texture> _player_ship_texture;
+    static std::shared_ptr<wze::texture> _space_texture;
+
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_pyrite_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_wolframite_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_carneol_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_moldavite_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_ruby_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_sapphire_texture;
+
+    static std::vector<std::shared_ptr<wze::texture>> _asteroids_wolframite_explosion_animation;
+
     assets() = default;
 
   public:
@@ -20,8 +34,9 @@ class assets final {
     static std::shared_ptr<wze::texture> const& asteroids_ruby_texture();
     static std::shared_ptr<wze::texture> const& asteroids_sapphire_texture();
 
-    static std::vector<std::shared_ptr<wze::texture>> const&
-    asteroids_iron_explosion_animation();
+    static std::vector<std::shared_ptr<wze::texture>> const& asteroids_wolframite_explosion_animation();
+
+    static void initialize();
 };
 
 #endif
