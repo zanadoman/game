@@ -1,5 +1,6 @@
-#include <game/space.hpp>
 #include <game/assets.hpp>
+#include <game/space.hpp>
+#include <iostream>
 #include <wizard_engine/wizard_engine.hpp>
 
 wze_main(2560, 1440) {
@@ -8,7 +9,7 @@ wze_main(2560, 1440) {
 
     wze_while(true) {
         space.update();
-        printf("%f\n", (double)wze::timer::delta_time());
+        std::cout << wze::timer::delta_time() << std::endl;
     };
 
     return 0;
