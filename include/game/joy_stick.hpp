@@ -5,10 +5,9 @@
 
 class joy_stick final {
   private:
-    static constexpr float _maximum = 200;
+    wze::sprite _crosshair;
     float _value;
     float _direction;
-    wze::sprite _crosshair;
 
   public:
     float value() const;

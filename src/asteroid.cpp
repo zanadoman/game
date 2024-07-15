@@ -35,22 +35,22 @@ asteroid::asteroid(float x, float y, float z) {
     if (97.5f < value) {
         texture = assets::asteroids_sapphire_texture();
         _explosion =
-            wze::animator(assets::asteroids_wolframite_explosion_animation());
+            wze::animator(assets::asteroids_sapphire_explosion_animation());
         _hitpoints = 70;
     } else if (92.5f < value) {
         texture = assets::asteroids_ruby_texture();
         _explosion =
-            wze::animator(assets::asteroids_wolframite_explosion_animation());
+            wze::animator(assets::asteroids_ruby_explosion_animation());
         _hitpoints = 60;
     } else if (87.5f < value) {
         texture = assets::asteroids_moldavite_texture();
         _explosion =
-            wze::animator(assets::asteroids_wolframite_explosion_animation());
+            wze::animator(assets::asteroids_moldavite_explosion_animation());
         _hitpoints = 50;
     } else if (80 < value) {
         texture = assets::asteroids_carneol_texture();
         _explosion =
-            wze::animator(assets::asteroids_wolframite_explosion_animation());
+            wze::animator(assets::asteroids_carneol_explosion_animation());
         _hitpoints = 40;
     } else if (50 < value) {
         texture = assets::asteroids_wolframite_texture();
@@ -60,7 +60,7 @@ asteroid::asteroid(float x, float y, float z) {
     } else {
         texture = assets::asteroids_pyrite_texture();
         _explosion =
-            wze::animator(assets::asteroids_wolframite_explosion_animation());
+            wze::animator(assets::asteroids_pyrite_explosion_animation());
         _hitpoints = 20;
     }
 
@@ -83,8 +83,8 @@ asteroid::asteroid(float x, float y, float z) {
     _explosion.set_frame_time(40);
     _explosion.targets().push_back(_appearance);
 
-    _minimum_z = this->z() - 100;
-    _maximum_z = this->z() + 100;
+    _minimum_z = this->z() - 500;
+    _maximum_z = this->z() + 500;
 }
 
 bool asteroid::update() {
