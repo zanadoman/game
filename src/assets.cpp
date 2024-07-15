@@ -5,12 +5,12 @@ std::shared_ptr<wze::texture> assets::_laser_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
 
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_pyrite_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_wolframite_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_carneol_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_moldavite_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_ruby_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_sapphire_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_pyrite_textures;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_wolframite_textures;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_carneol_textures;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_moldavite_textures;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_ruby_textures;
+std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_sapphire_textures;
 
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_wolframite_explosion_animation;
 
@@ -31,33 +31,33 @@ std::shared_ptr<wze::texture> const& assets::space_texture() {
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_pyrite_texture() {
-    return _asteroids_pyrite_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_pyrite_texture.size() - 1));
+    return _asteroids_pyrite_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_pyrite_textures.size() - 1));
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_wolframite_texture() {
-    return _asteroids_wolframite_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_wolframite_texture.size() - 1));
+    return _asteroids_wolframite_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_wolframite_textures.size() - 1));
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_carneol_texture() {
-    return _asteroids_carneol_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_carneol_texture.size() - 1));
+    return _asteroids_carneol_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_carneol_textures.size() - 1));
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_moldavite_texture() {
-    return _asteroids_moldavite_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_moldavite_texture.size() - 1));
+    return _asteroids_moldavite_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_moldavite_textures.size() - 1));
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_ruby_texture() {
-    return _asteroids_ruby_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_ruby_texture.size() - 1));
+    return _asteroids_ruby_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_ruby_textures.size() - 1));
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_sapphire_texture() {
-    return _asteroids_sapphire_texture.at(wze::math::random(
-        (int64_t)0, (int64_t)_asteroids_sapphire_texture.size() - 1));
+    return _asteroids_sapphire_textures.at(wze::math::random(
+        (int64_t)0, (int64_t)_asteroids_sapphire_textures.size() - 1));
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -78,7 +78,7 @@ void assets::initialize() {
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
 
-    _asteroids_pyrite_texture = {
+    _asteroids_pyrite_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/pyrite/1.png")),
         wze::assets::create_texture(
@@ -86,7 +86,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/pyrite/3.png"))};
 
-    _asteroids_wolframite_texture = {
+    _asteroids_wolframite_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/wolframite/1.png")),
         wze::assets::create_texture(
@@ -94,7 +94,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/wolframite/3.png"))};
 
-    _asteroids_carneol_texture = {
+    _asteroids_carneol_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/carneol/1.png")),
         wze::assets::create_texture(
@@ -102,7 +102,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/carneol/3.png"))};
 
-    _asteroids_moldavite_texture = {
+    _asteroids_moldavite_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/moldavite/1.png")),
         wze::assets::create_texture(
@@ -110,7 +110,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/moldavite/3.png"))};
 
-    _asteroids_ruby_texture = {
+    _asteroids_ruby_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/ruby/1.png")),
         wze::assets::create_texture(
@@ -118,7 +118,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/ruby/3.png"))};
 
-    _asteroids_sapphire_texture = {
+    _asteroids_sapphire_textures = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/sapphire/1.png")),
         wze::assets::create_texture(

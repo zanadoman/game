@@ -77,7 +77,7 @@ asteroid::asteroid(float x, float y, float z)
     }
 
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite{
-        x, y, z, wze::math::random(0, wze::math::to_radians(360)),
+        x, y, z, wze::math::random(0.f, wze::math::to_radians(360)),
         wze::math::random(_minimum_size, _maximum_size),
         wze::math::random(_maximum_size, _maximum_size), true, texture,
         std::numeric_limits<uint8_t>::max(),
