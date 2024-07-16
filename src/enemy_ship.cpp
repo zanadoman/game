@@ -102,9 +102,9 @@ void enemy_ship::shoot(player_ship const& player_ship,
     normalization =
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
 
-    lasers.push_back({x(), y(), z(), x_distance / normalization * 25,
-                      y_distance / normalization * 25,
-                      z_distance / normalization * 25, 800, 200, 255, 0, 0});
+    lasers.push_back({x(), y(), z(), x_distance / normalization * 30,
+                      y_distance / normalization * 30,
+                      z_distance / normalization * 30, 1000, 300, 255, 0, 0});
 }
 
 enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {

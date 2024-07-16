@@ -19,16 +19,16 @@ class player_ship final : public wze::entity {
     float _z;
     void update_movement();
 
-    static constexpr float _cannons_x_offset = 300;
-    static constexpr float _cannons_y_offset = 150;
+    static constexpr float _cannons_x_offset = 400;
+    static constexpr float _cannons_y_offset = 200;
     std::pair<float, float> _left_cannon;
     std::pair<float, float> _right_cannon;
     void update_cannons_x();
     void update_cannons_y();
 
     static constexpr float _laser_speed = 50;
-    static constexpr float _laser_length = 800;
-    static constexpr float _laser_diameter = 200;
+    static constexpr float _laser_length = 1000;
+    static constexpr float _laser_diameter = 300;
     static constexpr uint8_t _laser_color_r = 0;
     static constexpr uint8_t _laser_color_g = 150;
     static constexpr uint8_t _laser_color_b = 255;
