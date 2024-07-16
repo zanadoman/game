@@ -1,4 +1,3 @@
-#include "wizard_engine/math.hpp"
 #include <game/assets.hpp>
 #include <game/enemy_ship.hpp>
 
@@ -138,7 +137,9 @@ bool enemy_ship::update(player_ship& player_ship,
 
     if ((!_attacking && _ready) || (_attacking && !_ready)) {
         if (_loop.play()) {
-            set_angle(angle() + wze::math::to_radians(180));
+            set_angle(angle() + (wze::math::random(0.5)
+                                     ? wze::math::to_radians(180)
+                                     : -wze::math::to_radians(180)));
             _ready = !_ready;
             _loop.reset();
         }

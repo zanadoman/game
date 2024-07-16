@@ -28,7 +28,7 @@ namespace wze {
 /**
  * @file math.hpp
  * @author Zana Domán, Gunics Roland
- * @brief Subsystem to handle vector math and unit conversions.
+ * @brief Subsystem to handle 2D geometry and unit conversions.
  */
 class math final {
   private:
@@ -92,6 +92,19 @@ class math final {
     /**
      * @file math.hpp
      * @author Zana Domán
+     * @brief Returns a random boolean value.
+     * @param probability Probability of a true value.
+     * @return Random boolean value.
+     */
+    template <typename T>
+    static std::enable_if<std::is_same<T, bool>::value, T>::type
+    random(float probability = 0.5) {
+        return std::bernoulli_distribution((double)probability)(_mt19937_64);
+    }
+
+    /**
+     * @file math.hpp
+     * @author Zana Domán
      * @brief Returns the length of a vector.
      * @param x X component of the vector.
      * @param y Y component of the vector.
@@ -128,6 +141,16 @@ class math final {
      * @return Moved y component of the vector.
      */
     static float move_y(float length, float angle);
+
+    /**
+     * @file math.hpp
+     * @author Zana Domán, Gunics Roland
+     * @brief Normalizes a vector.
+     * @param x X component of the vector.
+     * @param y Y component of the vector.
+     * @return Normalized vector.
+     */
+    static std::pair<float, float> normalize(float x, float y);
 
     /**
      * @file math.hpp
