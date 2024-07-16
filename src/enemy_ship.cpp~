@@ -19,7 +19,7 @@ bool enemy_ship::dodge_asteroids(std::vector<asteroid> const& asteroids) {
         x_distance = x() - asteroid.x();
         y_distance = y() - asteroid.y();
         if (asteroid.z() - 5000 < z() && z() < asteroid.z() + 5000 &&
-            wze::math::length(x_distance, y_distance) < 7500) {
+            wze::math::length(x_distance, y_distance) < 10000) {
             if (!x_distance && !y_distance) {
                 x_distance = wze::math::random(-1.f, 1.f);
                 y_distance = wze::math::random(-1.f, 1.f);
@@ -43,8 +43,8 @@ bool enemy_ship::dodge_enemy_ships(std::vector<enemy_ship> const& enemy_ships) {
         if (&enemy_ship != this) {
             x_distance = x() - enemy_ship.x();
             y_distance = y() - enemy_ship.y();
-            if (enemy_ship.z() - 20000 < z() && z() < enemy_ship.z() + 20000 &&
-                wze::math::length(x_distance, y_distance) < 20000) {
+            if (enemy_ship.z() - 10000 < z() && z() < enemy_ship.z() + 10000 &&
+                wze::math::length(x_distance, y_distance) < 10000) {
                 if (!x_distance && !y_distance) {
                     x_distance = wze::math::random(-1.f, 1.f);
                     y_distance = wze::math::random(-1.f, 1.f);
@@ -137,7 +137,7 @@ bool enemy_ship::update(player_ship& player_ship,
     }
 
     if (!dodge_asteroids(asteroids) && !dodge_enemy_ships(enemy_ships)) {
-        if (15000 <
+        if (10000 <
             (normalization = wze::math::length(x_distance, y_distance))) {
             _x_speed = x_distance / normalization * _speed;
             _y_speed = y_distance / normalization * _speed;

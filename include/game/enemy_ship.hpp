@@ -18,8 +18,10 @@ class enemy_ship final : wze::entity {
     uint64_t _last_attack;
     bool _attacking;
     wze::animator _loop;
+    uint64_t _last_appearance_update;
 
     bool dodge_asteroids(std::vector<asteroid> const& asteroids);
+    bool dodge_enemy_ships(std::vector<enemy_ship> const& enemy_ships);
     void update_appearance();
 
   public:
@@ -28,6 +30,7 @@ class enemy_ship final : wze::entity {
 
     enemy_ship(float x, float y, float z);
     bool update(player_ship& player_ship,
+                std::vector<enemy_ship> const& enemy_ships,
                 std::vector<asteroid> const& asteroids);
 };
 

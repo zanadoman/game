@@ -29,7 +29,7 @@ void space::update_enemies() {
     std::vector<enemy_ship>::iterator iterator;
 
     for (iterator = _enemies.begin(); iterator != _enemies.end(); ++iterator) {
-        iterator->update(_player, _asteroids);
+        iterator->update(_player, _enemies, _asteroids);
     }
 }
 
@@ -68,9 +68,11 @@ space::space() {
 
     wze::renderer::set_space_texture(assets::space_texture());
 
-    std::apply([this](float x, float y,
-                      float z) -> void { _enemies.push_back({x, y, z}); },
-               sphere_coordinate(_asteroid_near, 100'000));
+    for (i = 0; i != 3; ++i) {
+        std::apply([this](float x, float y,
+                          float z) -> void { _enemies.push_back({x, y, z}); },
+                   sphere_coordinate(_asteroid_near, 100'000));
+    }
 
     for (i = 0; i != _asteroid_count; ++i) {
         std::apply(
