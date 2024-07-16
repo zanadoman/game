@@ -34,12 +34,15 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
 }
 
 bool laser::update(std::vector<asteroid>& asteroids) {
+    float z_movement;
+
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());
-    _z += _z_speed * wze::timer::delta_time();
+    _z += z_movement = _z_speed * wze::timer::delta_time();
 
     for (asteroid& asteroid : asteroids) {
-        if (asteroid.minimum_z() <= z() && z() <= asteroid.maximum_z() &&
+        if (asteroid.z() - z_movement < z() &&
+            z() <= asteroid.z() + z_movement &&
             asteroid.hitbox().inside(x(), y())) {
             asteroid.damage(10);
             return false;
