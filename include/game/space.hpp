@@ -4,6 +4,7 @@
 #include <game/asteroid.hpp>
 #include <game/laser.hpp>
 #include <game/player_ship.hpp>
+#include <game/enemy_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class space final {
@@ -12,6 +13,9 @@ class space final {
                                                       float maximum);
 
     player_ship _player;
+
+    std::vector<enemy_ship> _enemies;
+    void update_enemies();
 
     static constexpr float _laser_far = 300'000;
     std::vector<laser> _lasers;

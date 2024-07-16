@@ -1,5 +1,7 @@
 #include <game/assets.hpp>
 #include <game/space.hpp>
+#include <immintrin.h>
+#include <tuple>
 
 std::tuple<float, float, float> space::sphere_coordinate(float minimum,
                                                          float maximum) {
@@ -21,6 +23,14 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
 
     radius = wze::math::random(minimum, maximum);
     return {x * radius, y * radius, z * radius};
+}
+
+void space::update_enemies() {
+    std::vector<enemy_ship>::iterator iterator;
+
+    for (iterator = _enemies.begin(); iterator != _enemies.end(); ++iterator) {
+        iterator->update(_player, _asteroids);
+    }
 }
 
 void space::update_lasers() {
@@ -58,6 +68,10 @@ space::space() {
 
     wze::renderer::set_space_texture(assets::space_texture());
 
+    std::apply([this](float x, float y,
+                      float z) -> void { _enemies.push_back({x, y, z}); },
+               sphere_coordinate(_asteroid_near, 100'000));
+
     for (i = 0; i != _asteroid_count; ++i) {
         std::apply(
             [this](float x, float y, float z) -> void {
@@ -74,6 +88,7 @@ space::~space() {
 
 void space::update() {
     _player.update(_lasers);
+    update_enemies();
     update_lasers();
     update_asteroids();
 }
