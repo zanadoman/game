@@ -11,9 +11,16 @@ class enemy_ship final : wze::entity {
     std::shared_ptr<wze::polygon> _hitbox;
     float _z;
     float _speed;
+    float _x_speed;
+    float _y_speed;
+    float _z_speed;
+    bool _ready;
+    uint64_t _last_attack;
+    bool _attacking;
+    wze::animator _loop;
 
-    void dodge_asteroid(asteroid const& asteroid);
-    void set_appearance();
+    bool dodge_asteroids(std::vector<asteroid> const& asteroids);
+    void update_appearance();
 
   public:
     float z() const;
