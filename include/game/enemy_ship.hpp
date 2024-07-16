@@ -17,7 +17,8 @@ class enemy_ship final : wze::entity {
     bool _ready;
     uint64_t _last_attack;
     bool _attacking;
-    wze::animator _loop;
+    wze::animator _rear_loop;
+    wze::animator _front_loop;
     uint64_t _last_appearance_update;
 
     bool dodge_asteroids(std::vector<asteroid> const& asteroids);

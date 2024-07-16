@@ -107,10 +107,8 @@ enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
     _last_attack = 0;
     _attacking = false;
     _last_appearance_update = 0;
-    _loop = {{assets::enemy_loop1_texture(), assets::enemy_loop2_texture(),
-              assets::enemy_loop3_texture()},
-             150,
-             {_appearance}};
+    _rear_loop = {assets::enemy_rear_loop_animation(), 150, {_appearance}};
+    _front_loop = {assets::enemy_front_loop_animation(), 150, {_appearance}};
     components().push_back(_appearance);
 }
 
@@ -163,14 +161,23 @@ bool enemy_ship::update(player_ship& player_ship,
         _attacking = true;
     }
 
-    if ((!_attacking && _ready) || (_attacking && !_ready)) {
-        if (_loop.play()) {
+    if (_attacking && !_ready) {
+        if (_rear_loop.play()) {
             set_angle(angle() + (wze::math::random<bool>(0.5)
                                      ? wze::math::to_radians(180)
                                      : -wze::math::to_radians(180)));
             _ready = !_ready;
-            _loop.reset();
+            _rear_loop.reset();
         }
+    } else if (!_attacking && _ready) {
+        if (_front_loop.play()) {
+            set_angle(angle() + (wze::math::random<bool>(0.5)
+                                     ? wze::math::to_radians(180)
+                                     : -wze::math::to_radians(180)));
+            _ready = !_ready;
+            _front_loop.reset();
+        }
+
     } else if (_last_appearance_update + 150 < wze::timer::current_time()) {
         update_appearance();
         _last_appearance_update = wze::timer::current_time();
