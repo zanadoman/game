@@ -27,8 +27,8 @@ class player_ship final : public wze::entity {
     void update_cannons_y();
 
     static constexpr float _laser_speed = 50;
-    static constexpr float _laser_length = 600;
-    static constexpr float _laser_diameter = 100;
+    static constexpr float _laser_length = 800;
+    static constexpr float _laser_diameter = 200;
     static constexpr uint8_t _laser_color_r = 0;
     static constexpr uint8_t _laser_color_g = 150;
     static constexpr uint8_t _laser_color_b = 255;

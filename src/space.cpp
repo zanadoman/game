@@ -29,7 +29,7 @@ void space::update_enemies() {
     std::vector<enemy_ship>::iterator iterator;
 
     for (iterator = _enemies.begin(); iterator != _enemies.end(); ++iterator) {
-        iterator->update(_player, _enemies, _asteroids);
+        iterator->update(_player, _enemies, _lasers, _asteroids);
     }
 }
 

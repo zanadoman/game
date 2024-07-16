@@ -89,6 +89,24 @@ void enemy_ship::update_appearance() {
     }
 }
 
+void enemy_ship::shoot(player_ship const& player_ship,
+                       std::vector<laser>& lasers) {
+    float x_distance;
+    float y_distance;
+    float z_distance;
+    float normalization;
+
+    x_distance = player_ship.x() - x();
+    y_distance = player_ship.y() - y();
+    z_distance = player_ship.z() - z();
+    normalization =
+        sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
+
+    lasers.push_back({x(), y(), z(), x_distance / normalization * 25,
+                      y_distance / normalization * 25,
+                      z_distance / normalization * 25, 800, 200, 255, 0, 0});
+}
+
 enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
         this->x(), this->y(), z, 0, 8000, 8000, true,
@@ -109,11 +127,13 @@ enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
     _last_appearance_update = 0;
     _rear_loop = {assets::enemy_rear_loop_animation(), 150, {_appearance}};
     _front_loop = {assets::enemy_front_loop_animation(), 150, {_appearance}};
+    _last_shot = 0;
     components().push_back(_appearance);
 }
 
 bool enemy_ship::update(player_ship& player_ship,
                         std::vector<enemy_ship> const& enemy_ships,
+                        std::vector<laser>& lasers,
                         std::vector<asteroid> const& asteroids) {
     float x_distance;
     float y_distance;
@@ -177,10 +197,14 @@ bool enemy_ship::update(player_ship& player_ship,
             _ready = !_ready;
             _front_loop.reset();
         }
-
     } else if (_last_appearance_update + 150 < wze::timer::current_time()) {
         update_appearance();
         _last_appearance_update = wze::timer::current_time();
+    }
+
+    if (_attacking && _ready && _last_shot + 300 < wze::timer::current_time()) {
+        shoot(player_ship, lasers);
+        _last_shot = wze::timer::current_time();
     }
 
     return true;

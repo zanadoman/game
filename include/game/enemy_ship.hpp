@@ -2,6 +2,7 @@
 #define GAME_ENEMY_SHIP_HPP
 
 #include <game/asteroid.hpp>
+#include <game/laser.hpp>
 #include <game/player_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
@@ -25,6 +26,9 @@ class enemy_ship final : wze::entity {
     bool dodge_enemy_ships(std::vector<enemy_ship> const& enemy_ships);
     void update_appearance();
 
+    uint64_t _last_shot;
+    void shoot(player_ship const& player_ship, std::vector<laser>& lasers);
+
   public:
     float z() const;
     void set_z(float z);
@@ -32,6 +36,7 @@ class enemy_ship final : wze::entity {
     enemy_ship(float x, float y, float z);
     bool update(player_ship& player_ship,
                 std::vector<enemy_ship> const& enemy_ships,
+                std::vector<laser>& lasers,
                 std::vector<asteroid> const& asteroids);
 };
 
