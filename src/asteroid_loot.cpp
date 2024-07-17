@@ -60,11 +60,11 @@ bool asteroid_loot::update(player_ship const& player_ship) {
     distance =
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
 
-    if (distance < 2'000) {
+    if (distance < 4'000) {
         return false;
     }
 
-    if (distance < 30'000) {
+    if (distance < 50'000) {
         set_x(x() + x_distance / distance * 50 * wze::timer::delta_time());
         set_y(y() + y_distance / distance * 50 * wze::timer::delta_time());
         set_z(z() + z_distance / distance * 50 * wze::timer::delta_time());
