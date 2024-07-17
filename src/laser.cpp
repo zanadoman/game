@@ -49,7 +49,8 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
 
 bool laser::update(player_ship& player_ship,
                    std::vector<enemy_ship>& enemy_ships,
-                   std::vector<asteroid>& asteroids) {
+                   std::vector<asteroid>& asteroids,
+                   std::vector<asteroid_loot>& asteroid_loots) {
     float z_movement;
     size_t i;
 
@@ -61,7 +62,7 @@ bool laser::update(player_ship& player_ship,
         if (asteroid.z() - abs(z_movement) < z() &&
             z() < asteroid.z() + abs(z_movement) &&
             asteroid.hitbox().inside(x(), y())) {
-            asteroid.damage(_damage);
+            asteroid.damage(asteroid_loots, _damage);
             return false;
         }
     }

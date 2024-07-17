@@ -6,6 +6,7 @@
 class player_ship;
 class enemy_ship;
 class asteroid;
+class asteroid_loot;
 
 class laser final : public wze::entity {
   private:
@@ -24,7 +25,8 @@ class laser final : public wze::entity {
           float z_speed, float length, float diameter, uint8_t color_r,
           uint8_t color_g, uint8_t color_b, float damage);
     bool update(player_ship& player_ship, std::vector<enemy_ship>& enemy_ships,
-                std::vector<asteroid>& asteroids);
+                std::vector<asteroid>& asteroids,
+                std::vector<asteroid_loot>& asteroid_loots);
 };
 
 #endif

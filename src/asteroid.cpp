@@ -79,15 +79,9 @@ asteroid::asteroid(float x, float y, float z) {
                this->z()};
 }
 
-bool asteroid::update(player_ship& player_ship,
-                      std::vector<asteroid_loot>& asteroid_loots) {
+bool asteroid::update(player_ship& player_ship) {
     if (_hitpoints <= 0) {
-        if (_explosion.play()) {
-            asteroid_loots.push_back({x(), y(), z(), _material});
-            return false;
-        } else {
-            return true;
-        }
+        return !_explosion.play();
     }
 
     if (_appearance->color_a() != std::numeric_limits<uint8_t>::max()) {
@@ -105,8 +99,11 @@ bool asteroid::update(player_ship& player_ship,
     return true;
 }
 
-void asteroid::damage(float hitpoints) {
+void asteroid::damage(std::vector<asteroid_loot>& asteroid_loots,
+                      float hitpoints) {
     if (0 < _hitpoints) {
-        _hitpoints -= hitpoints;
+        if ((_hitpoints -= hitpoints) <= 0) {
+            asteroid_loots.push_back({x(), y(), z(), _material});
+        }
     }
 }

@@ -47,7 +47,7 @@ void space::update_asteroids() {
         if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
                             powf(asteroid.y() - _player_ship.y(), 2) +
                             powf(asteroid.z() - _player_ship.z(), 2)) ||
-            !asteroid.update(_player_ship, _asteroid_loots)) {
+            !asteroid.update(_player_ship)) {
             asteroid.~asteroid();
             std::apply(
                 [this, &asteroid](float x, float y, float z) -> void {
@@ -81,7 +81,8 @@ void space::update_lasers() {
         if (300'000 < sqrtf(powf(laser->x() - _player_ship.x(), 2) +
                             powf(laser->y() - _player_ship.y(), 2) +
                             powf(laser->z() - _player_ship.z(), 2)) ||
-            !laser->update(_player_ship, _enemy_ships, _asteroids)) {
+            !laser->update(_player_ship, _enemy_ships, _asteroids,
+                           _asteroid_loots)) {
             _lasers.erase(laser--);
         }
     }
