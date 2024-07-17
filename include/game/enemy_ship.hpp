@@ -36,6 +36,7 @@ class enemy_ship final : wze::entity {
     float _hitpoints;
 
   public:
+    std::shared_ptr<wze::polygon> const& hitbox() const;
     float z() const;
     void set_z(float z);
 

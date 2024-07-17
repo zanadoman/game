@@ -130,9 +130,13 @@ void enemy_ship::shoot(player_ship const& player_ship,
     normalization =
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
 
-    lasers.push_back({x(), y(), z(), x_distance / normalization * 50,
-                      y_distance / normalization * 50,
-                      z_distance / normalization * 50, 1000, 300, 255, 0, 0});
+    lasers.push_back({x(), y(), z(), x_distance / normalization * 100,
+                      y_distance / normalization * 100,
+                      z_distance / normalization * 100, 1000, 300, 255, 0, 0});
+}
+
+std::shared_ptr<wze::polygon> const& enemy_ship::hitbox() const {
+    return _hitbox;
 }
 
 float enemy_ship::z() const {
@@ -240,7 +244,7 @@ bool enemy_ship::update(player_ship& player_ship,
 }
 
 void enemy_ship::damage(float hitpoints) {
-    if (_hitpoints < 0) {
+    if (0 < _hitpoints) {
         _hitpoints -= hitpoints;
     }
 }
