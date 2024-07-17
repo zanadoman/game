@@ -50,6 +50,9 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>>
         _enemy_front_loop_animation;
 
+    static std::vector<std::shared_ptr<wze::texture>>
+        _enemy_explosion_animation;
+
     assets() = default;
 
   public:
@@ -92,6 +95,9 @@ class assets final {
     static std::shared_ptr<wze::texture> const& enemy_front_right_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     enemy_front_loop_animation();
+
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemy_explosion_animation();
 
     static void initialize();
 };

@@ -40,6 +40,8 @@ std::shared_ptr<wze::texture> assets::_enemy_front_left_texture;
 std::shared_ptr<wze::texture> assets::_enemy_front_right_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_enemy_front_loop_animation;
 
+std::vector<std::shared_ptr<wze::texture>> assets::_enemy_explosion_animation;
+
 std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
     return _placeholder_texture;
 }
@@ -164,6 +166,11 @@ std::shared_ptr<wze::texture> const& assets::enemy_front_right_texture() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::enemy_front_loop_animation() {
     return _enemy_front_loop_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemy_explosion_animation() {
+    return _enemy_explosion_animation;
 }
 
 void assets::initialize() {
@@ -453,4 +460,26 @@ void assets::initialize() {
             wze::assets::load_image("./assets/enemies/easy/front_loop2.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/front_loop3.png"))};
+
+    _enemy_explosion_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/5.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/6.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/7.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/8.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/9.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/explosion/10.png"))};
 }
