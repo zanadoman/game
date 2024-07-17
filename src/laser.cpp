@@ -17,6 +17,12 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
     float y_offset;
     float i;
 
+    _explosion = {assets::laser_explosion_animation(), 50, {}};
+    _diameter = diameter;
+    _color_r = color_r;
+    _color_g = color_g;
+    _color_b = color_b;
+
     _z = z + z_speed;
     _x_speed = x_speed;
     _y_speed = y_speed;
@@ -28,14 +34,15 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
     _half_length = abs(_z_speed) / normalization * length / 2;
     _length_skip = _half_length / 10.5f;
     _damage = damage;
+    _destroyed = false;
 
     x_offset = _x_speed / normalization * length * (0 < _z_speed ? 1 : -1);
     y_offset = _y_speed / normalization * length * (0 < _z_speed ? 1 : -1);
 
     for (i = -1; i <= 1; i += 0.1f) {
         _sprites.push_back(std::shared_ptr<wze::sprite>(new wze::sprite(
-            this->x(), this->y(), this->z(), 0, diameter, diameter, true,
-            assets::laser_texture(), color_r, color_g, color_b,
+            this->x(), this->y(), this->z(), 0, _diameter, _diameter, true,
+            assets::laser_texture(), _color_r, _color_g, _color_b,
             std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
             std::numeric_limits<uint8_t>::max(), false, x_offset / 2 * i,
             y_offset / 2 * i, 0, true, true, false, false, false)));
@@ -54,6 +61,10 @@ bool laser::update(player_ship& player_ship,
     float z_movement;
     size_t i;
 
+    if (_destroyed) {
+        return !_explosion.play();
+    }
+
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());
     _z += z_movement = _z_speed * wze::timer::delta_time();
@@ -63,7 +74,7 @@ bool laser::update(player_ship& player_ship,
             z() < asteroid.z() + abs(z_movement) &&
             asteroid.hitbox().inside(x(), y())) {
             asteroid.damage(asteroid_loots, _damage);
-            return false;
+            _destroyed = true;
         }
     }
 
@@ -72,7 +83,7 @@ bool laser::update(player_ship& player_ship,
             z() < enemy_ship.z() + abs(z_movement) &&
             enemy_ship.hitbox()->inside(x(), y())) {
             enemy_ship.damage(_damage);
-            return false;
+            _destroyed = true;
         }
     }
 
@@ -80,11 +91,22 @@ bool laser::update(player_ship& player_ship,
         z() < player_ship.z() + abs(z_movement) &&
         player_ship.hitbox()->inside(x(), y())) {
         player_ship.damage(_damage);
-        return false;
+        _destroyed = true;
     }
 
-    for (i = 0; i < _sprites.size(); ++i) {
-        _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
+    if (_destroyed) {
+        _sprites.clear();
+        _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
+            x(), y(), z() + _half_length * (0 < _z_speed ? -1 : 1), angle(),
+            _diameter * 10, _diameter * 10, true, assets::laser_texture(),
+            _color_r, _color_g, _color_b, std::numeric_limits<uint8_t>::max(),
+            wze::FLIP_NONE, true, std::numeric_limits<uint8_t>::max(), true, 0,
+            0, 0, true, true, false, false, false));
+        _explosion.targets().push_back(_appearance);
+    } else {
+        for (i = 0; i < _sprites.size(); ++i) {
+            _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
+        }
     }
 
     return true;

@@ -5,6 +5,8 @@ std::shared_ptr<wze::texture> assets::_laser_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
 
+std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
+
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_pyrite_textures;
 std::vector<std::shared_ptr<wze::texture>>
     assets::_asteroids_wolframite_textures;
@@ -56,6 +58,11 @@ std::shared_ptr<wze::texture> const& assets::player_ship_texture() {
 
 std::shared_ptr<wze::texture> const& assets::space_texture() {
     return _space_texture;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::laser_explosion_animation() {
+    return _laser_explosion_animation;
 }
 
 std::shared_ptr<wze::texture> const& assets::asteroids_pyrite_texture() {
@@ -185,6 +192,20 @@ void assets::initialize() {
 
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
+
+    _laser_explosion_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/5.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/laser/explosion/6.png"))};
 
     _asteroids_pyrite_textures = {
         wze::assets::create_texture(

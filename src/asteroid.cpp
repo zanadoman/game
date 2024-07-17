@@ -1,4 +1,3 @@
-#include "game/enums.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/asteroid_loot.hpp>

@@ -42,7 +42,7 @@ asteroid_loot::asteroid_loot(float x, float y, float z, material material)
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
-        std::numeric_limits<uint8_t>::max(), false, 0, 0, 0, true, true, false,
+        std::numeric_limits<uint8_t>::max(), false, 0, 0, 0, true, true, true,
         false, false));
 
     components().push_back(_appearance);
@@ -68,6 +68,7 @@ bool asteroid_loot::update(player_ship const& player_ship) {
         set_x(x() + x_distance / distance * 50 * wze::timer::delta_time());
         set_y(y() + y_distance / distance * 50 * wze::timer::delta_time());
         set_z(z() + z_distance / distance * 50 * wze::timer::delta_time());
+        set_angle(angle() + 0.01f * wze::timer::delta_time());
     }
 
     return true;
