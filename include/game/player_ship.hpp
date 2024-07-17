@@ -2,8 +2,9 @@
 #define GAME_PLAYER_SHIP_HPP
 
 #include <game/joy_stick.hpp>
-#include <game/laser.hpp>
 #include <wizard_engine/wizard_engine.hpp>
+
+class laser;
 
 class player_ship final : public wze::entity {
   private:

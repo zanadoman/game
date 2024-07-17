@@ -1,10 +1,11 @@
 #include <game/assets.hpp>
+#include <game/asteroid.hpp>
+#include <game/enemy_ship.hpp>
+#include <game/laser.hpp>
 #include <game/space.hpp>
-#include <immintrin.h>
-#include <tuple>
 
 std::tuple<float, float, float> space::sphere_coordinate(float minimum,
-                                                         float maximum) {
+                                                         float maximum) const {
     float x;
     float y;
     float z;
@@ -25,44 +26,50 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
     return {x * radius, y * radius, z * radius};
 }
 
-void space::update_enemies() {
-    std::vector<enemy_ship>::iterator iterator;
+void space::update_enemy_ships() {
+    std::vector<enemy_ship>::iterator enemy_ship;
 
-    for (iterator = _enemies.begin(); iterator != _enemies.end(); ++iterator) {
-        if (!iterator->update(_player, _enemies, _lasers, _asteroids)) {
-            _enemies.erase(iterator--);
-        }
-    }
-}
-
-void space::update_lasers() {
-    std::vector<laser>::iterator iterator;
-
-    for (iterator = _lasers.begin(); iterator != _lasers.end(); ++iterator) {
-        if (_laser_far < sqrtf(powf(iterator->x() - _player.x(), 2) +
-                               powf(iterator->y() - _player.y(), 2) +
-                               powf(iterator->z() - _player.z(), 2)) ||
-            !iterator->update(_player, _enemies, _asteroids)) {
-            _lasers.erase(iterator--);
+    for (enemy_ship = _enemy_ships.begin(); enemy_ship != _enemy_ships.end();
+         ++enemy_ship) {
+        if (300'000 < sqrtf(powf(enemy_ship->x() - _player_ship.x(), 2) +
+                            powf(enemy_ship->y() - _player_ship.y(), 2) +
+                            powf(enemy_ship->z() - _player_ship.z(), 2)) ||
+            !enemy_ship->update(_player_ship, _enemy_ships, _asteroids,
+                                _lasers)) {
+            _enemy_ships.erase(enemy_ship--);
         }
     }
 }
 
 void space::update_asteroids() {
     std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
-        if (_asteroid_far < sqrtf(powf(asteroid.x() - _player.x(), 2) +
-                                  powf(asteroid.y() - _player.y(), 2) +
-                                  powf(asteroid.z() - _player.z(), 2)) ||
+        if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
+                            powf(asteroid.y() - _player_ship.y(), 2) +
+                            powf(asteroid.z() - _player_ship.z(), 2)) ||
             !asteroid.update()) {
             asteroid.~asteroid();
             std::apply(
                 [this, &asteroid](float x, float y, float z) -> void {
-                    new (&asteroid) class asteroid(
-                        _player.x() + x, _player.y() + y, _player.z() + z);
+                    new (&asteroid) class asteroid(_player_ship.x() + x,
+                                                   _player_ship.y() + y,
+                                                   _player_ship.z() + z);
                 },
-                sphere_coordinate(_asteroid_near, _asteroid_far));
+                sphere_coordinate(50'000, 300'000));
         }
     });
+}
+
+void space::update_lasers() {
+    std::vector<laser>::iterator laser;
+
+    for (laser = _lasers.begin(); laser != _lasers.end(); ++laser) {
+        if (300'000 < sqrtf(powf(laser->x() - _player_ship.x(), 2) +
+                            powf(laser->y() - _player_ship.y(), 2) +
+                            powf(laser->z() - _player_ship.z(), 2)) ||
+            !laser->update(_player_ship, _enemy_ships, _asteroids)) {
+            _lasers.erase(laser--);
+        }
+    }
 }
 
 space::space() {
@@ -71,18 +78,23 @@ space::space() {
     wze::renderer::set_space_texture(assets::space_texture());
 
     for (i = 0; i != 3; ++i) {
-        std::apply([this](float x, float y,
-                          float z) -> void { _enemies.push_back({x, y, z}); },
-                   sphere_coordinate(_asteroid_near, 100'000));
-    }
-
-    for (i = 0; i != _asteroid_count; ++i) {
         std::apply(
             [this](float x, float y, float z) -> void {
-                _asteroids.push_back(
-                    {_player.x() + x, _player.y() + y, _player.z() + z});
+                _enemy_ships.push_back({_player_ship.x() + x,
+                                        _player_ship.y() + y,
+                                        _player_ship.z() + z});
             },
-            sphere_coordinate(_asteroid_near, _asteroid_far));
+            sphere_coordinate(50'000, 100'000));
+    }
+
+    for (i = 0; i != 1'000; ++i) {
+        std::apply(
+            [this](float x, float y, float z) -> void {
+                _asteroids.push_back({_player_ship.x() + x,
+                                      _player_ship.y() + y,
+                                      _player_ship.z() + z});
+            },
+            sphere_coordinate(50'000, 300'000));
     }
 }
 
@@ -91,8 +103,8 @@ space::~space() {
 }
 
 void space::update() {
-    _player.update(_lasers);
-    update_enemies();
-    update_lasers();
+    _player_ship.update(_lasers);
+    update_enemy_ships();
     update_asteroids();
+    update_lasers();
 }

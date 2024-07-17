@@ -1,12 +1,13 @@
 #ifndef GAME_ENEMY_SHIP_HPP
 #define GAME_ENEMY_SHIP_HPP
 
-#include <game/asteroid.hpp>
-#include <game/laser.hpp>
-#include <game/player_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
-class enemy_ship final : wze::entity {
+class player_ship;
+class asteroid;
+class laser;
+
+class enemy_ship final : public wze::entity {
   private:
     std::shared_ptr<wze::sprite> _appearance;
     wze::animator _rear_loop;
@@ -41,10 +42,10 @@ class enemy_ship final : wze::entity {
     void set_z(float z);
 
     enemy_ship(float x, float y, float z);
-    bool update(player_ship& player_ship,
+    bool update(player_ship const& player_ship,
                 std::vector<enemy_ship> const& enemy_ships,
-                std::vector<laser>& lasers,
-                std::vector<asteroid> const& asteroids);
+                std::vector<asteroid> const& asteroids,
+                std::vector<laser>& lasers);
 
     void damage(float hitpoints);
 };

@@ -7,7 +7,7 @@ wze_main(2560, 1440) {
     assets::initialize();
     space space;
 
-    wze::timer::set_frame_time(50);
+    // wze::timer::set_frame_time(50);
 
     wze_while(true) {
         space.update();

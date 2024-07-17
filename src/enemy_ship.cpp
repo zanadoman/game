@@ -1,5 +1,8 @@
 #include <game/assets.hpp>
+#include <game/asteroid.hpp>
 #include <game/enemy_ship.hpp>
+#include <game/laser.hpp>
+#include <game/player_ship.hpp>
 
 bool enemy_ship::dodge(float x, float y, float z, float near) {
     float x_distance;
@@ -183,19 +186,20 @@ enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
     components().push_back(_hitbox);
 }
 
-bool enemy_ship::update(player_ship& player_ship,
+bool enemy_ship::update(player_ship const& player_ship,
                         std::vector<enemy_ship> const& enemy_ships,
-                        std::vector<laser>& lasers,
-                        std::vector<asteroid> const& asteroids) {
+                        std::vector<asteroid> const& asteroids,
+                        std::vector<laser>& lasers) {
     bool on_target;
 
     if (_hitpoints <= 0) {
         return !_explosion.play();
     }
 
-    on_target = !dodge_asteroids(asteroids) &&
-                !dodge_enemy_ships(enemy_ships) &&
-                !follow_player_ship(player_ship);
+    on_target =
+        !dodge_asteroids(asteroids) && !dodge_enemy_ships(enemy_ships) &&
+        !dodge(player_ship.x(), player_ship.y(), player_ship.z(), 7'000) &&
+        !follow_player_ship(player_ship);
 
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());

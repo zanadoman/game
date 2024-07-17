@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/player_ship.hpp>
+#include <game/laser.hpp>
 
 void player_ship::update_joy_stick() {
     _joy_stick.update();
