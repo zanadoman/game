@@ -131,7 +131,7 @@ void player_ship::update(std::vector<laser>& lasers) {
     }
 
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
-        _last_shot + _reload_time <= wze::timer::current_time()) {
+        _last_shot + _reload_time < wze::timer::current_time()) {
         shoot(lasers);
     }
 }
