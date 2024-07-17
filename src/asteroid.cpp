@@ -1,5 +1,7 @@
+#include "game/enums.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
+#include <game/asteroid_loot.hpp>
 #include <game/player_ship.hpp>
 
 wze::polygon const& asteroid::hitbox() const {
@@ -28,32 +30,38 @@ asteroid::asteroid(float x, float y, float z) {
     if (97.5f < value) {
         texture = assets::asteroids_sapphire_texture();
         _explosion = {assets::asteroids_sapphire_explosion_animation()};
+        _material = MATERIAL_SAPPHIRE;
         _hitpoints = 70;
     } else if (92.5f < value) {
         texture = assets::asteroids_ruby_texture();
         _explosion = {assets::asteroids_ruby_explosion_animation()};
+        _material = MATERIAL_RUBY;
         _hitpoints = 60;
     } else if (87.5f < value) {
         texture = assets::asteroids_moldavite_texture();
         _explosion = {assets::asteroids_moldavite_explosion_animation()};
+        _material = MATERIAL_MOLDAVITE;
         _hitpoints = 50;
     } else if (80 < value) {
         texture = assets::asteroids_carneol_texture();
         _explosion = {assets::asteroids_carneol_explosion_animation()};
+        _material = MATERIAL_CARNEOL;
         _hitpoints = 40;
     } else if (50 < value) {
         texture = assets::asteroids_wolframite_texture();
         _explosion = {assets::asteroids_wolframite_explosion_animation()};
+        _material = MATERIAL_WOLFRAMITE;
         _hitpoints = 30;
     } else {
         texture = assets::asteroids_pyrite_texture();
         _explosion = {assets::asteroids_pyrite_explosion_animation()};
+        _material = MATERIAL_PYRITE;
         _hitpoints = 20;
     }
 
     diameter = wze::math::random(4000.f, 8000.f);
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite{
-        x, y, z, wze::math::random(0.f, wze::math::to_radians(360)), diameter,
+        x, y, z, wze::math::to_radians(wze::math::random(0.f, 360.f)), diameter,
         diameter, true, texture, std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), 0});
@@ -71,9 +79,15 @@ asteroid::asteroid(float x, float y, float z) {
                this->z()};
 }
 
-bool asteroid::update(player_ship& player_ship) {
+bool asteroid::update(player_ship& player_ship,
+                      std::vector<asteroid_loot>& asteroid_loots) {
     if (_hitpoints <= 0) {
-        return !_explosion.play();
+        if (_explosion.play()) {
+            asteroid_loots.push_back({x(), y(), z(), _material});
+            return false;
+        } else {
+            return true;
+        }
     }
 
     if (_appearance->color_a() != std::numeric_limits<uint8_t>::max()) {

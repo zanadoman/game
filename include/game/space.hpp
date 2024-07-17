@@ -6,6 +6,8 @@
 
 class enemy_ship;
 class asteroid;
+class asteroid_loot;
+class laser;
 
 class space final {
   private:
@@ -19,6 +21,9 @@ class space final {
 
     std::vector<asteroid> _asteroids;
     void update_asteroids();
+
+    std::vector<asteroid_loot> _asteroid_loots;
+    void update_asteroid_loots();
 
     std::vector<laser> _lasers;
     void update_lasers();

@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
+#include <game/asteroid_loot.hpp>
 #include <game/enemy_ship.hpp>
 #include <game/laser.hpp>
 #include <game/space.hpp>
@@ -46,7 +47,7 @@ void space::update_asteroids() {
         if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
                             powf(asteroid.y() - _player_ship.y(), 2) +
                             powf(asteroid.z() - _player_ship.z(), 2)) ||
-            !asteroid.update(_player_ship)) {
+            !asteroid.update(_player_ship, _asteroid_loots)) {
             asteroid.~asteroid();
             std::apply(
                 [this, &asteroid](float x, float y, float z) -> void {
@@ -57,6 +58,20 @@ void space::update_asteroids() {
                 sphere_coordinate(50'000, 300'000));
         }
     });
+}
+
+void space::update_asteroid_loots() {
+    std::vector<asteroid_loot>::iterator asteroid_loot;
+
+    for (asteroid_loot = _asteroid_loots.begin();
+         asteroid_loot != _asteroid_loots.end(); ++asteroid_loot) {
+        if (300'000 < sqrtf(powf(asteroid_loot->x() - _player_ship.x(), 2) +
+                            powf(asteroid_loot->y() - _player_ship.y(), 2) +
+                            powf(asteroid_loot->z() - _player_ship.z(), 2)) ||
+            !asteroid_loot->update(_player_ship)) {
+            _asteroid_loots.erase(asteroid_loot--);
+        }
+    }
 }
 
 void space::update_lasers() {
@@ -106,5 +121,6 @@ void space::update() {
     _player_ship.update(_lasers);
     update_enemy_ships();
     update_asteroids();
+    update_asteroid_loots();
     update_lasers();
 }
