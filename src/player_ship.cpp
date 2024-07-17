@@ -1,6 +1,6 @@
 #include <game/assets.hpp>
-#include <game/player_ship.hpp>
 #include <game/laser.hpp>
+#include <game/player_ship.hpp>
 
 void player_ship::update_joy_stick() {
     _joy_stick.update();
@@ -12,42 +12,36 @@ void player_ship::update_joy_stick() {
 
 void player_ship::update_movement() {
     if (wze::input::key(wze::KEY_W) && !wze::input::key(wze::KEY_S)) {
-        set_z(z() + _movement_speed * wze::timer::delta_time());
+        set_z(z() + _speed * wze::timer::delta_time());
     } else if (wze::input::key(wze::KEY_S) && !wze::input::key(wze::KEY_W)) {
-        set_z(z() - _movement_speed * wze::timer::delta_time());
+        set_z(z() - _speed * wze::timer::delta_time());
     }
 
     if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
-        set_angle(angle() - _rotation_speed * wze::timer::delta_time());
+        set_angle(angle() - 0.001f * wze::timer::delta_time());
     } else if (wze::input::key(wze::KEY_D) && !wze::input::key(wze::KEY_A)) {
-        set_angle(angle() + _rotation_speed * wze::timer::delta_time());
+        set_angle(angle() + 0.001f * wze::timer::delta_time());
     }
 
     update_joy_stick();
     if (50 < _joy_stick.value()) {
-        set_x(x() +
-              _joy_stick_x * _movement_speed / 75 * wze::timer::delta_time());
-        set_y(y() +
-              _joy_stick_y * _movement_speed / 75 * wze::timer::delta_time());
+        set_x(x() + _joy_stick_x * _speed / 75 * wze::timer::delta_time());
+        set_y(y() + _joy_stick_y * _speed / 75 * wze::timer::delta_time());
     }
 }
 
 void player_ship::update_cannons_x() {
     _left_cannon.first =
-        x() + wze::math::transform_x(-_cannons_x_offset, _cannons_y_offset,
-                                     transformation_matrix());
+        x() + wze::math::transform_x(-300, 500, transformation_matrix());
     _right_cannon.first =
-        x() + wze::math::transform_x(_cannons_x_offset, _cannons_y_offset,
-                                     transformation_matrix());
+        x() + wze::math::transform_x(300, 500, transformation_matrix());
 }
 
 void player_ship::update_cannons_y() {
     _left_cannon.second =
-        y() + wze::math::transform_y(-_cannons_x_offset, _cannons_y_offset,
-                                     transformation_matrix());
+        y() + wze::math::transform_y(-300, 500, transformation_matrix());
     _right_cannon.second =
-        y() + wze::math::transform_y(_cannons_x_offset, _cannons_y_offset,
-                                     transformation_matrix());
+        y() + wze::math::transform_y(300, 500, transformation_matrix());
 }
 
 void player_ship::shoot(std::vector<laser>& lasers) {
@@ -61,10 +55,8 @@ void player_ship::shoot(std::vector<laser>& lasers) {
     lasers.push_back({cannon.first, cannon.second, z(),
                       _joy_stick_x / normalization * _laser_speed,
                       _joy_stick_y / normalization * _laser_speed,
-                      wze::camera::focus() / normalization * _laser_speed,
-                      _laser_length, _laser_diameter, _laser_color_r,
-                      _laser_color_g, _laser_color_b, 10});
-    _last_shot = wze::timer::current_time();
+                      wze::camera::focus() / normalization * _laser_speed, 1000,
+                      300, 0, 155, 255, _damage});
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
@@ -84,12 +76,11 @@ void player_ship::set_y(float y) {
 }
 
 float player_ship::z() const {
-    return _z;
+    return wze::camera::z();
 }
 
 void player_ship::set_z(float z) {
-    _z = z;
-    wze::camera::set_z(this->z());
+    wze::camera::set_z(z);
 }
 
 void player_ship::set_angle(float angle) {
@@ -109,15 +100,23 @@ player_ship::player_ship() {
                 false,
                 assets::player_ship_texture()};
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
-        {{-1280, -720}, {-1280, 720}, {1280, 720}, {1280, -720}}));
+        {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
+
     _joy_stick = {};
     _joy_stick_x = 0;
     _joy_stick_y = 0;
-    _z = 0;
-    _left_cannon = {x() - _cannons_x_offset, y() + _cannons_y_offset};
-    _right_cannon = {x() + _cannons_x_offset, y() + _cannons_y_offset};
+
+    _speed = 5;
+
+    _left_cannon = {x() - 300, y() + 500};
+    _right_cannon = {x() + 300, y() + 500};
+
     _active_cannon = false;
+    _laser_speed = 100;
     _last_shot = 0;
+    _reload_time = 300;
+    _damage = 10;
+
     _last_damage = 0;
 
     components().push_back(_hitbox);
@@ -134,6 +133,7 @@ void player_ship::update(std::vector<laser>& lasers) {
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time < wze::timer::current_time()) {
         shoot(lasers);
+        _last_shot = wze::timer::current_time();
     }
 }
 
