@@ -8,6 +8,7 @@
 class player_ship final : public wze::entity {
   private:
     wze::sprite _cockpit;
+    std::shared_ptr<wze::polygon> _hitbox;
 
     joy_stick _joy_stick;
     float _joy_stick_x;
@@ -37,7 +38,10 @@ class player_ship final : public wze::entity {
     uint64_t _last_shot;
     void shoot(std::vector<laser>& lasers);
 
+    uint64_t _last_damage;
+
   public:
+    std::shared_ptr<wze::polygon> const& hitbox() const;
     void set_x(float x) final;
     void set_y(float y) final;
     float z() const;
@@ -46,6 +50,7 @@ class player_ship final : public wze::entity {
 
     player_ship();
     void update(std::vector<laser>& lasers);
+    void damage(float hitpoints);
 };
 
 #endif

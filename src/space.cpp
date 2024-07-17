@@ -42,7 +42,7 @@ void space::update_lasers() {
         if (_laser_far < sqrtf(powf(iterator->x() - _player.x(), 2) +
                                powf(iterator->y() - _player.y(), 2) +
                                powf(iterator->z() - _player.z(), 2)) ||
-            !iterator->update(_enemies, _asteroids)) {
+            !iterator->update(_player, _enemies, _asteroids)) {
             _lasers.erase(iterator--);
         }
     }

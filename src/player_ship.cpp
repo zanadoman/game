@@ -66,6 +66,10 @@ void player_ship::shoot(std::vector<laser>& lasers) {
     _last_shot = wze::timer::current_time();
 }
 
+std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
+    return _hitbox;
+}
+
 void player_ship::set_x(float x) {
     entity::set_x(x);
     update_cannons_x();
@@ -103,6 +107,8 @@ player_ship::player_ship() {
                 (float)wze::window::height(),
                 false,
                 assets::player_ship_texture()};
+    _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
+        {{-1280, -720}, {-1280, 720}, {1280, 720}, {1280, -720}}));
     _joy_stick = {};
     _joy_stick_x = 0;
     _joy_stick_y = 0;
@@ -111,13 +117,27 @@ player_ship::player_ship() {
     _right_cannon = {x() + _cannons_x_offset, y() + _cannons_y_offset};
     _active_cannon = false;
     _last_shot = 0;
+    _last_damage = 0;
+
+    components().push_back(_hitbox);
 }
 
 void player_ship::update(std::vector<laser>& lasers) {
     update_movement();
 
+    if (_last_damage + 200 < wze::timer::current_time()) {
+        _cockpit.set_color_g(std::numeric_limits<uint8_t>::max());
+        _cockpit.set_color_b(std::numeric_limits<uint8_t>::max());
+    }
+
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time <= wze::timer::current_time()) {
         shoot(lasers);
     }
+}
+
+void player_ship::damage([[maybe_unused]] float hitpoints) {
+    _cockpit.set_color_g(std::numeric_limits<uint8_t>::max() / 2);
+    _cockpit.set_color_b(std::numeric_limits<uint8_t>::max() / 2);
+    _last_damage = wze::timer::current_time();
 }

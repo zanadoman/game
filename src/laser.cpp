@@ -1,6 +1,7 @@
 #include <game/assets.hpp>
 #include <game/enemy_ship.hpp>
 #include <game/laser.hpp>
+#include <game/player_ship.hpp>
 
 float laser::z() const {
     return _z;
@@ -42,13 +43,23 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
         });
 }
 
-bool laser::update(std::vector<enemy_ship>& enemy_ships,
+bool laser::update(player_ship& player_ship,
+                   std::vector<enemy_ship>& enemy_ships,
                    std::vector<asteroid>& asteroids) {
     float z_movement;
 
     set_x(x() + _x_speed * wze::timer::delta_time());
     set_y(y() + _y_speed * wze::timer::delta_time());
     _z += z_movement = _z_speed * wze::timer::delta_time();
+
+    for (asteroid& asteroid : asteroids) {
+        if (asteroid.z() - abs(z_movement) < z() &&
+            z() < asteroid.z() + abs(z_movement) &&
+            asteroid.hitbox().inside(x(), y())) {
+            asteroid.damage(10);
+            return false;
+        }
+    }
 
     for (enemy_ship& enemy_ship : enemy_ships) {
         if (enemy_ship.z() - abs(z_movement) < z() &&
@@ -59,13 +70,11 @@ bool laser::update(std::vector<enemy_ship>& enemy_ships,
         }
     }
 
-    for (asteroid& asteroid : asteroids) {
-        if (asteroid.z() - abs(z_movement) < z() &&
-            z() < asteroid.z() + abs(z_movement) &&
-            asteroid.hitbox().inside(x(), y())) {
-            asteroid.damage(10);
-            return false;
-        }
+    if (player_ship.z() - abs(z_movement) < z() &&
+        z() < player_ship.z() + abs(z_movement) &&
+        player_ship.hitbox()->inside(x(), y())) {
+        player_ship.damage(10);
+        return false;
     }
 
     for (size_t i = 0; i < _sprites.size(); ++i) {
