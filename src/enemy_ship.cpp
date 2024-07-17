@@ -132,7 +132,8 @@ void enemy_ship::shoot(player_ship const& player_ship,
 
     lasers.push_back({x(), y(), z(), x_distance / normalization * 100,
                       y_distance / normalization * 100,
-                      z_distance / normalization * 100, 1000, 300, 255, 0, 0});
+                      z_distance / normalization * 100, 1000, 300, 255, 0, 0,
+                      10});
 }
 
 std::shared_ptr<wze::polygon> const& enemy_ship::hitbox() const {

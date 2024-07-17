@@ -1,11 +1,11 @@
 #ifndef GAME_LASER_HPP
 #define GAME_LASER_HPP
 
-#include <game/asteroid.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
-class enemy_ship;
 class player_ship;
+class enemy_ship;
+class asteroid;
 
 class laser final : public wze::entity {
   private:
@@ -15,13 +15,14 @@ class laser final : public wze::entity {
     float _z_speed;
     float _half_length;
     float _length_skip;
+    float _damage;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
 
   public:
     float z() const;
     laser(float x, float y, float z, float x_speed, float y_speed,
           float z_speed, float length, float diameter, uint8_t color_r,
-          uint8_t color_g, uint8_t color_b);
+          uint8_t color_g, uint8_t color_b, float damage);
     bool update(player_ship& player_ship, std::vector<enemy_ship>& enemy_ships,
                 std::vector<asteroid>& asteroids);
 };

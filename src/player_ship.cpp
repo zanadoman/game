@@ -62,7 +62,7 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                       _joy_stick_y / normalization * _laser_speed,
                       wze::camera::focus() / normalization * _laser_speed,
                       _laser_length, _laser_diameter, _laser_color_r,
-                      _laser_color_g, _laser_color_b});
+                      _laser_color_g, _laser_color_b, 10});
     _last_shot = wze::timer::current_time();
 }
 
