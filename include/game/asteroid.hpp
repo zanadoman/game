@@ -3,6 +3,8 @@
 
 #include <wizard_engine/wizard_engine.hpp>
 
+class player_ship;
+
 class asteroid final {
   private:
     std::shared_ptr<wze::sprite> _appearance;
@@ -17,7 +19,7 @@ class asteroid final {
     float z() const;
 
     asteroid(float x, float y, float z);
-    bool update();
+    bool update(player_ship& player_ship);
     void damage(float hitpoints);
 };
 

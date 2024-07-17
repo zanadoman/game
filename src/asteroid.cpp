@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
+#include <game/player_ship.hpp>
 
 wze::polygon const& asteroid::hitbox() const {
     return _hitbox;
@@ -70,7 +71,7 @@ asteroid::asteroid(float x, float y, float z) {
                this->z()};
 }
 
-bool asteroid::update() {
+bool asteroid::update(player_ship& player_ship) {
     if (_hitpoints <= 0) {
         return !_explosion.play();
     }
@@ -79,6 +80,12 @@ bool asteroid::update() {
         _appearance->set_color_a(
             std::min(_appearance->color_a() + wze::timer::delta_time(),
                      (float)std::numeric_limits<uint8_t>::max()));
+    }
+
+    if (z() - 2000 < player_ship.z() && player_ship.z() < z() + 2000 &&
+        player_ship.hitbox()->overlap(_hitbox)) {
+        player_ship.damage(_hitpoints);
+        _hitpoints = 0;
     }
 
     return true;
