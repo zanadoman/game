@@ -4,8 +4,10 @@ std::shared_ptr<wze::font> assets::_normal_font;
 std::shared_ptr<wze::font> assets::_bold_font;
 
 std::shared_ptr<wze::texture> assets::_placeholder_texture;
-std::shared_ptr<wze::texture> assets::_player_ship_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
+
+std::shared_ptr<wze::texture> assets::_player_ship_base_texture;
+std::shared_ptr<wze::texture> assets::_player_ship_crosshair_texture;
 
 std::shared_ptr<wze::texture> assets::_laser_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
@@ -66,12 +68,16 @@ std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
     return _placeholder_texture;
 }
 
-std::shared_ptr<wze::texture> const& assets::player_ship_texture() {
-    return _player_ship_texture;
-}
-
 std::shared_ptr<wze::texture> const& assets::space_texture() {
     return _space_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::player_ship_base_texture() {
+    return _player_ship_base_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::player_ship_crosshair_texture() {
+    return _player_ship_crosshair_texture;
 }
 
 std::shared_ptr<wze::texture> const& assets::laser_texture() {
@@ -232,10 +238,13 @@ void assets::initialize() {
 
     _placeholder_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/placeholder.png"));
-    _player_ship_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/player_ship.png"));
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
+
+    _player_ship_base_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player_ship/base.png"));
+    _player_ship_crosshair_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player_ship/crosshair.png"));
 
     _laser_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/laser/laser.png"));

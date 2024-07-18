@@ -98,7 +98,7 @@ player_ship::player_ship() {
                 (float)wze::window::width(),
                 (float)wze::window::height(),
                 false,
-                assets::player_ship_texture()};
+                assets::player_ship_base_texture()};
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
         {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
 

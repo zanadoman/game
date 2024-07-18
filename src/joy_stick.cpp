@@ -10,7 +10,8 @@ float joy_stick::direction() const {
 }
 
 joy_stick::joy_stick() {
-    _crosshair = {0, 0, 0, 0, 10, 10, false, assets::placeholder_texture()};
+    _crosshair = {0,  0,  0,     0,
+                  36, 36, false, assets::player_ship_crosshair_texture()};
     _value = 0;
     _direction = 0;
 }
