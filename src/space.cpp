@@ -48,7 +48,7 @@ void space::update_asteroids() {
         if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
                             powf(asteroid.y() - _player_ship.y(), 2) +
                             powf(asteroid.z() - _player_ship.z(), 2)) ||
-            !asteroid.update(_player_ship)) {
+            !asteroid.update(_player_ship, _asteroid_loots)) {
             asteroid.~asteroid();
             std::apply(
                 [this, &asteroid](float x, float y, float z) -> void {
@@ -93,8 +93,8 @@ void space::update_particles() {
     std::ranges::for_each(_particles, [this](wze::sprite& particle) -> void {
         if (particle.z() < _player_ship.z() ||
             100'000 < sqrtf(powf(particle.x() - _player_ship.x(), 2) +
-                           powf(particle.y() - _player_ship.y(), 2) +
-                           powf(particle.z() - _player_ship.z(), 2))) {
+                            powf(particle.y() - _player_ship.y(), 2) +
+                            powf(particle.z() - _player_ship.z(), 2))) {
             particle.~sprite();
             std::apply(
                 [this, &particle](float x, float y, float z) -> void {

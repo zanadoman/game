@@ -22,7 +22,8 @@ class asteroid final {
     float z() const;
 
     asteroid(float x, float y, float z);
-    bool update(player_ship& player_ship);
+    bool update(player_ship& player_ship,
+                std::vector<asteroid_loot>& asteroid_loots);
     void damage(std::vector<asteroid_loot>& asteroid_loots, float hitpoints);
 };
 

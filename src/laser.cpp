@@ -97,7 +97,8 @@ bool laser::update(player_ship& player_ship,
     if (_destroyed) {
         _sprites.clear();
         _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
-            x(), y(), z() + _half_length * (0 < _z_speed ? -1 : 1), angle(),
+            x(), y(), z() + _half_length * (0 < _z_speed ? -1 : 1),
+            wze::math::to_radians(wze::math::random(0.f, 360.f)),
             _diameter * 10, _diameter * 10, true, assets::laser_texture(),
             _color_r, _color_g, _color_b, std::numeric_limits<uint8_t>::max(),
             wze::FLIP_NONE, true, std::numeric_limits<uint8_t>::max(), true, 0,

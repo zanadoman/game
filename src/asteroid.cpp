@@ -78,7 +78,8 @@ asteroid::asteroid(float x, float y, float z) {
                this->z()};
 }
 
-bool asteroid::update(player_ship& player_ship) {
+bool asteroid::update(player_ship& player_ship,
+                      std::vector<asteroid_loot>& asteroid_loots) {
     if (_hitpoints <= 0) {
         return !_explosion.play();
     }
@@ -92,7 +93,7 @@ bool asteroid::update(player_ship& player_ship) {
     if (z() - 2000 < player_ship.z() && player_ship.z() < z() + 2000 &&
         player_ship.hitbox()->overlap(_hitbox)) {
         player_ship.damage(_hitpoints);
-        _hitpoints = 0;
+        damage(asteroid_loots, _hitpoints);
     }
 
     return true;

@@ -21,6 +21,7 @@ class player_ship final : public wze::entity {
     wze::sprite _ruby_count;
     wze::sprite _sapphire_icon;
     wze::sprite _sapphire_count;
+    wze::sprite _hitpoints_count;
     std::shared_ptr<wze::polygon> _hitbox;
     void update_hud();
 
@@ -44,7 +45,8 @@ class player_ship final : public wze::entity {
     float _damage;
     void shoot(std::vector<laser>& lasers);
 
-    uint64_t _last_damage;
+    float _current_hitpoints;
+    float _max_hitpoints;
 
   public:
     std::shared_ptr<wze::polygon> const& hitbox() const;
