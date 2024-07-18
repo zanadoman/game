@@ -8,6 +8,7 @@ std::shared_ptr<wze::texture> assets::_space_texture;
 
 std::shared_ptr<wze::texture> assets::_player_ship_base_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_crosshair_texture;
+std::shared_ptr<wze::texture> assets::_player_ship_warning_texture;
 std::vector<std::shared_ptr<wze::texture>>
     assets::_player_ship_hitpoints_textures;
 std::vector<std::shared_ptr<wze::texture>>
@@ -88,6 +89,10 @@ std::shared_ptr<wze::texture> const& assets::player_ship_base_texture() {
 
 std::shared_ptr<wze::texture> const& assets::player_ship_crosshair_texture() {
     return _player_ship_crosshair_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::player_ship_warning_texture() {
+    return _player_ship_warning_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -293,6 +298,8 @@ void assets::initialize() {
         wze::assets::load_image("./assets/player_ship/base.png"));
     _player_ship_crosshair_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player_ship/crosshair.png"));
+    _player_ship_warning_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player_ship/warning.png"));
     _player_ship_hitpoints_textures = {
         nullptr,
         wze::assets::create_texture(

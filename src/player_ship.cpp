@@ -6,7 +6,13 @@
 void player_ship::update_hud() {
     std::shared_ptr<wze::image> image;
 
-    if (_pyrite_icon.width() != 60) {
+    if (_warning_opacity != 0) {
+        _warning.set_color_a(
+            _warning_opacity = std::max(
+                0.f, _warning_opacity - 0.1f * wze::timer::delta_time()));
+    }
+
+    if (_pyrite_icon.width() != 60 && _pyrite_icon.height() != 60) {
         _pyrite_icon.set_width(std::max(
             60.f, _pyrite_icon.width() - 0.05f * wze::timer::delta_time()));
         _pyrite_icon.set_height(std::max(
@@ -17,7 +23,7 @@ void player_ship::update_hud() {
     _pyrite_count.set_width(_pyrite_count.height() * image->w / image->h);
     _pyrite_count.set_texture(wze::assets::create_texture(image));
 
-    if (_wolframite_icon.width() != 60) {
+    if (_wolframite_icon.width() != 60 && _wolframite_icon.height() != 60) {
         _wolframite_icon.set_width(std::max(
             60.f, _wolframite_icon.width() - 0.05f * wze::timer::delta_time()));
         _wolframite_icon.set_height(std::max(
@@ -29,7 +35,7 @@ void player_ship::update_hud() {
                                 image->h);
     _wolframite_count.set_texture(wze::assets::create_texture(image));
 
-    if (_carneol_icon.width() != 60) {
+    if (_carneol_icon.width() != 60 && _carneol_icon.height() != 60) {
         _carneol_icon.set_width(std::max(
             60.f, _carneol_icon.width() - 0.05f * wze::timer::delta_time()));
         _carneol_icon.set_height(std::max(
@@ -40,7 +46,7 @@ void player_ship::update_hud() {
     _carneol_count.set_width(_carneol_count.height() * image->w / image->h);
     _carneol_count.set_texture(wze::assets::create_texture(image));
 
-    if (_moldavite_icon.width() != 60) {
+    if (_moldavite_icon.width() != 60 && _moldavite_icon.height() != 60) {
         _moldavite_icon.set_width(std::max(
             60.f, _moldavite_icon.width() - 0.05f * wze::timer::delta_time()));
         _moldavite_icon.set_height(std::max(
@@ -51,7 +57,7 @@ void player_ship::update_hud() {
     _moldavite_count.set_width(_moldavite_count.height() * image->w / image->h);
     _moldavite_count.set_texture(wze::assets::create_texture(image));
 
-    if (_ruby_icon.width() != 60) {
+    if (_ruby_icon.width() != 60 && _ruby_icon.height() != 60) {
         _ruby_icon.set_width(std::max(
             60.f, _ruby_icon.width() - 0.05f * wze::timer::delta_time()));
         _ruby_icon.set_height(std::max(
@@ -62,7 +68,7 @@ void player_ship::update_hud() {
     _ruby_count.set_width(_ruby_count.height() * image->w / image->h);
     _ruby_count.set_texture(wze::assets::create_texture(image));
 
-    if (_sapphire_icon.width() != 60) {
+    if (_sapphire_icon.width() != 60 && _sapphire_icon.height() != 60) {
         _sapphire_icon.set_width(std::max(
             60.f, _sapphire_icon.width() - 0.05f * wze::timer::delta_time()));
         _sapphire_icon.set_height(std::max(
@@ -193,6 +199,20 @@ player_ship::player_ship() {
                 true,
                 0};
 
+    _warning = {0,
+                0,
+                0,
+                0,
+                (float)wze::window::width(),
+                (float)wze::window::height(),
+                false,
+                assets::player_ship_warning_texture(),
+                std::numeric_limits<uint8_t>::max(),
+                std::numeric_limits<uint8_t>::max(),
+                std::numeric_limits<uint8_t>::max(),
+                0};
+    _warning_opacity = 0;
+
     _pyrite_icon = {-70, 492, 0,     0,
                     60,  60,  false, assets::asteroids_pyrite_gem_ui_texture()};
     _pyrite_count = {-70, 534, 0, 0, 90, 35, false, {}, 14, 12, 21};
@@ -277,6 +297,8 @@ void player_ship::update(std::vector<laser>& lasers) {
 void player_ship::damage(float hitpoints) {
     if (0 < _current_hitpoints) {
         _current_hitpoints = std::max(0.f, _current_hitpoints - hitpoints);
+        _warning.set_color_a(_warning_opacity =
+                                 std::numeric_limits<uint8_t>::max());
     }
 }
 

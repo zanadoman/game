@@ -10,6 +10,8 @@ class laser;
 class player_ship final : public wze::entity {
   private:
     wze::sprite _cockpit;
+    wze::sprite _warning;
+    float _warning_opacity;
     wze::sprite _pyrite_icon;
     wze::sprite _pyrite_count;
     wze::sprite _wolframite_icon;
