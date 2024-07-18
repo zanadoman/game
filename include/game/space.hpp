@@ -28,6 +28,9 @@ class space final {
     std::vector<laser> _lasers;
     void update_lasers();
 
+    std::vector<wze::sprite> _particles;
+    void update_particles();
+
   public:
     space();
     ~space();

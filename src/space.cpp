@@ -88,6 +88,28 @@ void space::update_lasers() {
     }
 }
 
+void space::update_particles() {
+    std::ranges::for_each(_particles, [this](wze::sprite& particle) -> void {
+        if (particle.z() < _player_ship.z() ||
+            100'000 < sqrtf(powf(particle.x() - _player_ship.x(), 2) +
+                           powf(particle.y() - _player_ship.y(), 2) +
+                           powf(particle.z() - _player_ship.z(), 2))) {
+            particle.~sprite();
+            std::apply(
+                [this, &particle](float x, float y, float z) -> void {
+                    new (&particle) wze::sprite(
+                        _player_ship.x() + x, _player_ship.y() + y,
+                        _player_ship.z() + abs(z),
+                        wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                        wze::math::random(50.f, 100.f),
+                        wze::math::random(50.f, 100.f), true,
+                        assets::placeholder_texture());
+                },
+                sphere_coordinate(10'000, 100'000));
+        }
+    });
+}
+
 space::space() {
     size_t i;
 
@@ -112,6 +134,20 @@ space::space() {
             },
             sphere_coordinate(50'000, 300'000));
     }
+
+    for (i = 0; i != 200; ++i) {
+        std::apply(
+            [this](float x, float y, float z) -> void {
+                _particles.push_back(
+                    {_player_ship.x() + x, _player_ship.y() + y,
+                     _player_ship.z() + abs(z),
+                     wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                     wze::math::random(50.f, 100.f),
+                     wze::math::random(50.f, 100.f), true,
+                     assets::placeholder_texture()});
+            },
+            sphere_coordinate(10'000, 100'000));
+    }
 }
 
 space::~space() {
@@ -124,4 +160,5 @@ void space::update() {
     update_asteroids();
     update_asteroid_loots();
     update_lasers();
+    update_particles();
 }
