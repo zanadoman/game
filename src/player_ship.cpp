@@ -124,16 +124,16 @@ void player_ship::update_movement() {
 
 void player_ship::update_cannons_x() {
     _left_cannon.first =
-        x() + wze::math::transform_x(-300, 500, transformation_matrix());
+        x() + wze::math::transform_x(-500, 300, transformation_matrix());
     _right_cannon.first =
-        x() + wze::math::transform_x(300, 500, transformation_matrix());
+        x() + wze::math::transform_x(500, 300, transformation_matrix());
 }
 
 void player_ship::update_cannons_y() {
     _left_cannon.second =
-        y() + wze::math::transform_y(-300, 500, transformation_matrix());
+        y() + wze::math::transform_y(-500, 300, transformation_matrix());
     _right_cannon.second =
-        y() + wze::math::transform_y(300, 500, transformation_matrix());
+        y() + wze::math::transform_y(500, 300, transformation_matrix());
 }
 
 void player_ship::shoot(std::vector<laser>& lasers) {
@@ -266,8 +266,8 @@ player_ship::player_ship() {
 
     _speed = 5;
 
-    _left_cannon = {x() - 300, y() + 500};
-    _right_cannon = {x() + 300, y() + 500};
+    _left_cannon = {x() - 500, y() + 300};
+    _right_cannon = {x() + 500, y() + 300};
 
     _active_cannon = false;
     _laser_speed = 100;
