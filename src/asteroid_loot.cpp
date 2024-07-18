@@ -16,22 +16,22 @@ asteroid_loot::asteroid_loot(float x, float y, float z, material material)
 
     switch (_material = material) {
     case MATERIAL_PYRITE:
-        texture = assets::asteroids_pyrite_texture();
+        texture = assets::asteroids_pyrite_gem_texture();
         break;
     case MATERIAL_WOLFRAMITE:
-        texture = assets::asteroids_wolframite_texture();
+        texture = assets::asteroids_wolframite_gem_texture();
         break;
     case MATERIAL_CARNEOL:
-        texture = assets::asteroids_carneol_texture();
+        texture = assets::asteroids_carneol_gem_texture();
         break;
     case MATERIAL_MOLDAVITE:
-        texture = assets::asteroids_moldavite_texture();
+        texture = assets::asteroids_moldavite_gem_texture();
         break;
     case MATERIAL_RUBY:
-        texture = assets::asteroids_ruby_texture();
+        texture = assets::asteroids_ruby_gem_texture();
         break;
     case MATERIAL_SAPPHIRE:
-        texture = assets::asteroids_sapphire_texture();
+        texture = assets::asteroids_sapphire_gem_texture();
         break;
     }
 

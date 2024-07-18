@@ -1,10 +1,13 @@
 #include <game/assets.hpp>
 
+std::shared_ptr<wze::font> assets::_normal_font;
+std::shared_ptr<wze::font> assets::_bold_font;
+
 std::shared_ptr<wze::texture> assets::_placeholder_texture;
-std::shared_ptr<wze::texture> assets::_laser_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
 
+std::shared_ptr<wze::texture> assets::_laser_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
 
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_pyrite_textures;
@@ -15,6 +18,13 @@ std::vector<std::shared_ptr<wze::texture>>
     assets::_asteroids_moldavite_textures;
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_ruby_textures;
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_sapphire_textures;
+
+std::shared_ptr<wze::texture> assets::_asteroids_pyrite_gem_texture;
+std::shared_ptr<wze::texture> assets::_asteroids_wolframite_gem_texture;
+std::shared_ptr<wze::texture> assets::_asteroids_carneol_gem_texture;
+std::shared_ptr<wze::texture> assets::_asteroids_moldavite_gem_texture;
+std::shared_ptr<wze::texture> assets::_asteroids_ruby_gem_texture;
+std::shared_ptr<wze::texture> assets::_asteroids_sapphire_gem_texture;
 
 std::vector<std::shared_ptr<wze::texture>>
     assets::_asteroids_pyrite_explosion_animation;
@@ -44,12 +54,16 @@ std::vector<std::shared_ptr<wze::texture>> assets::_enemy_front_loop_animation;
 
 std::vector<std::shared_ptr<wze::texture>> assets::_enemy_explosion_animation;
 
-std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
-    return _placeholder_texture;
+std::shared_ptr<wze::font> const& assets::normal_font() {
+    return _normal_font;
 }
 
-std::shared_ptr<wze::texture> const& assets::laser_texture() {
-    return _laser_texture;
+std::shared_ptr<wze::font> const& assets::bold_font() {
+    return _bold_font;
+}
+
+std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
+    return _placeholder_texture;
 }
 
 std::shared_ptr<wze::texture> const& assets::player_ship_texture() {
@@ -58,6 +72,10 @@ std::shared_ptr<wze::texture> const& assets::player_ship_texture() {
 
 std::shared_ptr<wze::texture> const& assets::space_texture() {
     return _space_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::laser_texture() {
+    return _laser_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -93,6 +111,31 @@ std::shared_ptr<wze::texture> const& assets::asteroids_ruby_texture() {
 std::shared_ptr<wze::texture> const& assets::asteroids_sapphire_texture() {
     return _asteroids_sapphire_textures.at(
         wze::math::random<size_t>(0, _asteroids_sapphire_textures.size() - 1));
+}
+
+std::shared_ptr<wze::texture> const& assets::asteroids_pyrite_gem_texture() {
+    return _asteroids_pyrite_gem_texture;
+}
+
+std::shared_ptr<wze::texture> const&
+assets::asteroids_wolframite_gem_texture() {
+    return _asteroids_wolframite_gem_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::asteroids_carneol_gem_texture() {
+    return _asteroids_carneol_gem_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::asteroids_moldavite_gem_texture() {
+    return _asteroids_moldavite_gem_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::asteroids_ruby_gem_texture() {
+    return _asteroids_ruby_gem_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::asteroids_sapphire_gem_texture() {
+    return _asteroids_sapphire_gem_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -181,18 +224,21 @@ assets::enemy_explosion_animation() {
 }
 
 void assets::initialize() {
+    _normal_font = wze::assets::load_font(
+        "./assets/PixelifySans-VariableFont_wght.ttf", 48);
+    _bold_font =
+        wze::assets::load_font("./assets/PixelifySans-VariableFont_wght.ttf",
+                               48, wze::FONT_STYLE_BOLD);
+
     _placeholder_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/placeholder.png"));
-
-    _laser_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/laser.png"));
-
     _player_ship_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player_ship.png"));
-
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
 
+    _laser_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/laser.png"));
     _laser_explosion_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/laser/explosion/1.png")),
@@ -254,6 +300,19 @@ void assets::initialize() {
             wze::assets::load_image("./assets/asteroids/sapphire/2.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/asteroids/sapphire/3.png"))};
+
+    _asteroids_pyrite_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/pyrite/gem.png"));
+    _asteroids_wolframite_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/wolframite/gem.png"));
+    _asteroids_carneol_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/carneol/gem.png"));
+    _asteroids_moldavite_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/moldavite/gem.png"));
+    _asteroids_ruby_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/ruby/gem.png"));
+    _asteroids_sapphire_gem_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/asteroids/sapphire/gem.png"));
 
     _asteroids_pyrite_explosion_animation = {
         wze::assets::create_texture(wze::assets::load_image(

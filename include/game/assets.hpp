@@ -5,11 +5,14 @@
 
 class assets final {
   private:
+    static std::shared_ptr<wze::font> _normal_font;
+    static std::shared_ptr<wze::font> _bold_font;
+
     static std::shared_ptr<wze::texture> _placeholder_texture;
-    static std::shared_ptr<wze::texture> _laser_texture;
     static std::shared_ptr<wze::texture> _player_ship_texture;
     static std::shared_ptr<wze::texture> _space_texture;
 
+    static std::shared_ptr<wze::texture> _laser_texture;
     static std::vector<std::shared_ptr<wze::texture>>
         _laser_explosion_animation;
 
@@ -24,6 +27,13 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>> _asteroids_ruby_textures;
     static std::vector<std::shared_ptr<wze::texture>>
         _asteroids_sapphire_textures;
+
+    static std::shared_ptr<wze::texture> _asteroids_pyrite_gem_texture;
+    static std::shared_ptr<wze::texture> _asteroids_wolframite_gem_texture;
+    static std::shared_ptr<wze::texture> _asteroids_carneol_gem_texture;
+    static std::shared_ptr<wze::texture> _asteroids_moldavite_gem_texture;
+    static std::shared_ptr<wze::texture> _asteroids_ruby_gem_texture;
+    static std::shared_ptr<wze::texture> _asteroids_sapphire_gem_texture;
 
     static std::vector<std::shared_ptr<wze::texture>>
         _asteroids_pyrite_explosion_animation;
@@ -59,11 +69,14 @@ class assets final {
     assets() = default;
 
   public:
+    static std::shared_ptr<wze::font> const& normal_font();
+    static std::shared_ptr<wze::font> const& bold_font();
+
     static std::shared_ptr<wze::texture> const& placeholder_texture();
-    static std::shared_ptr<wze::texture> const& laser_texture();
     static std::shared_ptr<wze::texture> const& player_ship_texture();
     static std::shared_ptr<wze::texture> const& space_texture();
 
+    static std::shared_ptr<wze::texture> const& laser_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     laser_explosion_animation();
 
@@ -73,6 +86,16 @@ class assets final {
     static std::shared_ptr<wze::texture> const& asteroids_moldavite_texture();
     static std::shared_ptr<wze::texture> const& asteroids_ruby_texture();
     static std::shared_ptr<wze::texture> const& asteroids_sapphire_texture();
+
+    static std::shared_ptr<wze::texture> const& asteroids_pyrite_gem_texture();
+    static std::shared_ptr<wze::texture> const&
+    asteroids_wolframite_gem_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_carneol_gem_texture();
+    static std::shared_ptr<wze::texture> const&
+    asteroids_moldavite_gem_texture();
+    static std::shared_ptr<wze::texture> const& asteroids_ruby_gem_texture();
+    static std::shared_ptr<wze::texture> const&
+    asteroids_sapphire_gem_texture();
 
     static std::vector<std::shared_ptr<wze::texture>> const&
     asteroids_pyrite_explosion_animation();
