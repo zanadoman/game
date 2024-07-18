@@ -1,3 +1,4 @@
+#include "wizard_engine/input.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/asteroid_loot.hpp>
@@ -113,6 +114,7 @@ void space::update_particles() {
 space::space() {
     size_t i;
 
+    wze::input::set_cursor_visible(false);
     wze::renderer::set_space_texture(assets::space_texture());
 
     for (i = 0; i != 3; ++i) {
@@ -152,6 +154,7 @@ space::space() {
 
 space::~space() {
     wze::renderer::set_space_texture({});
+    wze::input::set_cursor_visible(true);
 }
 
 void space::update() {

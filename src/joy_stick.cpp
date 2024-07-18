@@ -17,17 +17,14 @@ joy_stick::joy_stick() {
 }
 
 void joy_stick::update() {
-    _value = wze::math::length(wze::input::cursor_absolute_x(),
-                               wze::input::cursor_absolute_y());
-    _direction = wze::math::angle(wze::input::cursor_absolute_x(),
-                                  wze::input::cursor_absolute_y());
+    _crosshair.set_x(_crosshair.x() + wze::input::cursor_relative_x());
+    _crosshair.set_y(_crosshair.y() + wze::input::cursor_relative_y());
+    _value = wze::math::length(_crosshair.x(), _crosshair.y());
+    _direction = wze::math::angle(_crosshair.x(), _crosshair.y());
 
     if (200 < value()) {
         _value = 200;
         _crosshair.set_x(wze::math::move_x(value(), direction()));
         _crosshair.set_y(wze::math::move_y(value(), direction()));
-    } else {
-        _crosshair.set_x(wze::input::cursor_absolute_x());
-        _crosshair.set_y(wze::input::cursor_absolute_y());
     }
 }
