@@ -238,7 +238,7 @@ void assets::initialize() {
         wze::assets::load_image("./assets/space.png"));
 
     _laser_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/laser.png"));
+        wze::assets::load_image("./assets/laser/laser.png"));
     _laser_explosion_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/laser/explosion/1.png")),
