@@ -9,7 +9,20 @@ class laser;
 class player_ship final : public wze::entity {
   private:
     wze::sprite _cockpit;
+    wze::sprite _pyrite_icon;
+    wze::sprite _pyrite_count;
+    wze::sprite _wolframite_icon;
+    wze::sprite _wolframite_count;
+    wze::sprite _carneol_icon;
+    wze::sprite _carneol_count;
+    wze::sprite _moldavite_icon;
+    wze::sprite _moldavite_count;
+    wze::sprite _ruby_icon;
+    wze::sprite _ruby_count;
+    wze::sprite _sapphire_icon;
+    wze::sprite _sapphire_count;
     std::shared_ptr<wze::polygon> _hitbox;
+    void update_hud();
 
     joy_stick _joy_stick;
     float _joy_stick_x;

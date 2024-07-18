@@ -1,6 +1,42 @@
 #include <game/assets.hpp>
 #include <game/laser.hpp>
 #include <game/player_ship.hpp>
+#include <game/save_data.hpp>
+
+void player_ship::update_hud() {
+    std::shared_ptr<wze::image> image;
+
+    image = wze::assets::create_image(std::to_string(save_data::pyrite_count()),
+                                      assets::bold_font());
+    _pyrite_count.set_width(_pyrite_count.height() * image->w / image->h);
+    _pyrite_count.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(
+        std::to_string(save_data::wolframite_count()), assets::bold_font());
+    _wolframite_count.set_width(_wolframite_count.height() * image->w /
+                                image->h);
+    _wolframite_count.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(
+        std::to_string(save_data::carneol_count()), assets::bold_font());
+    _carneol_count.set_width(_carneol_count.height() * image->w / image->h);
+    _carneol_count.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(
+        std::to_string(save_data::moldavite_count()), assets::bold_font());
+    _moldavite_count.set_width(_moldavite_count.height() * image->w / image->h);
+    _moldavite_count.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(std::to_string(save_data::ruby_count()),
+                                      assets::bold_font());
+    _ruby_count.set_width(_ruby_count.height() * image->w / image->h);
+    _ruby_count.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(
+        std::to_string(save_data::sapphire_count()), assets::bold_font());
+    _sapphire_count.set_width(_sapphire_count.height() * image->w / image->h);
+    _sapphire_count.set_texture(wze::assets::create_texture(image));
+}
 
 void player_ship::update_joy_stick() {
     _joy_stick.update();
@@ -98,7 +134,36 @@ player_ship::player_ship() {
                 (float)wze::window::width(),
                 (float)wze::window::height(),
                 false,
-                assets::player_ship_base_texture()};
+                assets::player_ship_base_texture(),
+                std::numeric_limits<uint8_t>::max(),
+                std::numeric_limits<uint8_t>::max(),
+                std::numeric_limits<uint8_t>::max(),
+                std::numeric_limits<uint8_t>::max(),
+                wze::FLIP_NONE,
+                true,
+                0};
+
+    _pyrite_icon = {-70, 492, 0,     0,
+                    60,  60,  false, assets::asteroids_pyrite_gem_texture()};
+    _pyrite_count = {-70, 534, 0, 0, 90, 35, false, {}, 0, 0, 0};
+    _wolframite_icon = {
+        0,  492, 0,     0,
+        60, 60,  false, assets::asteroids_wolframite_gem_texture()};
+    _wolframite_count = {0, 534, 0, 0, 90, 35, false, {}, 0, 0, 0};
+    _carneol_icon = {70, 492, 0,     0,
+                     60, 60,  false, assets::asteroids_carneol_gem_texture()};
+    _carneol_count = {70, 534, 0, 0, 90, 35, false, {}, 0, 0, 0};
+    _moldavite_icon = {
+        -70, 588, 0,     0,
+        60,  60,  false, assets::asteroids_moldavite_gem_texture()};
+    _moldavite_count = {-70, 630, 0, 0, 90, 35, false, {}, 0, 0, 0};
+    _ruby_icon = {0,  588, 0,     0,
+                  60, 60,  false, assets::asteroids_ruby_gem_texture()};
+    _ruby_count = {0, 630, 0, 0, 90, 35, false, {}, 0, 0, 0};
+    _sapphire_icon = {70, 588, 0,     0,
+                      60, 60,  false, assets::asteroids_sapphire_gem_texture()};
+    _sapphire_count = {70, 630, 0, 0, 90, 35, false, {}, 0, 0, 0};
+
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
         {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
 
@@ -135,6 +200,8 @@ void player_ship::update(std::vector<laser>& lasers) {
         shoot(lasers);
         _last_shot = wze::timer::current_time();
     }
+
+    update_hud();
 }
 
 void player_ship::damage([[maybe_unused]] float hitpoints) {
