@@ -49,7 +49,7 @@ asteroid_loot::asteroid_loot(float x, float y, float z, material material)
     components().push_back(_appearance);
 }
 
-bool asteroid_loot::update(player_ship const& player_ship) {
+bool asteroid_loot::update(player_ship& player_ship) {
     float x_distance;
     float y_distance;
     float z_distance;
@@ -62,26 +62,8 @@ bool asteroid_loot::update(player_ship const& player_ship) {
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
 
     if (distance < 4'000) {
-        switch (_material) {
-        case MATERIAL_PYRITE:
-            save_data::set_pyrite_count(save_data::pyrite_count() + 1);
-            return false;
-        case MATERIAL_WOLFRAMITE:
-            save_data::set_wolframite_count(save_data::wolframite_count() + 1);
-            return false;
-        case MATERIAL_CARNEOL:
-            save_data::set_carneol_count(save_data::carneol_count() + 1);
-            return false;
-        case MATERIAL_MOLDAVITE:
-            save_data::set_moldavite_count(save_data::moldavite_count() + 1);
-            return false;
-        case MATERIAL_RUBY:
-            save_data::set_ruby_count(save_data::ruby_count() + 1);
-            return false;
-        case MATERIAL_SAPPHIRE:
-            save_data::set_sapphire_count(save_data::sapphire_count() + 1);
-            return false;
-        }
+        player_ship.asteroid_loot(_material);
+        return false;
     }
 
     if (distance < 50'000) {

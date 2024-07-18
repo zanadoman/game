@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <game/assets.hpp>
 #include <game/laser.hpp>
 #include <game/player_ship.hpp>
@@ -7,44 +6,86 @@
 void player_ship::update_hud() {
     std::shared_ptr<wze::image> image;
 
+    if (_pyrite_icon.width() != 60) {
+        _pyrite_icon.set_width(std::max(
+            60.f, _pyrite_icon.width() - 0.05f * wze::timer::delta_time()));
+        _pyrite_icon.set_height(std::max(
+            60.f, _pyrite_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(std::to_string(save_data::pyrite_count()),
                                       assets::bold_font());
     _pyrite_count.set_width(_pyrite_count.height() * image->w / image->h);
     _pyrite_count.set_texture(wze::assets::create_texture(image));
 
+    if (_wolframite_icon.width() != 60) {
+        _wolframite_icon.set_width(std::max(
+            60.f, _wolframite_icon.width() - 0.05f * wze::timer::delta_time()));
+        _wolframite_icon.set_height(std::max(
+            60.f, _wolframite_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(
         std::to_string(save_data::wolframite_count()), assets::bold_font());
     _wolframite_count.set_width(_wolframite_count.height() * image->w /
                                 image->h);
     _wolframite_count.set_texture(wze::assets::create_texture(image));
 
+    if (_carneol_icon.width() != 60) {
+        _carneol_icon.set_width(std::max(
+            60.f, _carneol_icon.width() - 0.05f * wze::timer::delta_time()));
+        _carneol_icon.set_height(std::max(
+            60.f, _carneol_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(
         std::to_string(save_data::carneol_count()), assets::bold_font());
     _carneol_count.set_width(_carneol_count.height() * image->w / image->h);
     _carneol_count.set_texture(wze::assets::create_texture(image));
 
+    if (_moldavite_icon.width() != 60) {
+        _moldavite_icon.set_width(std::max(
+            60.f, _moldavite_icon.width() - 0.05f * wze::timer::delta_time()));
+        _moldavite_icon.set_height(std::max(
+            60.f, _moldavite_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(
         std::to_string(save_data::moldavite_count()), assets::bold_font());
     _moldavite_count.set_width(_moldavite_count.height() * image->w / image->h);
     _moldavite_count.set_texture(wze::assets::create_texture(image));
 
+    if (_ruby_icon.width() != 60) {
+        _ruby_icon.set_width(std::max(
+            60.f, _ruby_icon.width() - 0.05f * wze::timer::delta_time()));
+        _ruby_icon.set_height(std::max(
+            60.f, _ruby_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(std::to_string(save_data::ruby_count()),
                                       assets::bold_font());
     _ruby_count.set_width(_ruby_count.height() * image->w / image->h);
     _ruby_count.set_texture(wze::assets::create_texture(image));
 
+    if (_sapphire_icon.width() != 60) {
+        _sapphire_icon.set_width(std::max(
+            60.f, _sapphire_icon.width() - 0.05f * wze::timer::delta_time()));
+        _sapphire_icon.set_height(std::max(
+            60.f, _sapphire_icon.width() - 0.05f * wze::timer::delta_time()));
+    }
     image = wze::assets::create_image(
         std::to_string(save_data::sapphire_count()), assets::bold_font());
     _sapphire_count.set_width(_sapphire_count.height() * image->w / image->h);
     _sapphire_count.set_texture(wze::assets::create_texture(image));
 
     _hitpoints_count.set_texture(assets::player_ship_hitpoints_textures().at(
-        ceil(_current_hitpoints / _max_hitpoints * 10)));
+        ceilf(_current_hitpoints / _max_hitpoints * 10)));
     _hitpoints_count.set_color_r(228 -
                                  _current_hitpoints / _max_hitpoints * 91);
     _hitpoints_count.set_color_g(44 +
                                  _current_hitpoints / _max_hitpoints * 177);
     _hitpoints_count.set_color_b(56 + _current_hitpoints / _max_hitpoints * 14);
+
+    _storage_count.set_texture(assets::player_ship_storage_textures().at(
+        floorf((save_data::pyrite_count() + save_data::wolframite_count() +
+                save_data::carneol_count() + save_data::moldavite_count() +
+                save_data::ruby_count() + save_data::sapphire_count()) /
+               (float)_storage * 10)));
 }
 
 void player_ship::update_joy_stick() {
@@ -187,6 +228,15 @@ player_ship::player_ship() {
                         221,
                         70};
 
+    _storage_count = {0,
+                      0,
+                      0,
+                      0,
+                      (float)wze::window::width(),
+                      (float)wze::window::height(),
+                      false,
+                      assets::player_ship_hitpoints_textures().front()};
+
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
         {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
 
@@ -205,8 +255,9 @@ player_ship::player_ship() {
     _reload_time = 300;
     _damage = 10;
 
-    _current_hitpoints = 1000;
-    _max_hitpoints = 1000;
+    _current_hitpoints = _max_hitpoints = 300;
+
+    _storage = 50;
 
     components().push_back(_hitbox);
 }
@@ -226,5 +277,47 @@ void player_ship::update(std::vector<laser>& lasers) {
 void player_ship::damage(float hitpoints) {
     if (0 < _current_hitpoints) {
         _current_hitpoints = std::max(0.f, _current_hitpoints - hitpoints);
+    }
+}
+
+void player_ship::asteroid_loot(material material) {
+    if (save_data::pyrite_count() + save_data::wolframite_count() +
+            save_data::carneol_count() + save_data::moldavite_count() +
+            save_data::ruby_count() + save_data::sapphire_count() ==
+        _storage) {
+        return;
+    }
+
+    switch (material) {
+    case MATERIAL_PYRITE:
+        save_data::set_pyrite_count(save_data::pyrite_count() + 1);
+        _pyrite_icon.set_width(80);
+        _pyrite_icon.set_height(80);
+        break;
+    case MATERIAL_WOLFRAMITE:
+        save_data::set_wolframite_count(save_data::wolframite_count() + 1);
+        _wolframite_icon.set_width(80);
+        _wolframite_icon.set_height(80);
+        break;
+    case MATERIAL_CARNEOL:
+        save_data::set_carneol_count(save_data::carneol_count() + 1);
+        _carneol_icon.set_width(80);
+        _carneol_icon.set_height(80);
+        break;
+    case MATERIAL_MOLDAVITE:
+        save_data::set_moldavite_count(save_data::moldavite_count() + 1);
+        _moldavite_icon.set_width(80);
+        _moldavite_icon.set_height(80);
+        break;
+    case MATERIAL_RUBY:
+        save_data::set_ruby_count(save_data::ruby_count() + 1);
+        _ruby_icon.set_width(80);
+        _ruby_icon.set_height(80);
+        break;
+    case MATERIAL_SAPPHIRE:
+        save_data::set_sapphire_count(save_data::sapphire_count() + 1);
+        _sapphire_icon.set_width(80);
+        _sapphire_icon.set_height(80);
+        break;
     }
 }

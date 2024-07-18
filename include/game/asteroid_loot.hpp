@@ -16,7 +16,7 @@ class asteroid_loot final : public wze::entity {
     void set_z(float z);
 
     asteroid_loot(float x, float y, float z, enum material material);
-    bool update(player_ship const& player_ship);
+    bool update(player_ship& player_ship);
 };
 
 #endif

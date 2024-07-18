@@ -15,6 +15,8 @@ class assets final {
     static std::shared_ptr<wze::texture> _player_ship_crosshair_texture;
     static std::vector<std::shared_ptr<wze::texture>>
         _player_ship_hitpoints_textures;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_ship_storage_textures;
 
     static std::shared_ptr<wze::texture> _laser_texture;
     static std::vector<std::shared_ptr<wze::texture>>
@@ -89,6 +91,8 @@ class assets final {
     static std::shared_ptr<wze::texture> const& player_ship_crosshair_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     player_ship_hitpoints_textures();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    player_ship_storage_textures();
 
     static std::shared_ptr<wze::texture> const& laser_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&

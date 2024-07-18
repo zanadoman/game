@@ -2,6 +2,7 @@
 #define GAME_PLAYER_SHIP_HPP
 
 #include <game/joy_stick.hpp>
+#include <game/enums.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class laser;
@@ -22,6 +23,7 @@ class player_ship final : public wze::entity {
     wze::sprite _sapphire_icon;
     wze::sprite _sapphire_count;
     wze::sprite _hitpoints_count;
+    wze::sprite _storage_count;
     std::shared_ptr<wze::polygon> _hitbox;
     void update_hud();
 
@@ -48,6 +50,8 @@ class player_ship final : public wze::entity {
     float _current_hitpoints;
     float _max_hitpoints;
 
+    uint16_t _storage;
+
   public:
     std::shared_ptr<wze::polygon> const& hitbox() const;
     void set_x(float x) final;
@@ -59,6 +63,7 @@ class player_ship final : public wze::entity {
     player_ship();
     void update(std::vector<laser>& lasers);
     void damage(float hitpoints);
+    void asteroid_loot(material material);
 };
 
 #endif

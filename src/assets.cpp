@@ -10,6 +10,8 @@ std::shared_ptr<wze::texture> assets::_player_ship_base_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_crosshair_texture;
 std::vector<std::shared_ptr<wze::texture>>
     assets::_player_ship_hitpoints_textures;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_player_ship_storage_textures;
 
 std::shared_ptr<wze::texture> assets::_laser_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
@@ -91,6 +93,11 @@ std::shared_ptr<wze::texture> const& assets::player_ship_crosshair_texture() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_ship_hitpoints_textures() {
     return _player_ship_hitpoints_textures;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::player_ship_storage_textures() {
+    return _player_ship_storage_textures;
 }
 
 std::shared_ptr<wze::texture> const& assets::laser_texture() {
@@ -308,6 +315,29 @@ void assets::initialize() {
             wze::assets::load_image("./assets/player_ship/hitpoints/9.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/player_ship/hitpoints/10.png")),
+    };
+    _player_ship_storage_textures = {
+        nullptr,
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/5.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/6.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/7.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/8.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/9.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/storage/10.png")),
     };
 
     _laser_texture = wze::assets::create_texture(
