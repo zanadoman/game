@@ -27,9 +27,17 @@ class enemy_ship final : public wze::entity {
     uint64_t _last_appearance_update;
     void update_appearance();
 
+    float _left_cannon_x_offset;
+    float _right_cannon_x_offset;
+    float _cannon_y_offset;
+    std::pair<float, float> _left_cannon;
+    std::pair<float, float> _right_cannon;
+    void update_cannons();
+
     uint64_t _attack_begin;
     bool _attacking;
     bool _target_locked;
+    bool _active_cannon;
     uint64_t _last_shot;
     uint16_t _reload_time;
     void shoot(player_ship const& player_ship, std::vector<laser>& lasers);
