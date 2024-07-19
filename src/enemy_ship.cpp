@@ -89,32 +89,17 @@ void enemy_ship::update_appearance() {
         if (abs(x_speed) < abs(y_speed)) {
             if (0 < y_speed) {
                 _appearance->set_texture(assets::enemy_front_down_texture());
-                _left_cannon_x_offset = -1125;
-                _right_cannon_x_offset = 1125;
-                _cannon_y_offset = 1750;
             } else {
                 _appearance->set_texture(assets::enemy_front_up_texture());
-                _left_cannon_x_offset = -1000;
-                _right_cannon_x_offset = 1000;
-                _cannon_y_offset = 0;
             }
         } else if (abs(y_speed) < abs(x_speed)) {
             if (0 < x_speed) {
                 _appearance->set_texture(assets::enemy_front_right_texture());
-                _left_cannon_x_offset = 0;
-                _right_cannon_x_offset = 1375;
-                _cannon_y_offset = 1500;
             } else {
                 _appearance->set_texture(assets::enemy_front_left_texture());
-                _left_cannon_x_offset = -1500;
-                _right_cannon_x_offset = -125;
-                _cannon_y_offset = 1500;
             }
         } else {
             _appearance->set_texture(assets::enemy_front_texture());
-            _left_cannon_x_offset = -1000;
-            _right_cannon_x_offset = 1000;
-            _cannon_y_offset = 1500;
         }
     } else {
         if (abs(x_speed) < abs(y_speed)) {
@@ -259,14 +244,14 @@ bool enemy_ship::update(player_ship const& player_ship,
 
     if (_attacking && _target_locked &&
         _last_shot + _reload_time < wze::timer::current_time()) {
-        _left_cannon.first = wze::math::transform_x(
-            _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-        _left_cannon.second = wze::math::transform_y(
-            _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-        _right_cannon.first = wze::math::transform_x(
-            _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-        _right_cannon.second = wze::math::transform_y(
-            _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
+        _left_cannon.first =
+            wze::math::transform_x(-2000, 500, transformation_matrix());
+        _left_cannon.second =
+            wze::math::transform_y(-2000, 500, transformation_matrix());
+        _right_cannon.first =
+            wze::math::transform_x(2000, 500, transformation_matrix());
+        _right_cannon.second =
+            wze::math::transform_y(2000, 500, transformation_matrix());
         shoot(player_ship, lasers);
         _last_shot = wze::timer::current_time();
     }
