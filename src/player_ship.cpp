@@ -96,10 +96,10 @@ void player_ship::update_hud() {
 
 void player_ship::update_joy_stick() {
     _joy_stick.update();
-    _joy_stick_x =
-        wze::math::move_x(_joy_stick.value(), _joy_stick.direction() + angle());
-    _joy_stick_y =
-        wze::math::move_y(_joy_stick.value(), _joy_stick.direction() + angle());
+    _joy_stick_x = wze::math::transform_x(_joy_stick.x(), _joy_stick.y(),
+                                          transformation_matrix());
+    _joy_stick_y = wze::math::transform_y(_joy_stick.x(), _joy_stick.y(),
+                                          transformation_matrix());
 }
 
 void player_ship::update_movement() {
@@ -116,7 +116,7 @@ void player_ship::update_movement() {
     }
 
     update_joy_stick();
-    if (50 < _joy_stick.value()) {
+    if (50 < wze::math::length(_joy_stick_x, _joy_stick_y)) {
         set_x(x() + _joy_stick_x * _speed / 75 * wze::timer::delta_time());
         set_y(y() + _joy_stick_y * _speed / 75 * wze::timer::delta_time());
     }
@@ -148,7 +148,7 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                       _joy_stick_x / normalization * _laser_speed,
                       _joy_stick_y / normalization * _laser_speed,
                       wze::camera::focus() / normalization * _laser_speed, 1000,
-                      300, 0, 155, 255, _damage});
+                      300, 52, 122, 208, _damage});
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
@@ -157,14 +157,14 @@ std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
 
 void player_ship::set_x(float x) {
     entity::set_x(x);
-    update_cannons_x();
     wze::camera::set_x(this->x());
+    update_cannons_x();
 }
 
 void player_ship::set_y(float y) {
     entity::set_y(y);
-    update_cannons_y();
     wze::camera::set_y(this->y());
+    update_cannons_y();
 }
 
 float player_ship::z() const {

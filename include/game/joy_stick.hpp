@@ -6,12 +6,10 @@
 class joy_stick final {
   private:
     wze::sprite _crosshair;
-    float _value;
-    float _direction;
 
   public:
-    float value() const;
-    float direction() const;
+    float x() const;
+    float y() const;
     joy_stick();
     void update();
 };
