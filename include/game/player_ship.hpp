@@ -1,8 +1,8 @@
 #ifndef GAME_PLAYER_SHIP_HPP
 #define GAME_PLAYER_SHIP_HPP
 
-#include <game/joy_stick.hpp>
 #include <game/enums.hpp>
+#include <game/joy_stick.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class laser;
@@ -43,7 +43,6 @@ class player_ship final : public wze::entity {
     void update_cannons_y();
 
     bool _active_cannon;
-    float _laser_speed;
     uint64_t _last_shot;
     uint16_t _reload_time;
     float _damage;

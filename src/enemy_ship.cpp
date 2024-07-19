@@ -135,17 +135,6 @@ void enemy_ship::update_appearance() {
     }
 }
 
-void enemy_ship::update_cannons() {
-    _left_cannon.first = wze::math::transform_x(
-        _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-    _left_cannon.second = wze::math::transform_y(
-        _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-    _right_cannon.first = wze::math::transform_x(
-        _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-    _right_cannon.second = wze::math::transform_y(
-        _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
-}
-
 void enemy_ship::shoot(player_ship const& player_ship,
                        std::vector<laser>& lasers) {
     float x_distance;
@@ -154,13 +143,13 @@ void enemy_ship::shoot(player_ship const& player_ship,
     float normalization;
     std::pair<float, float> cannon;
 
-    x_distance = player_ship.x() - x();
-    y_distance = player_ship.y() - y();
+    cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
+    x_distance = player_ship.x() - (x() + cannon.first);
+    y_distance = player_ship.y() - (y() + cannon.second);
     z_distance = player_ship.z() - z();
     normalization =
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
 
-    cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
     lasers.push_back(
         {x() + cannon.first, y() + cannon.second, z(),
          x_distance / normalization * 100, y_distance / normalization * 100,
@@ -192,7 +181,7 @@ enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
     _front_loop = {assets::enemy_front_loop_animation(), 150, {_appearance}};
     _explosion = {assets::enemy_explosion_animation(), 40, {_appearance}};
     _hitbox = std::shared_ptr<wze::polygon>(
-        new wze::polygon({{-7'000, 0}, {0, 4'000}, {7'000, 0}, {0, -4'000}},
+        new wze::polygon({{-7'000, 0}, {0, 3'000}, {7'000, 0}, {0, -3'000}},
                          this->x(), this->y()));
 
     _speed = 10;
@@ -270,7 +259,14 @@ bool enemy_ship::update(player_ship const& player_ship,
 
     if (_attacking && _target_locked &&
         _last_shot + _reload_time < wze::timer::current_time()) {
-        update_cannons();
+        _left_cannon.first = wze::math::transform_x(
+            _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
+        _left_cannon.second = wze::math::transform_y(
+            _left_cannon_x_offset, _cannon_y_offset, transformation_matrix());
+        _right_cannon.first = wze::math::transform_x(
+            _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
+        _right_cannon.second = wze::math::transform_y(
+            _right_cannon_x_offset, _cannon_y_offset, transformation_matrix());
         shoot(player_ship, lasers);
         _last_shot = wze::timer::current_time();
     }

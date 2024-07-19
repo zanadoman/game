@@ -145,10 +145,10 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                           powf(wze::camera::focus(), 2));
 
     lasers.push_back({cannon.first, cannon.second, z(),
-                      _joy_stick_x / normalization * _laser_speed,
-                      _joy_stick_y / normalization * _laser_speed,
-                      wze::camera::focus() / normalization * _laser_speed, 1000,
-                      300, 52, 122, 208, _damage});
+                      _joy_stick_x / normalization * 100,
+                      _joy_stick_y / normalization * 100,
+                      wze::camera::focus() / normalization * 100, 1000, 300, 52,
+                      122, 208, _damage});
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
@@ -270,7 +270,6 @@ player_ship::player_ship() {
     _right_cannon = {x() + 500, y() + 300};
 
     _active_cannon = false;
-    _laser_speed = 100;
     _last_shot = 0;
     _reload_time = 300;
     _damage = 10;
