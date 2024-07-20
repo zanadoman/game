@@ -18,6 +18,8 @@ class assets final {
         _player_ship_hitpoints_textures;
     static std::vector<std::shared_ptr<wze::texture>>
         _player_ship_storage_textures;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_ship_difficulty_textures;
 
     static std::shared_ptr<wze::texture> _laser_texture;
     static std::vector<std::shared_ptr<wze::texture>>
@@ -61,23 +63,26 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>>
         _asteroids_sapphire_explosion_animation;
 
-    static std::shared_ptr<wze::texture> _enemy_rear_texture;
-    static std::shared_ptr<wze::texture> _enemy_rear_up_texture;
-    static std::shared_ptr<wze::texture> _enemy_rear_down_texture;
-    static std::shared_ptr<wze::texture> _enemy_rear_left_texture;
-    static std::shared_ptr<wze::texture> _enemy_rear_right_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _enemies_easy_textures;
     static std::vector<std::shared_ptr<wze::texture>>
-        _enemy_rear_loop_animation;
-    static std::shared_ptr<wze::texture> _enemy_front_texture;
-    static std::shared_ptr<wze::texture> _enemy_front_up_texture;
-    static std::shared_ptr<wze::texture> _enemy_front_down_texture;
-    static std::shared_ptr<wze::texture> _enemy_front_left_texture;
-    static std::shared_ptr<wze::texture> _enemy_front_right_texture;
+        _enemies_easy_rear_loop_animation;
     static std::vector<std::shared_ptr<wze::texture>>
-        _enemy_front_loop_animation;
+        _enemies_easy_front_loop_animation;
+
+    static std::vector<std::shared_ptr<wze::texture>> _enemies_normal_textures;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _enemies_normal_rear_loop_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _enemies_normal_front_loop_animation;
+
+    static std::vector<std::shared_ptr<wze::texture>> _enemies_hard_textures;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _enemies_hard_rear_loop_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _enemies_hard_front_loop_animation;
 
     static std::vector<std::shared_ptr<wze::texture>>
-        _enemy_explosion_animation;
+        _enemies_explosion_animation;
 
     assets() = default;
 
@@ -95,6 +100,8 @@ class assets final {
     player_ship_hitpoints_textures();
     static std::vector<std::shared_ptr<wze::texture>> const&
     player_ship_storage_textures();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    player_ship_difficulty_textures();
 
     static std::shared_ptr<wze::texture> const& laser_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
@@ -141,23 +148,29 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>> const&
     asteroids_sapphire_explosion_animation();
 
-    static std::shared_ptr<wze::texture> const& enemy_rear_texture();
-    static std::shared_ptr<wze::texture> const& enemy_rear_up_texture();
-    static std::shared_ptr<wze::texture> const& enemy_rear_down_texture();
-    static std::shared_ptr<wze::texture> const& enemy_rear_left_texture();
-    static std::shared_ptr<wze::texture> const& enemy_rear_right_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
-    enemy_rear_loop_animation();
-    static std::shared_ptr<wze::texture> const& enemy_front_texture();
-    static std::shared_ptr<wze::texture> const& enemy_front_up_texture();
-    static std::shared_ptr<wze::texture> const& enemy_front_down_texture();
-    static std::shared_ptr<wze::texture> const& enemy_front_left_texture();
-    static std::shared_ptr<wze::texture> const& enemy_front_right_texture();
+    enemies_easy_textures();
     static std::vector<std::shared_ptr<wze::texture>> const&
-    enemy_front_loop_animation();
+    enemies_easy_rear_loop_animation();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_easy_front_loop_animation();
 
     static std::vector<std::shared_ptr<wze::texture>> const&
-    enemy_explosion_animation();
+    enemies_normal_textures();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_normal_rear_loop_animation();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_normal_front_loop_animation();
+
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_hard_textures();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_hard_rear_loop_animation();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_hard_front_loop_animation();
+
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    enemies_explosion_animation();
 
     static void initialize();
 };

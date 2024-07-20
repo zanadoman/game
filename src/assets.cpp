@@ -13,6 +13,8 @@ std::vector<std::shared_ptr<wze::texture>>
     assets::_player_ship_hitpoints_textures;
 std::vector<std::shared_ptr<wze::texture>>
     assets::_player_ship_storage_textures;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_player_ship_difficulty_textures;
 
 std::shared_ptr<wze::texture> assets::_laser_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
@@ -52,20 +54,25 @@ std::vector<std::shared_ptr<wze::texture>>
 std::vector<std::shared_ptr<wze::texture>>
     assets::_asteroids_sapphire_explosion_animation;
 
-std::shared_ptr<wze::texture> assets::_enemy_rear_texture;
-std::shared_ptr<wze::texture> assets::_enemy_rear_up_texture;
-std::shared_ptr<wze::texture> assets::_enemy_rear_down_texture;
-std::shared_ptr<wze::texture> assets::_enemy_rear_left_texture;
-std::shared_ptr<wze::texture> assets::_enemy_rear_right_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_enemy_rear_loop_animation;
-std::shared_ptr<wze::texture> assets::_enemy_front_texture;
-std::shared_ptr<wze::texture> assets::_enemy_front_up_texture;
-std::shared_ptr<wze::texture> assets::_enemy_front_down_texture;
-std::shared_ptr<wze::texture> assets::_enemy_front_left_texture;
-std::shared_ptr<wze::texture> assets::_enemy_front_right_texture;
-std::vector<std::shared_ptr<wze::texture>> assets::_enemy_front_loop_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_enemies_easy_textures;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_easy_rear_loop_animation;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_easy_front_loop_animation;
 
-std::vector<std::shared_ptr<wze::texture>> assets::_enemy_explosion_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_enemies_normal_textures;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_normal_rear_loop_animation;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_normal_front_loop_animation;
+
+std::vector<std::shared_ptr<wze::texture>> assets::_enemies_hard_textures;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_hard_rear_loop_animation;
+std::vector<std::shared_ptr<wze::texture>>
+    assets::_enemies_hard_front_loop_animation;
+
+std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
     return _normal_font;
@@ -103,6 +110,11 @@ assets::player_ship_hitpoints_textures() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_ship_storage_textures() {
     return _player_ship_storage_textures;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::player_ship_difficulty_textures() {
+    return _player_ship_difficulty_textures;
 }
 
 std::shared_ptr<wze::texture> const& assets::laser_texture() {
@@ -227,59 +239,54 @@ assets::asteroids_sapphire_explosion_animation() {
     return _asteroids_sapphire_explosion_animation;
 }
 
-std::shared_ptr<wze::texture> const& assets::enemy_rear_texture() {
-    return _enemy_rear_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_rear_up_texture() {
-    return _enemy_rear_up_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_rear_down_texture() {
-    return _enemy_rear_down_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_rear_left_texture() {
-    return _enemy_rear_left_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_rear_right_texture() {
-    return _enemy_rear_right_texture;
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_easy_textures() {
+    return _enemies_easy_textures;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
-assets::enemy_rear_loop_animation() {
-    return _enemy_rear_loop_animation;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_front_texture() {
-    return _enemy_front_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_front_up_texture() {
-    return _enemy_front_up_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_front_down_texture() {
-    return _enemy_front_down_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_front_left_texture() {
-    return _enemy_front_left_texture;
-}
-
-std::shared_ptr<wze::texture> const& assets::enemy_front_right_texture() {
-    return _enemy_front_right_texture;
+assets::enemies_easy_rear_loop_animation() {
+    return _enemies_easy_rear_loop_animation;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
-assets::enemy_front_loop_animation() {
-    return _enemy_front_loop_animation;
+assets::enemies_easy_front_loop_animation() {
+    return _enemies_easy_front_loop_animation;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
-assets::enemy_explosion_animation() {
-    return _enemy_explosion_animation;
+assets::enemies_normal_textures() {
+    return _enemies_normal_textures;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_normal_rear_loop_animation() {
+    return _enemies_normal_rear_loop_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_normal_front_loop_animation() {
+    return _enemies_normal_front_loop_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_hard_textures() {
+    return _enemies_hard_textures;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_hard_rear_loop_animation() {
+    return _enemies_hard_rear_loop_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_hard_front_loop_animation() {
+    return _enemies_hard_front_loop_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::enemies_explosion_animation() {
+    return _enemies_explosion_animation;
 }
 
 void assets::initialize() {
@@ -321,8 +328,7 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/player_ship/hitpoints/9.png")),
         wze::assets::create_texture(
-            wze::assets::load_image("./assets/player_ship/hitpoints/10.png")),
-    };
+            wze::assets::load_image("./assets/player_ship/hitpoints/10.png"))};
     _player_ship_storage_textures = {
         nullptr,
         wze::assets::create_texture(
@@ -344,8 +350,19 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/player_ship/storage/9.png")),
         wze::assets::create_texture(
-            wze::assets::load_image("./assets/player_ship/storage/10.png")),
-    };
+            wze::assets::load_image("./assets/player_ship/storage/10.png"))};
+    _player_ship_difficulty_textures = {
+        nullptr,
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/difficulty/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/difficulty/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/difficulty/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/difficulty/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/player_ship/difficulty/5.png"))};
 
     _laser_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/laser/laser.png"));
@@ -629,34 +646,35 @@ void assets::initialize() {
         wze::assets::create_texture(wze::assets::load_image(
             "./assets/asteroids/sapphire/explosion/15.png"))};
 
-    _enemy_rear_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/rear.png"));
-    _enemy_rear_up_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/rear_up.png"));
-    _enemy_rear_down_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/rear_down.png"));
-    _enemy_rear_left_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/rear_left.png"));
-    _enemy_rear_right_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/rear_right.png"));
-    _enemy_rear_loop_animation = {
+    _enemies_easy_textures = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/rear.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/rear_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/rear_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/rear_left.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/rear_right.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/front.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/front_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/front_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/front_left.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/easy/front_right.png"))};
+    _enemies_easy_rear_loop_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/rear_loop1.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/rear_loop2.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/rear_loop3.png"))};
-    _enemy_front_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/front.png"));
-    _enemy_front_up_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/front_up.png"));
-    _enemy_front_down_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/front_down.png"));
-    _enemy_front_left_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/front_left.png"));
-    _enemy_front_right_texture = wze::assets::create_texture(
-        wze::assets::load_image("./assets/enemies/easy/front_right.png"));
-    _enemy_front_loop_animation = {
+    _enemies_easy_front_loop_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/front_loop1.png")),
         wze::assets::create_texture(
@@ -664,7 +682,79 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/easy/front_loop3.png"))};
 
-    _enemy_explosion_animation = {
+    _enemies_normal_textures = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_left.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_right.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front_left.png")),
+        wze::assets::create_texture(wze::assets::load_image(
+            "./assets/enemies/normal/front_right.png"))};
+    _enemies_normal_rear_loop_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_loop1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_loop2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/rear_loop3.png"))};
+    _enemies_normal_front_loop_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front_loop1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/normal/front_loop2.png")),
+        wze::assets::create_texture(wze::assets::load_image(
+            "./assets/enemies/normal/front_loop3.png"))};
+
+    _enemies_hard_textures = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_left.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_right.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_up.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_down.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_left.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_right.png"))};
+    _enemies_hard_rear_loop_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_loop1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_loop2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/rear_loop3.png"))};
+    _enemies_hard_front_loop_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_loop1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_loop2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/enemies/hard/front_loop3.png"))};
+
+    _enemies_explosion_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/1.png")),
         wze::assets::create_texture(

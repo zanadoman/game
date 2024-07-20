@@ -14,6 +14,9 @@ class space final {
     std::tuple<float, float, float> sphere_coordinate(float minimum,
                                                       float maximum) const;
 
+    uint8_t _difficulty;
+    void update_difficulty();
+
     player_ship _player_ship;
 
     std::vector<enemy_ship> _enemy_ships;

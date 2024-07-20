@@ -1,9 +1,9 @@
-#include "wizard_engine/input.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/asteroid_loot.hpp>
 #include <game/enemy_ship.hpp>
 #include <game/laser.hpp>
+#include <game/save_data.hpp>
 #include <game/space.hpp>
 
 std::tuple<float, float, float> space::sphere_coordinate(float minimum,
@@ -26,6 +26,14 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
 
     radius = wze::math::random(minimum, maximum);
     return {x * radius, y * radius, z * radius};
+}
+
+void space::update_difficulty() {
+    _difficulty = ceilf(
+        (save_data::pyrite_count() * 1 + save_data::wolframite_count() * 2 +
+         save_data::carneol_count() * 3 + save_data::moldavite_count() * 4 +
+         save_data::ruby_count() * 5 + save_data::sapphire_count() * 6) /
+        900.f * 5);
 }
 
 void space::update_enemy_ships() {
