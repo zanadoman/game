@@ -13,7 +13,7 @@ class asteroid final {
     wze::animator _explosion;
     wze::polygon _hitbox;
     material _material;
-    float _hitpoints;
+    uint16_t _hitpoints;
 
   public:
     wze::polygon const& hitbox() const;
@@ -21,10 +21,10 @@ class asteroid final {
     float y() const;
     float z() const;
 
-    asteroid(float x, float y, float z);
+    asteroid(float x, float y, float z, material material);
     bool update(player_ship& player_ship,
                 std::vector<asteroid_loot>& asteroid_loots);
-    void damage(std::vector<asteroid_loot>& asteroid_loots, float hitpoints);
+    void damage(std::vector<asteroid_loot>& asteroid_loots, uint16_t hitpoints);
 };
 
 #endif

@@ -19,43 +19,47 @@ float asteroid::z() const {
     return _appearance->z();
 }
 
-asteroid::asteroid(float x, float y, float z) {
-    float value;
+asteroid::asteroid(float x, float y, float z, material material) {
     std::shared_ptr<wze::texture> texture;
     float diameter;
     float half_diameter;
 
-    value = wze::math::random(0.f, 100.f);
-    if (97.5f < value) {
-        texture = assets::asteroids_sapphire_texture();
-        _explosion = {assets::asteroids_sapphire_explosion_animation()};
-        _material = MATERIAL_SAPPHIRE;
-        _hitpoints = 70;
-    } else if (92.5f < value) {
-        texture = assets::asteroids_ruby_texture();
-        _explosion = {assets::asteroids_ruby_explosion_animation()};
-        _material = MATERIAL_RUBY;
-        _hitpoints = 60;
-    } else if (87.5f < value) {
-        texture = assets::asteroids_moldavite_texture();
-        _explosion = {assets::asteroids_moldavite_explosion_animation()};
-        _material = MATERIAL_MOLDAVITE;
-        _hitpoints = 50;
-    } else if (80 < value) {
-        texture = assets::asteroids_carneol_texture();
-        _explosion = {assets::asteroids_carneol_explosion_animation()};
-        _material = MATERIAL_CARNEOL;
-        _hitpoints = 40;
-    } else if (50 < value) {
-        texture = assets::asteroids_wolframite_texture();
-        _explosion = {assets::asteroids_wolframite_explosion_animation()};
-        _material = MATERIAL_WOLFRAMITE;
-        _hitpoints = 30;
-    } else {
+    switch (_material = material) {
+    case MATERIAL_PYRITE:
         texture = assets::asteroids_pyrite_texture();
         _explosion = {assets::asteroids_pyrite_explosion_animation()};
-        _material = MATERIAL_PYRITE;
-        _hitpoints = 20;
+        _hitpoints = 30;
+        break;
+
+    case MATERIAL_WOLFRAMITE:
+        texture = assets::asteroids_wolframite_texture();
+        _explosion = {assets::asteroids_wolframite_explosion_animation()};
+        _hitpoints = 50;
+        break;
+
+    case MATERIAL_CARNEOL:
+        texture = assets::asteroids_carneol_texture();
+        _explosion = {assets::asteroids_carneol_explosion_animation()};
+        _hitpoints = 70;
+        break;
+
+    case MATERIAL_MOLDAVITE:
+        texture = assets::asteroids_moldavite_texture();
+        _explosion = {assets::asteroids_moldavite_explosion_animation()};
+        _hitpoints = 90;
+        break;
+
+    case MATERIAL_RUBY:
+        texture = assets::asteroids_ruby_texture();
+        _explosion = {assets::asteroids_ruby_explosion_animation()};
+        _hitpoints = 110;
+        break;
+
+    case MATERIAL_SAPPHIRE:
+        texture = assets::asteroids_sapphire_texture();
+        _explosion = {assets::asteroids_sapphire_explosion_animation()};
+        _hitpoints = 130;
+        break;
     }
 
     diameter = wze::math::random(4000.f, 8000.f);
@@ -80,7 +84,7 @@ asteroid::asteroid(float x, float y, float z) {
 
 bool asteroid::update(player_ship& player_ship,
                       std::vector<asteroid_loot>& asteroid_loots) {
-    if (_hitpoints <= 0) {
+    if (!_hitpoints) {
         return !_explosion.play();
     }
 
@@ -100,10 +104,8 @@ bool asteroid::update(player_ship& player_ship,
 }
 
 void asteroid::damage(std::vector<asteroid_loot>& asteroid_loots,
-                      float hitpoints) {
-    if (0 < _hitpoints) {
-        if ((_hitpoints -= hitpoints) <= 0) {
-            asteroid_loots.push_back({x(), y(), z(), _material});
-        }
+                      uint16_t hitpoints) {
+    if (_hitpoints && !(_hitpoints = std::max(0, _hitpoints - hitpoints))) {
+        asteroid_loots.push_back({x(), y(), z(), _material});
     }
 }

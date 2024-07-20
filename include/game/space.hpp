@@ -1,6 +1,7 @@
 #ifndef GAME_SPACE_HPP
 #define GAME_SPACE_HPP
 
+#include <game/enums.hpp>
 #include <game/player_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
@@ -22,7 +23,8 @@ class space final {
     std::vector<enemy_ship> _enemy_ships;
     void update_enemy_ships();
 
-    std::vector<asteroid> _asteroids;
+    std::vector<class asteroid> _asteroids;
+    std::tuple<float, float, float, material> asteroid();
     void update_asteroids();
 
     std::vector<asteroid_loot> _asteroid_loots;

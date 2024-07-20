@@ -29,11 +29,13 @@ std::tuple<float, float, float> space::sphere_coordinate(float minimum,
 }
 
 void space::update_difficulty() {
-    _difficulty = ceilf(
-        (save_data::pyrite_count() * 1 + save_data::wolframite_count() * 2 +
-         save_data::carneol_count() * 3 + save_data::moldavite_count() * 4 +
-         save_data::ruby_count() * 5 + save_data::sapphire_count() * 6) /
-        900.f * 5);
+    _difficulty = std::clamp(
+        ceilf(
+            (save_data::pyrite_count() * 1 + save_data::wolframite_count() * 2 +
+             save_data::carneol_count() * 3 + save_data::moldavite_count() * 4 +
+             save_data::ruby_count() * 5 + save_data::sapphire_count() * 6) /
+            400.f * 5),
+        0.f, 5.f);
 }
 
 void space::update_enemy_ships() {
@@ -51,20 +53,47 @@ void space::update_enemy_ships() {
     }
 }
 
+std::tuple<float, float, float, material> space::asteroid() {
+    float random;
+    material material;
+
+    random = wze::math::random(0, 20 * _difficulty);
+    if (95 < random) {
+        material = MATERIAL_SAPPHIRE;
+    } else if (75 < random) {
+        material = MATERIAL_RUBY;
+    } else if (55 < random) {
+        material = MATERIAL_MOLDAVITE;
+    } else if (35 < random) {
+        material = MATERIAL_CARNEOL;
+    } else if (15 < random) {
+        material = MATERIAL_WOLFRAMITE;
+    } else {
+        material = MATERIAL_PYRITE;
+    }
+
+    return std::apply(
+        [ this, material ](float x, float y, float z)
+            -> std::tuple<float, float, float, enum material> {
+            return {_player_ship.x() + x, _player_ship.y() + y,
+                    _player_ship.z() + z, material};
+        },
+        sphere_coordinate(50'000, 300'000));
+}
+
 void space::update_asteroids() {
-    std::ranges::for_each(_asteroids, [this](asteroid& asteroid) -> void {
+    std::ranges::for_each(_asteroids, [this](class asteroid& asteroid) -> void {
         if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
                             powf(asteroid.y() - _player_ship.y(), 2) +
                             powf(asteroid.z() - _player_ship.z(), 2)) ||
             !asteroid.update(_player_ship, _asteroid_loots)) {
             asteroid.~asteroid();
             std::apply(
-                [this, &asteroid](float x, float y, float z) -> void {
-                    new (&asteroid) class asteroid(_player_ship.x() + x,
-                                                   _player_ship.y() + y,
-                                                   _player_ship.z() + z);
+                [&asteroid](float x, float y, float z,
+                            material material) -> void {
+                    new (&asteroid) class asteroid(x, y, z, material);
                 },
-                sphere_coordinate(50'000, 300'000));
+                this->asteroid());
         }
     });
 }
@@ -125,6 +154,8 @@ space::space() {
     wze::input::set_cursor_visible(false);
     wze::renderer::set_space_texture(assets::space_texture());
 
+    update_difficulty();
+
     for (i = 0; i != 3; ++i) {
         std::apply(
             [this](float x, float y, float z) -> void {
@@ -137,12 +168,10 @@ space::space() {
 
     for (i = 0; i != 1'000; ++i) {
         std::apply(
-            [this](float x, float y, float z) -> void {
-                _asteroids.push_back({_player_ship.x() + x,
-                                      _player_ship.y() + y,
-                                      _player_ship.z() + z});
+            [this](float x, float y, float z, material material) -> void {
+                _asteroids.push_back({x, y, z, material});
             },
-            sphere_coordinate(50'000, 300'000));
+            asteroid());
     }
 
     for (i = 0; i != 200; ++i) {
@@ -166,6 +195,7 @@ space::~space() {
 }
 
 void space::update() {
+    update_difficulty();
     _player_ship.update(_lasers);
     update_enemy_ships();
     update_asteroids();

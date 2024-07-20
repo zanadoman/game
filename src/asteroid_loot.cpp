@@ -1,7 +1,6 @@
 #include <game/assets.hpp>
 #include <game/asteroid_loot.hpp>
 #include <game/player_ship.hpp>
-#include <game/save_data.hpp>
 
 float asteroid_loot::z() const {
     return _appearance->z();

@@ -1,6 +1,7 @@
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/enemy_ship.hpp>
+#include <game/enums.hpp>
 #include <game/laser.hpp>
 #include <game/player_ship.hpp>
 
@@ -88,34 +89,44 @@ void enemy_ship::update_appearance() {
     if (_target_locked) {
         if (abs(x_speed) < abs(y_speed)) {
             if (0 < y_speed) {
-                _appearance->set_texture(assets::enemy_front_down_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_FRONT_DOWN_TEXTURE));
             } else {
-                _appearance->set_texture(assets::enemy_front_up_texture());
+                _appearance->set_texture(
+                    assets::enemies_easy_textures().at(ENEMY_FRONT_UP_TEXTURE));
             }
         } else if (abs(y_speed) < abs(x_speed)) {
             if (0 < x_speed) {
-                _appearance->set_texture(assets::enemy_front_right_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_FRONT_RIGHT_TEXTURE));
             } else {
-                _appearance->set_texture(assets::enemy_front_left_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_FRONT_LEFT_TEXTURE));
             }
         } else {
-            _appearance->set_texture(assets::enemy_front_texture());
+            _appearance->set_texture(
+                assets::enemies_easy_textures().at(ENEMY_FRONT_TEXTURE));
         }
     } else {
         if (abs(x_speed) < abs(y_speed)) {
             if (0 < y_speed) {
-                _appearance->set_texture(assets::enemy_rear_down_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_REAR_DOWN_TEXTURE));
             } else {
-                _appearance->set_texture(assets::enemy_rear_up_texture());
+                _appearance->set_texture(
+                    assets::enemies_easy_textures().at(ENEMY_REAR_UP_TEXTURE));
             }
         } else if (abs(y_speed) < abs(x_speed)) {
             if (0 < x_speed) {
-                _appearance->set_texture(assets::enemy_rear_right_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_REAR_RIGHT_TEXTURE));
             } else {
-                _appearance->set_texture(assets::enemy_rear_left_texture());
+                _appearance->set_texture(assets::enemies_easy_textures().at(
+                    ENEMY_REAR_LEFT_TEXTURE));
             }
         } else {
-            _appearance->set_texture(assets::enemy_rear_texture());
+            _appearance->set_texture(
+                assets::enemies_easy_textures().at(ENEMY_FRONT_TEXTURE));
         }
     }
 }
@@ -154,17 +165,20 @@ void enemy_ship::set_z(float z) {
 }
 
 enemy_ship::enemy_ship(float x, float y, float z) : entity({}, x, y) {
-    _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
-        this->x(), this->y(), z, 0, 8000, 8000, true,
-        assets::enemy_rear_texture(), std::numeric_limits<uint8_t>::max(),
-        std::numeric_limits<uint8_t>::max(),
-        std::numeric_limits<uint8_t>::max(),
-        std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
-        std::numeric_limits<uint8_t>::max(), true, 0, 0, 0, true, true, true,
-        false, false));
-    _rear_loop = {assets::enemy_rear_loop_animation(), 150, {_appearance}};
-    _front_loop = {assets::enemy_front_loop_animation(), 150, {_appearance}};
-    _explosion = {assets::enemy_explosion_animation(), 40, {_appearance}};
+    _appearance = std::shared_ptr<wze::sprite>(
+        new wze::sprite(this->x(), this->y(), z, 0, 8000, 8000, true,
+                        assets::enemies_easy_textures().at(ENEMY_REAR_TEXTURE),
+                        std::numeric_limits<uint8_t>::max(),
+                        std::numeric_limits<uint8_t>::max(),
+                        std::numeric_limits<uint8_t>::max(),
+                        std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE,
+                        true, std::numeric_limits<uint8_t>::max(), true, 0, 0,
+                        0, true, true, true, false, false));
+    _rear_loop = {
+        assets::enemies_easy_rear_loop_animation(), 150, {_appearance}};
+    _front_loop = {
+        assets::enemies_easy_front_loop_animation(), 150, {_appearance}};
+    _explosion = {assets::enemies_explosion_animation(), 40, {_appearance}};
     _hitbox = std::shared_ptr<wze::polygon>(
         new wze::polygon({{-7'000, 0}, {0, 3'000}, {7'000, 0}, {0, -3'000}},
                          this->x(), this->y()));
