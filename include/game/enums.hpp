@@ -1,6 +1,12 @@
 #ifndef GAME_ENUMS_HPP
 #define GAME_ENUMS_HPP
 
+enum enemy_difficulty {
+    ENEMY_DIFFICULTY_EASY,
+    ENEMY_DIFFICULTY_NORMAL,
+    ENEMY_DIFFICULTY_HARD
+};
+
 enum enemy_texture {
     ENEMY_REAR_TEXTURE,
     ENEMY_REAR_UP_TEXTURE,
