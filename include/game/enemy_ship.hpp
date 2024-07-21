@@ -44,7 +44,7 @@ class enemy_ship final : public wze::entity {
     uint16_t _current_hitpoints;
     uint16_t _max_hitpoints;
 
-    std::array<wze::sprite, 25> _particles;
+    std::array<wze::sprite, 50> _particles;
     uint8_t _particles_color_r;
     uint8_t _particles_color_g;
     uint8_t _particles_color_b;

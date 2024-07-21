@@ -152,20 +152,33 @@ void enemy_ship::shoot(player_ship const& player_ship,
 
 void enemy_ship::update_particles() {
     std::ranges::for_each(_particles, [this](wze::sprite& particle) -> void {
-        if (20'000 <
-            sqrtf(powf(particle.x() - x(), 2) + powf(particle.y() - y(), 2) +
-                  powf(particle.z() - z(), 2))) {
-            particle.~sprite();
-            new (&particle) wze::sprite(
-                x() + wze::math::random(-1'000, 1'000),
-                y() + wze::math::random(-1'000, 1'000),
-                z() + wze::math::random(0, 20'000) * (_target_locked ? 1 : -1),
-                wze::math::to_radians(wze::math::random(0.f, 360.f)),
-                wze::math::random(150.f, 300.f),
-                wze::math::random(150.f, 300.f), true,
-                assets::placeholder_texture(), _particles_color_r,
-                _particles_color_g, _particles_color_b);
+        float distance;
+        float ratio;
+        float size;
+
+        if (10'000 < (distance = sqrtf(powf(particle.x() - x(), 2) +
+                                       powf(particle.y() - y(), 2) +
+                                       powf(particle.z() - z(), 2)))) {
+            particle.set_x(x() + wze::math::random(-1'000.f, 1'000.f));
+            particle.set_y(y() + wze::math::random(-1'000.f, 1'000.f));
+            particle.set_z(z() + wze::math::random(0.f, _target_locked
+                                                            ? 10'000.f
+                                                            : -10'000.f));
+            distance = sqrtf(powf(particle.x() - x(), 2) +
+                             powf(particle.y() - y(), 2) +
+                             powf(particle.z() - z(), 2));
         }
+
+        ratio = distance / 10'000;
+        size = 100 + ratio * 300;
+
+        particle.set_width(size);
+        particle.set_height(size);
+        particle.set_color_r(_particles_color_r);
+        particle.set_color_g(_particles_color_g);
+        particle.set_color_b(_particles_color_b);
+        particle.set_color_a(
+            round((1 - ratio) * std::numeric_limits<uint8_t>::max()));
     });
 }
 
@@ -241,10 +254,13 @@ enemy_ship::enemy_ship(float x, float y, float z,
     _target_locked = false;
     _last_shot = 0;
 
-    _particles = {};
+    std::ranges::for_each(_particles, [](wze::sprite& particle) -> void {
+        particle.set_spatial(true);
+        particle.set_texture(assets::placeholder_texture());
+    });
     _particles_color_r = 61;
-    _particles_color_g = 178;
-    _particles_color_b = 198;
+    _particles_color_g = 177;
+    _particles_color_b = 200;
 
     components().push_back(_appearance);
     components().push_back(_hitbox);
@@ -334,8 +350,8 @@ void enemy_ship::damage(uint16_t hitpoints) {
         _particles_color_r =
             228 - ((float)_current_hitpoints / (float)_max_hitpoints) * 167;
         _particles_color_g =
-            44 + ((float)_current_hitpoints / (float)_max_hitpoints) * 134;
+            44 + ((float)_current_hitpoints / (float)_max_hitpoints) * 133;
         _particles_color_b =
-            56 + ((float)_current_hitpoints / (float)_max_hitpoints) * 142;
+            56 + ((float)_current_hitpoints / (float)_max_hitpoints) * 144;
     }
 }
