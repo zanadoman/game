@@ -45,7 +45,7 @@ class player_ship final : public wze::entity {
     bool _active_cannon;
     uint64_t _last_shot;
     uint16_t _reload_time;
-    float _damage;
+    uint16_t _damage;
     void shoot(std::vector<laser>& lasers);
 
     float _current_hitpoints;

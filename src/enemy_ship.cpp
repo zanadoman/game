@@ -1,3 +1,4 @@
+#include "wizard_engine/sprite.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/enemy_ship.hpp>
@@ -150,6 +151,24 @@ void enemy_ship::shoot(player_ship const& player_ship,
          z_distance / normalization * speed, 1'000, 300, 228, 44, 56, _damage});
 }
 
+void enemy_ship::update_particles() {
+    std::ranges::for_each(_particles, [this](wze::sprite& particle) -> void {
+        if (20'000 <
+            sqrtf(powf(particle.x() - x(), 2) + powf(particle.y() - y(), 2) +
+                  powf(particle.z() - z(), 2))) {
+            particle.~sprite();
+            new (&particle) wze::sprite(
+                x() + wze::math::random(-1'000, 1'000),
+                y() + wze::math::random(-1'000, 1'000),
+                z() + wze::math::random(0, 20'000) * (_target_locked ? 1 : -1),
+                wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                wze::math::random(150.f, 300.f),
+                wze::math::random(150.f, 300.f), true,
+                assets::placeholder_texture());
+        }
+    });
+}
+
 std::shared_ptr<wze::polygon> const& enemy_ship::hitbox() const {
     return _hitbox;
 }
@@ -221,6 +240,8 @@ enemy_ship::enemy_ship(float x, float y, float z,
     _attacking = false;
     _target_locked = false;
     _last_shot = 0;
+
+    _particles = {};
 
     components().push_back(_appearance);
     components().push_back(_hitbox);
@@ -298,6 +319,8 @@ bool enemy_ship::update(player_ship const& player_ship,
         shoot(player_ship, lasers);
         _last_shot = wze::timer::current_time();
     }
+
+    update_particles();
 
     return true;
 }

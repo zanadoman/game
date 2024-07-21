@@ -43,6 +43,10 @@ class enemy_ship final : public wze::entity {
 
     uint16_t _hitpoints;
 
+    std::array<wze::sprite, 25> _particles;
+    uint64_t _last_particle;
+    void update_particles();
+
   public:
     std::shared_ptr<wze::polygon> const& hitbox() const;
     float z() const;
