@@ -10,7 +10,7 @@ float laser::z() const {
 
 laser::laser(float x, float y, float z, float x_speed, float y_speed,
              float z_speed, float length, float diameter, uint8_t color_r,
-             uint8_t color_g, uint8_t color_b, float damage)
+             uint8_t color_g, uint8_t color_b, uint16_t damage)
     : entity({}, x + x_speed, y + y_speed) {
     float normalization;
     float x_offset;

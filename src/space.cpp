@@ -40,6 +40,9 @@ void space::update_difficulty() {
 
 void space::update_enemy_ships() {
     std::vector<enemy_ship>::iterator enemy_ship;
+    enemy_difficulty enemy_difficulty;
+    size_t count;
+    size_t i;
 
     for (enemy_ship = _enemy_ships.begin(); enemy_ship != _enemy_ships.end();
          ++enemy_ship) {
@@ -49,6 +52,52 @@ void space::update_enemy_ships() {
             !enemy_ship->update(_player_ship, _enemy_ships, _asteroids,
                                 _lasers)) {
             _enemy_ships.erase(enemy_ship--);
+            if (!_enemy_ships.size()) {
+                _last_spawn = wze::timer::current_time();
+            }
+        }
+    }
+
+    if (!_enemy_ships.size() &&
+        _last_spawn + _spawn_time < wze::timer::current_time()) {
+        switch (_difficulty) {
+        case 1:
+            enemy_difficulty = ENEMY_DIFFICULTY_EASY;
+            count = wze::math::random(1, 2);
+            _spawn_time = wze::math::random(60'000, 80'000);
+            break;
+        case 2:
+            enemy_difficulty = ENEMY_DIFFICULTY_EASY;
+            count = wze::math::random(1, 2);
+            _spawn_time = wze::math::random(50'000, 70'000);
+            break;
+        case 3:
+            enemy_difficulty = ENEMY_DIFFICULTY_NORMAL;
+            count = wze::math::random(2, 3);
+            _spawn_time = wze::math::random(40'000, 60'000);
+            break;
+        case 4:
+            enemy_difficulty = ENEMY_DIFFICULTY_NORMAL;
+            count = wze::math::random(2, 3);
+            _spawn_time = wze::math::random(30'000, 50'000);
+            break;
+        case 5:
+            enemy_difficulty = ENEMY_DIFFICULTY_HARD;
+            count = wze::math::random(3, 4);
+            _spawn_time = wze::math::random(20'000, 40'000);
+            break;
+        default:
+            return;
+        }
+
+        for (i = 0; i != count; ++i) {
+            std::apply(
+                [this, enemy_difficulty](float x, float y, float z) -> void {
+                    _enemy_ships.push_back(
+                        {_player_ship.x() + x, _player_ship.y() + y,
+                         _player_ship.z() + z, enemy_difficulty});
+                },
+                sphere_coordinate(50'000, 100'000));
         }
     }
 }
@@ -154,17 +203,17 @@ space::space() {
     wze::input::set_cursor_visible(false);
     wze::renderer::set_space_texture(assets::space_texture());
 
-    update_difficulty();
+    _difficulty = 0;
+    _player_ship = {};
+    _enemy_ships = {};
+    _last_spawn = 0;
+    _spawn_time = 85;
+    _asteroids = {};
+    _asteroid_loots = {};
+    _lasers = {};
+    _particles = {};
 
-    for (i = 0; i != 3; ++i) {
-        std::apply(
-            [this](float x, float y, float z) -> void {
-                _enemy_ships.push_back({_player_ship.x() + x,
-                                        _player_ship.y() + y,
-                                        _player_ship.z() + z});
-            },
-            sphere_coordinate(50'000, 100'000));
-    }
+    update_difficulty();
 
     for (i = 0; i != 1'000; ++i) {
         std::apply(

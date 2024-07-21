@@ -62,7 +62,7 @@ asteroid::asteroid(float x, float y, float z, material material) {
         break;
     }
 
-    diameter = wze::math::random(4000.f, 8000.f);
+    diameter = wze::math::random(4'000.f, 8'000.f);
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite{
         x, y, z, wze::math::to_radians(wze::math::random(0.f, 360.f)), diameter,
         diameter, true, texture, std::numeric_limits<uint8_t>::max(),
@@ -94,7 +94,7 @@ bool asteroid::update(player_ship& player_ship,
                      (float)std::numeric_limits<uint8_t>::max()));
     }
 
-    if (z() - 2000 < player_ship.z() && player_ship.z() < z() + 2000 &&
+    if (z() - 2'000 < player_ship.z() && player_ship.z() < z() + 2'000 &&
         player_ship.hitbox()->overlap(_hitbox)) {
         player_ship.damage(_hitpoints);
         damage(asteroid_loots, _hitpoints);

@@ -37,7 +37,7 @@ asteroid_loot::asteroid_loot(float x, float y, float z, material material)
 
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
         this->x(), this->y(), z,
-        wze::math::to_radians(wze::math::random(0.f, 360.f)), 1000, 1000, true,
+        wze::math::to_radians(wze::math::random(0.f, 360.f)), 1'000, 1'000, true,
         texture, std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),

@@ -21,6 +21,8 @@ class space final {
     player_ship _player_ship;
 
     std::vector<enemy_ship> _enemy_ships;
+    uint64_t _last_spawn;
+    uint32_t _spawn_time;
     void update_enemy_ships();
 
     std::vector<class asteroid> _asteroids;
