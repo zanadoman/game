@@ -150,7 +150,7 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                       _joy_stick_x / normalization * speed,
                       _joy_stick_y / normalization * speed,
                       wze::camera::focus() / normalization * speed, 1'000, 300,
-                      52, 122, 208, _damage});
+                      137, 221, 71, _damage});
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
