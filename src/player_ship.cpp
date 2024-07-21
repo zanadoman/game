@@ -285,7 +285,7 @@ player_ship::player_ship() {
     _joy_stick_x = 0;
     _joy_stick_y = 0;
 
-    _speed = 10;
+    _speed = 5;
 
     _left_cannon = {x() - 500, y() + 300};
     _right_cannon = {x() + 500, y() + 300};
@@ -293,11 +293,11 @@ player_ship::player_ship() {
     _active_cannon = false;
     _last_shot = 0;
     _reload_time = 300;
-    _damage = 30;
+    _damage = 10;
 
     _current_hitpoints = _max_hitpoints = 300;
 
-    _storage = 150;
+    _storage = 50;
 
     components().push_back(_hitbox);
 }
