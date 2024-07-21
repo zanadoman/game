@@ -3,7 +3,7 @@
 #include <game/player_ship.hpp>
 #include <game/save_data.hpp>
 
-void player_ship::update_hud() {
+void player_ship::update_hud(uint8_t difficulty) {
     std::shared_ptr<wze::image> image;
 
     if (_warning_opacity != 0) {
@@ -92,6 +92,9 @@ void player_ship::update_hud() {
                 save_data::carneol_count() + save_data::moldavite_count() +
                 save_data::ruby_count() + save_data::sapphire_count()) /
                (float)_storage * 10)));
+
+    _difficulty_count.set_texture(
+        assets::player_ship_difficulty_textures().at(difficulty));
 }
 
 void player_ship::update_joy_stick() {
@@ -103,15 +106,22 @@ void player_ship::update_joy_stick() {
 }
 
 void player_ship::update_movement() {
-    if (wze::input::key(wze::KEY_W) && !wze::input::key(wze::KEY_S)) {
+    if ((wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP)) &&
+        !(wze::input::key(wze::KEY_S) || wze::input::key(wze::KEY_DOWN))) {
         set_z(z() + _speed * wze::timer::delta_time());
-    } else if (wze::input::key(wze::KEY_S) && !wze::input::key(wze::KEY_W)) {
+    } else if ((wze::input::key(wze::KEY_S) ||
+                wze::input::key(wze::KEY_DOWN)) &&
+               !(wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP))) {
         set_z(z() - _speed * wze::timer::delta_time());
     }
 
-    if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
+    if ((wze::input::key(wze::KEY_A) || wze::input::key(wze::KEY_LEFT)) &&
+        !(wze::input::key(wze::KEY_D) || wze::input::key(wze::KEY_RIGHT))) {
         set_angle(angle() - _speed / 7'500 * wze::timer::delta_time());
-    } else if (wze::input::key(wze::KEY_D) && !wze::input::key(wze::KEY_A)) {
+    } else if ((wze::input::key(wze::KEY_D) ||
+                wze::input::key(wze::KEY_RIGHT)) &&
+               !(wze::input::key(wze::KEY_A) ||
+                 wze::input::key(wze::KEY_LEFT))) {
         set_angle(angle() + _speed / 7'500 * wze::timer::delta_time());
     }
 
@@ -259,6 +269,15 @@ player_ship::player_ship() {
                       false,
                       assets::player_ship_hitpoints_textures().front()};
 
+    _difficulty_count = {0,
+                         0,
+                         0,
+                         0,
+                         (float)wze::window::width(),
+                         (float)wze::window::height(),
+                         false,
+                         assets::player_ship_difficulty_textures().front()};
+
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
         {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
 
@@ -266,7 +285,7 @@ player_ship::player_ship() {
     _joy_stick_x = 0;
     _joy_stick_y = 0;
 
-    _speed = 5;
+    _speed = 10;
 
     _left_cannon = {x() - 500, y() + 300};
     _right_cannon = {x() + 500, y() + 300};
@@ -274,16 +293,16 @@ player_ship::player_ship() {
     _active_cannon = false;
     _last_shot = 0;
     _reload_time = 300;
-    _damage = 10;
+    _damage = 30;
 
     _current_hitpoints = _max_hitpoints = 300;
 
-    _storage = 50;
+    _storage = 150;
 
     components().push_back(_hitbox);
 }
 
-void player_ship::update(std::vector<laser>& lasers) {
+void player_ship::update(uint8_t difficulty, std::vector<laser>& lasers) {
     update_movement();
 
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
@@ -292,7 +311,7 @@ void player_ship::update(std::vector<laser>& lasers) {
         _last_shot = wze::timer::current_time();
     }
 
-    update_hud();
+    update_hud(difficulty);
 }
 
 void player_ship::damage(float hitpoints) {

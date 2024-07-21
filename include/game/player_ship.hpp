@@ -26,8 +26,9 @@ class player_ship final : public wze::entity {
     wze::sprite _sapphire_count;
     wze::sprite _hitpoints_count;
     wze::sprite _storage_count;
+    wze::sprite _difficulty_count;
     std::shared_ptr<wze::polygon> _hitbox;
-    void update_hud();
+    void update_hud(uint8_t difficulty);
 
     joy_stick _joy_stick;
     float _joy_stick_x;
@@ -62,7 +63,7 @@ class player_ship final : public wze::entity {
     void set_angle(float angle) final;
 
     player_ship();
-    void update(std::vector<laser>& lasers);
+    void update(uint8_t difficulty, std::vector<laser>& lasers);
     void damage(float hitpoints);
     void asteroid_loot(material material);
 };

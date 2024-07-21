@@ -245,7 +245,7 @@ space::~space() {
 
 void space::update() {
     update_difficulty();
-    _player_ship.update(_lasers);
+    _player_ship.update(_difficulty, _lasers);
     update_enemy_ships();
     update_asteroids();
     update_asteroid_loots();
