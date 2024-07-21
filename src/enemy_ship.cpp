@@ -1,4 +1,3 @@
-#include "wizard_engine/sprite.hpp"
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/enemy_ship.hpp>
@@ -164,7 +163,8 @@ void enemy_ship::update_particles() {
                 wze::math::to_radians(wze::math::random(0.f, 360.f)),
                 wze::math::random(150.f, 300.f),
                 wze::math::random(150.f, 300.f), true,
-                assets::placeholder_texture());
+                assets::placeholder_texture(), _particles_color_r,
+                _particles_color_g, _particles_color_b);
         }
     });
 }
@@ -189,25 +189,25 @@ enemy_ship::enemy_ship(float x, float y, float z,
         _textures = assets::enemies_easy_textures;
         _rear_loop = assets::enemies_easy_rear_loop_animation();
         _front_loop = assets::enemies_easy_front_loop_animation();
-        _speed = 15;
+        _speed = 10;
         _damage = 10;
-        _hitpoints = 100;
+        _current_hitpoints = _max_hitpoints = 100;
         break;
     case ENEMY_DIFFICULTY_NORMAL:
         _textures = assets::enemies_normal_textures;
         _rear_loop = assets::enemies_normal_rear_loop_animation();
         _front_loop = assets::enemies_normal_front_loop_animation();
-        _speed = 10;
+        _speed = 15;
         _damage = 20;
-        _hitpoints = 200;
+        _current_hitpoints = _max_hitpoints = 200;
         break;
     case ENEMY_DIFFICULTY_HARD:
         _textures = assets::enemies_hard_textures;
         _rear_loop = assets::enemies_hard_rear_loop_animation();
         _front_loop = assets::enemies_hard_front_loop_animation();
-        _speed = 25;
+        _speed = 20;
         _damage = 30;
-        _hitpoints = 300;
+        _current_hitpoints = _max_hitpoints = 300;
         break;
     }
 
@@ -242,6 +242,9 @@ enemy_ship::enemy_ship(float x, float y, float z,
     _last_shot = 0;
 
     _particles = {};
+    _particles_color_r = 61;
+    _particles_color_g = 178;
+    _particles_color_b = 198;
 
     components().push_back(_appearance);
     components().push_back(_hitbox);
@@ -253,7 +256,7 @@ bool enemy_ship::update(player_ship const& player_ship,
                         std::vector<laser>& lasers) {
     bool on_target;
 
-    if (!_hitpoints) {
+    if (!_current_hitpoints) {
         return !_explosion.play();
     }
 
@@ -272,9 +275,9 @@ bool enemy_ship::update(player_ship const& player_ship,
     set_y(y() + _y_speed * wze::timer::delta_time());
     set_z(z() + _z_speed * wze::timer::delta_time());
     if (angle() < player_ship.angle() - wze::math::to_radians(10)) {
-        set_angle(angle() + _speed / 1500 * wze::timer::delta_time());
+        set_angle(angle() + _speed / 1'500 * wze::timer::delta_time());
     } else if (player_ship.angle() + wze::math::to_radians(10) < angle()) {
-        set_angle(angle() - _speed / 1500 * wze::timer::delta_time());
+        set_angle(angle() - _speed / 1'500 * wze::timer::delta_time());
     }
 
     if (_attacking && _attack_begin + 2'500 < wze::timer::current_time()) {
@@ -326,7 +329,13 @@ bool enemy_ship::update(player_ship const& player_ship,
 }
 
 void enemy_ship::damage(uint16_t hitpoints) {
-    if (_hitpoints) {
-        _hitpoints = std::max(0, _hitpoints - hitpoints);
+    if (_current_hitpoints) {
+        _current_hitpoints = std::max(0, _current_hitpoints - hitpoints);
+        _particles_color_r =
+            228 - ((float)_current_hitpoints / (float)_max_hitpoints) * 167;
+        _particles_color_g =
+            44 + ((float)_current_hitpoints / (float)_max_hitpoints) * 134;
+        _particles_color_b =
+            56 + ((float)_current_hitpoints / (float)_max_hitpoints) * 142;
     }
 }

@@ -41,10 +41,13 @@ class enemy_ship final : public wze::entity {
     uint16_t _damage;
     void shoot(player_ship const& player_ship, std::vector<laser>& lasers);
 
-    uint16_t _hitpoints;
+    uint16_t _current_hitpoints;
+    uint16_t _max_hitpoints;
 
     std::array<wze::sprite, 25> _particles;
-    uint64_t _last_particle;
+    uint8_t _particles_color_r;
+    uint8_t _particles_color_g;
+    uint8_t _particles_color_b;
     void update_particles();
 
   public:

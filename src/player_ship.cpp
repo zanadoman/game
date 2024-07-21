@@ -110,9 +110,9 @@ void player_ship::update_movement() {
     }
 
     if (wze::input::key(wze::KEY_A) && !wze::input::key(wze::KEY_D)) {
-        set_angle(angle() - _speed / 8'000 * wze::timer::delta_time());
+        set_angle(angle() - _speed / 7'500 * wze::timer::delta_time());
     } else if (wze::input::key(wze::KEY_D) && !wze::input::key(wze::KEY_A)) {
-        set_angle(angle() + _speed / 8'000 * wze::timer::delta_time());
+        set_angle(angle() + _speed / 7'500 * wze::timer::delta_time());
     }
 
     update_joy_stick();
@@ -266,7 +266,7 @@ player_ship::player_ship() {
     _joy_stick_x = 0;
     _joy_stick_y = 0;
 
-    _speed = 15;
+    _speed = 5;
 
     _left_cannon = {x() - 500, y() + 300};
     _right_cannon = {x() + 500, y() + 300};
@@ -274,11 +274,11 @@ player_ship::player_ship() {
     _active_cannon = false;
     _last_shot = 0;
     _reload_time = 300;
-    _damage = 30;
+    _damage = 10;
 
     _current_hitpoints = _max_hitpoints = 300;
 
-    _storage = 150;
+    _storage = 50;
 
     components().push_back(_hitbox);
 }
