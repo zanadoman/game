@@ -78,6 +78,7 @@ std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
 std::shared_ptr<wze::sound> assets::_laser_sound;
 std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
+std::shared_ptr<wze::sound> assets::_laser_passing_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_enemies_explosion_sounds;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
@@ -309,6 +310,10 @@ std::shared_ptr<wze::sound> const& assets::laser_sound() {
 
 std::shared_ptr<wze::sound> const& assets::laser_explosion_sound() {
     return _laser_explosion_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::laser_passing_sound() {
+    return _laser_passing_sound;
 }
 
 std::shared_ptr<wze::sound> const& assets::enemies_explosion_sound() {
@@ -807,9 +812,11 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
     _space_fight_music_sound =
         wze::assets::load_sound("./assets/sounds/space_fight.mp3");
-    _laser_sound = wze::assets::load_sound("./assets/sounds/laser.ogg");
+    _laser_sound = wze::assets::load_sound("./assets/sounds/laser.wav");
     _laser_explosion_sound =
         wze::assets::load_sound("./assets/sounds/laser_explosion.ogg");
+    _laser_passing_sound =
+        wze::assets::load_sound("./assets/sounds/laser_passing.wav");
     _enemies_explosion_sounds = {
         wze::assets::load_sound("./assets/sounds/enemies_explosion1.ogg"),
         wze::assets::load_sound("./assets/sounds/enemies_explosion2.ogg"),

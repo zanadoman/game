@@ -27,6 +27,8 @@ class laser final : public wze::entity {
     bool _destroyed;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
 
+    bool _passed_by;
+
   public:
     float z() const;
     laser(float x, float y, float z, float x_speed, float y_speed,

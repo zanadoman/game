@@ -361,8 +361,8 @@ void enemy_ship::damage(std::vector<wze::speaker>& speakers,
             speakers.push_back({assets::enemies_explosion_sound(),
                                 std::numeric_limits<int8_t>::max(), 100'000,
                                 false, x(), y(), z(), true});
+            speakers.back().align_panning();
+            speakers.back().play();
         }
-        speakers.back().align_panning();
-        speakers.back().play();
     }
 }

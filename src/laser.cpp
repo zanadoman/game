@@ -54,6 +54,8 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
             components().push_back(sprite);
         });
 
+    _passed_by = false;
+
     speakers.push_back({assets::laser_sound(),
                         std::numeric_limits<int8_t>::max(), 100'000, false, x,
                         y, z, true});
@@ -96,10 +98,19 @@ bool laser::update(player_ship& player_ship,
     }
 
     if (player_ship.z() - abs(z_movement) < z() &&
-        z() < player_ship.z() + abs(z_movement) &&
-        player_ship.hitbox()->inside(x(), y())) {
-        player_ship.damage(_damage);
-        _destroyed = true;
+        z() < player_ship.z() + abs(z_movement)) {
+        if (!_passed_by) {
+            speakers.push_back({assets::laser_passing_sound(),
+                                std::numeric_limits<int8_t>::max(), 25'000,
+                                false, x(), y(), z(), true});
+            speakers.back().align_panning();
+            speakers.back().play();
+            _passed_by = true;
+        }
+        if (player_ship.hitbox()->inside(x(), y())) {
+            player_ship.damage(_damage);
+            _destroyed = true;
+        }
     }
 
     if (_destroyed) {
