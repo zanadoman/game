@@ -128,7 +128,8 @@ void enemy_ship::update_appearance() {
 }
 
 void enemy_ship::shoot(player_ship const& player_ship,
-                       std::vector<laser>& lasers) {
+                       std::vector<laser>& lasers,
+                       std::vector<wze::speaker>& speakers) {
     float x_distance;
     float y_distance;
     float z_distance;
@@ -144,10 +145,11 @@ void enemy_ship::shoot(player_ship const& player_ship,
         sqrtf(powf(x_distance, 2) + powf(y_distance, 2) + powf(z_distance, 2));
     speed = _speed * 10;
 
-    lasers.push_back(
-        {x() + cannon.first, y() + cannon.second, z(),
-         x_distance / normalization * speed, y_distance / normalization * speed,
-         z_distance / normalization * speed, 1'000, 300, 228, 44, 56, _damage});
+    lasers.push_back({x() + cannon.first, y() + cannon.second, z(),
+                      x_distance / normalization * speed,
+                      y_distance / normalization * speed,
+                      z_distance / normalization * speed, 1'000, 300, 228, 44,
+                      56, _damage, speakers});
 }
 
 void enemy_ship::update_particles() {
@@ -269,7 +271,8 @@ enemy_ship::enemy_ship(float x, float y, float z,
 bool enemy_ship::update(player_ship const& player_ship,
                         std::vector<enemy_ship> const& enemy_ships,
                         std::vector<asteroid> const& asteroids,
-                        std::vector<laser>& lasers) {
+                        std::vector<laser>& lasers,
+                        std::vector<wze::speaker>& speakers) {
     bool on_target;
 
     if (!_current_hitpoints) {
@@ -335,7 +338,7 @@ bool enemy_ship::update(player_ship const& player_ship,
             wze::math::transform_x(2'000, 500, transformation_matrix());
         _right_cannon.second =
             wze::math::transform_y(2'000, 500, transformation_matrix());
-        shoot(player_ship, lasers);
+        shoot(player_ship, lasers, speakers);
         _last_shot = wze::timer::current_time();
     }
 

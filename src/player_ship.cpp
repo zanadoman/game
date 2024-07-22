@@ -146,7 +146,8 @@ void player_ship::update_cannons_y() {
         y() + wze::math::transform_y(500, 300, transformation_matrix());
 }
 
-void player_ship::shoot(std::vector<laser>& lasers) {
+void player_ship::shoot(std::vector<laser>& lasers,
+                        std::vector<wze::speaker>& speakers) {
     std::pair<float, float> cannon;
     float normalization;
     float speed;
@@ -160,7 +161,7 @@ void player_ship::shoot(std::vector<laser>& lasers) {
                       _joy_stick_x / normalization * speed,
                       _joy_stick_y / normalization * speed,
                       wze::camera::focus() / normalization * speed, 1'000, 300,
-                      137, 221, 71, _damage});
+                      137, 221, 71, _damage, speakers});
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {
@@ -302,12 +303,13 @@ player_ship::player_ship() {
     components().push_back(_hitbox);
 }
 
-void player_ship::update(uint8_t difficulty, std::vector<laser>& lasers) {
+void player_ship::update(uint8_t difficulty, std::vector<laser>& lasers,
+                         std::vector<wze::speaker>& speakers) {
     update_movement();
 
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
         _last_shot + _reload_time < wze::timer::current_time()) {
-        shoot(lasers);
+        shoot(lasers, speakers);
         _last_shot = wze::timer::current_time();
     }
 

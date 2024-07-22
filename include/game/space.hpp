@@ -38,9 +38,10 @@ class space final {
     std::vector<wze::sprite> _particles;
     void update_particles();
 
+    std::vector<wze::speaker> _speakers;
     wze::speaker _ambiance_music;
     wze::speaker _fight_music;
-    void update_music();
+    void update_speakers();
 
   public:
     space();

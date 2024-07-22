@@ -49,8 +49,8 @@ void space::update_enemy_ships() {
         if (300'000 < sqrtf(powf(enemy_ship->x() - _player_ship.x(), 2) +
                             powf(enemy_ship->y() - _player_ship.y(), 2) +
                             powf(enemy_ship->z() - _player_ship.z(), 2)) ||
-            !enemy_ship->update(_player_ship, _enemy_ships, _asteroids,
-                                _lasers)) {
+            !enemy_ship->update(_player_ship, _enemy_ships, _asteroids, _lasers,
+                                _speakers)) {
             _enemy_ships.erase(enemy_ship--);
             if (!_enemy_ships.size()) {
                 _last_spawn = wze::timer::current_time();
@@ -169,7 +169,7 @@ void space::update_lasers() {
                             powf(laser->y() - _player_ship.y(), 2) +
                             powf(laser->z() - _player_ship.z(), 2)) ||
             !laser->update(_player_ship, _enemy_ships, _asteroids,
-                           _asteroid_loots)) {
+                           _asteroid_loots, _speakers)) {
             _lasers.erase(laser--);
         }
     }
@@ -197,7 +197,15 @@ void space::update_particles() {
     });
 }
 
-void space::update_music() {
+void space::update_speakers() {
+    std::vector<wze::speaker>::iterator speaker;
+
+    for (speaker = _speakers.begin(); speaker != _speakers.end(); ++speaker) {
+        if (!speaker->playing()) {
+            _speakers.erase(speaker--);
+        }
+    }
+
     if (!_enemy_ships.size() && !_ambiance_music.playing()) {
         _fight_music.stop(3'000);
         _ambiance_music.play(3'000, std::numeric_limits<uint16_t>::max());
@@ -257,11 +265,11 @@ space::~space() {
 
 void space::update() {
     update_difficulty();
-    _player_ship.update(_difficulty, _lasers);
+    _player_ship.update(_difficulty, _lasers, _speakers);
     update_enemy_ships();
     update_asteroids();
     update_asteroid_loots();
     update_lasers();
     update_particles();
-    update_music();
+    update_speakers();
 }

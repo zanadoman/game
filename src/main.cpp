@@ -11,6 +11,7 @@ wze_main(2560, 1440) {
     space space;
 
     // wze::timer::set_frame_time(50);
+    wze::audio::set_volume(std::numeric_limits<int8_t>::max() / 2);
 
     wze_while(true) {
         space.update();

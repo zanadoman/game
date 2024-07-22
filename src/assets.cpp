@@ -77,6 +77,7 @@ std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
 std::shared_ptr<wze::sound> assets::_laser_sound;
+std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
     return _normal_font;
@@ -303,6 +304,10 @@ std::shared_ptr<wze::sound> const& assets::space_fight_music_sound() {
 
 std::shared_ptr<wze::sound> const& assets::laser_sound() {
     return _laser_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::laser_explosion_sound() {
+    return _laser_explosion_sound;
 }
 
 void assets::initialize() {
@@ -797,4 +802,6 @@ void assets::initialize() {
     _space_fight_music_sound =
         wze::assets::load_sound("./assets/sounds/space_fight.mp3");
     _laser_sound = wze::assets::load_sound("./assets/sounds/laser.ogg");
+    _laser_explosion_sound =
+        wze::assets::load_sound("./assets/sounds/laser_explosion.ogg");
 }

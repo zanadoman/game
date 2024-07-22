@@ -39,7 +39,8 @@ class enemy_ship final : public wze::entity {
     bool _target_locked;
     uint64_t _last_shot;
     uint16_t _damage;
-    void shoot(player_ship const& player_ship, std::vector<laser>& lasers);
+    void shoot(player_ship const& player_ship, std::vector<laser>& lasers,
+               std::vector<wze::speaker>& speakers);
 
     uint16_t _current_hitpoints;
     uint16_t _max_hitpoints;
@@ -59,7 +60,8 @@ class enemy_ship final : public wze::entity {
     bool update(player_ship const& player_ship,
                 std::vector<enemy_ship> const& enemy_ships,
                 std::vector<asteroid> const& asteroids,
-                std::vector<laser>& lasers);
+                std::vector<laser>& lasers,
+                std::vector<wze::speaker>& speakers);
     void damage(uint16_t hitpoints);
 };
 

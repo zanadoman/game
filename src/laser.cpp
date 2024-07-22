@@ -10,7 +10,8 @@ float laser::z() const {
 
 laser::laser(float x, float y, float z, float x_speed, float y_speed,
              float z_speed, float length, float diameter, uint8_t color_r,
-             uint8_t color_g, uint8_t color_b, uint16_t damage)
+             uint8_t color_g, uint8_t color_b, uint16_t damage,
+             std::vector<wze::speaker>& speakers)
     : entity({}, x + x_speed, y + y_speed) {
     float normalization;
     float x_offset;
@@ -53,22 +54,18 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
             components().push_back(sprite);
         });
 
-    _sound = {assets::laser_sound(),
-              std::numeric_limits<int8_t>::max(),
-              100'000,
-              false,
-              x,
-              y,
-              z,
-              true};
-    _sound.align_panning();
-    _sound.play();
+    speakers.push_back({assets::laser_sound(),
+                        std::numeric_limits<int8_t>::max(), 100'000, false, x,
+                        y, z, true});
+    speakers.back().align_panning();
+    speakers.back().play();
 }
 
 bool laser::update(player_ship& player_ship,
                    std::vector<enemy_ship>& enemy_ships,
                    std::vector<asteroid>& asteroids,
-                   std::vector<asteroid_loot>& asteroid_loots) {
+                   std::vector<asteroid_loot>& asteroid_loots,
+                   std::vector<wze::speaker>& speakers) {
     float z_movement;
     size_t i;
 
@@ -115,6 +112,11 @@ bool laser::update(player_ship& player_ship,
             wze::FLIP_NONE, true, std::numeric_limits<uint8_t>::max(), true, 0,
             0, 0, true, true, false, false, false));
         _explosion.targets().push_back(_appearance);
+        speakers.push_back({assets::laser_explosion_sound(),
+                            std::numeric_limits<int8_t>::max() / 4, 100'000,
+                            false, x(), y(), z(), true});
+        speakers.back().align_panning();
+        speakers.back().play();
     } else {
         for (i = 0; i < _sprites.size(); ++i) {
             _sprites.at(i)->set_z(z() - _half_length + _length_skip * i);
