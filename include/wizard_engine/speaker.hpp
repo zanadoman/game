@@ -359,6 +359,14 @@ class speaker final : public component {
     /**
      * @file speaker.hpp
      * @author Zana Domán
+     * @brief Move constructor.
+     * @param other Other speaker instance.
+     */
+    speaker(speaker&& other);
+
+    /**
+     * @file speaker.hpp
+     * @author Zana Domán
      * @brief Destroys the speaker instance and erases from instances.
      */
     ~speaker();
@@ -371,6 +379,15 @@ class speaker final : public component {
      * @return Self reference.
      */
     speaker& operator=(speaker const& other);
+
+    /**
+     * @file speaker.hpp
+     * @author Zana Domán
+     * @brief Move assignment operator.
+     * @param other Other speaker instance.
+     * @return Self reference.
+     */
+    speaker& operator=(speaker&& other);
 
     /**
      * @file speaker.hpp
