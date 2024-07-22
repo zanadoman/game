@@ -1,6 +1,4 @@
-#include "wizard_engine/assets.hpp"
 #include <game/assets.hpp>
-#include <memory>
 
 std::shared_ptr<wze::font> assets::_normal_font;
 std::shared_ptr<wze::font> assets::_bold_font;
@@ -294,11 +292,11 @@ assets::enemies_explosion_animation() {
     return _enemies_explosion_animation;
 }
 
-std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound(){
+std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
     return _space_ambiance_music_sound;
 }
 
-std::shared_ptr<wze::sound> const& assets::space_fight_music_sound(){
+std::shared_ptr<wze::sound> const& assets::space_fight_music_sound() {
     return _space_fight_music_sound;
 }
 
@@ -789,6 +787,8 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/10.png"))};
 
-    _space_ambiance_music_sound = wze::assets::load_sound("./assets/audio/space_ambiance_placeholder.mp3");
-    _space_fight_music_sound = wze::assets::load_sound("./assets/audio/space_fight.wav");
+    _space_ambiance_music_sound = wze::assets::load_sound(
+        "./assets/audio/space_ambiance_placeholder.mp3");
+    _space_fight_music_sound =
+        wze::assets::load_sound("./assets/audio/space_fight.wav");
 }
