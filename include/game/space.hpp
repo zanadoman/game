@@ -1,7 +1,6 @@
 #ifndef GAME_SPACE_HPP
 #define GAME_SPACE_HPP
 
-#include "wizard_engine/speaker.hpp"
 #include <game/enums.hpp>
 #include <game/player_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>

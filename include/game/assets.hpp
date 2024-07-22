@@ -1,9 +1,6 @@
 #ifndef GAME_ASSETS_HPP
 #define GAME_ASSETS_HPP
 
-#include "wizard_engine/assets.hpp"
-#include <memory>
-#include <vector>
 #include <wizard_engine/wizard_engine.hpp>
 
 class assets final {

@@ -787,8 +787,8 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/10.png"))};
 
-    _space_ambiance_music_sound = wze::assets::load_sound(
-        "./assets/audio/space_ambiance_placeholder.mp3");
+    _space_ambiance_music_sound =
+        wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
     _space_fight_music_sound =
-        wze::assets::load_sound("./assets/audio/space_fight.wav");
+        wze::assets::load_sound("./assets/sounds/space_fight.mp3");
 }
