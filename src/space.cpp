@@ -198,12 +198,12 @@ void space::update_particles() {
 }
 
 void space::update_music() {
-    if (!_enemy_ships.size() && !_fight_music.playing()) {
-        _ambiance_music.stop(1500);
-        _fight_music.play(2000, std::numeric_limits<uint16_t>::max());
-    } else if (!_ambiance_music.playing()) {
-        _fight_music.stop(1500);
-        _ambiance_music.play(2000, std::numeric_limits<uint16_t>::max());
+    if (!_enemy_ships.size() && !_ambiance_music.playing()) {
+        _fight_music.stop(3'000);
+        _ambiance_music.play(3'000, std::numeric_limits<uint16_t>::max());
+    } else if (_enemy_ships.size() && !_fight_music.playing()) {
+        _ambiance_music.stop(3'000);
+        _fight_music.play(3'000, std::numeric_limits<uint16_t>::max());
     }
 }
 
@@ -216,12 +216,14 @@ space::space() {
     _difficulty = 0;
     _player_ship = {};
     _enemy_ships = {};
-    _last_spawn = 0;
-    _spawn_time = 85;
+    _last_spawn = wze::timer::current_time();
+    _spawn_time = wze::math::random(20'000, 40'000);
     _asteroids = {};
     _asteroid_loots = {};
     _lasers = {};
     _particles = {};
+    _ambiance_music = {assets::space_ambiance_music_sound()};
+    _fight_music = {assets::space_fight_music_sound()};
 
     update_difficulty();
 
