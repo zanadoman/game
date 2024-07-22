@@ -17,8 +17,8 @@ bool enemy_ship::dodge(float x, float y, float z, float near) {
             y_distance = wze::math::random(-1.f, 1.f);
             distance = wze::math::length(x_distance, y_distance);
         }
-        _x_speed = x_distance / distance * _speed;
-        _y_speed = y_distance / distance * _speed;
+        _x_speed = x_distance / distance * _speed * 3;
+        _y_speed = y_distance / distance * _speed * 3;
         return true;
     }
 
@@ -58,17 +58,22 @@ bool enemy_ship::follow_player_ship(player_ship const& player_ship) {
     adjusted = false;
 
     if (20'000 < distance) {
-        _x_speed = x_distance / distance * _speed;
-        _y_speed = y_distance / distance * _speed;
+        _x_speed = x_distance / distance * _speed * 3;
+        _y_speed = y_distance / distance * _speed * 3;
         adjusted = true;
+    } else if (_speed < wze::math::length(_x_speed, _y_speed)) {
+        _x_speed /= 3;
+        _y_speed /= 3;
     }
 
     if (z() < player_ship.z() + 20'000) {
-        _z_speed = _speed;
+        _z_speed = _speed * 3;
         adjusted = true;
     } else if (player_ship.z() + 50'000 < z()) {
-        _z_speed = -_speed;
+        _z_speed = -_speed * 3;
         adjusted = true;
+    } else if (_speed < abs(_z_speed)) {
+        _z_speed /= 3;
     }
 
     return adjusted;
