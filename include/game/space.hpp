@@ -1,6 +1,7 @@
 #ifndef GAME_SPACE_HPP
 #define GAME_SPACE_HPP
 
+#include "wizard_engine/speaker.hpp"
 #include <game/enums.hpp>
 #include <game/player_ship.hpp>
 #include <wizard_engine/wizard_engine.hpp>
@@ -37,6 +38,10 @@ class space final {
 
     std::vector<wze::sprite> _particles;
     void update_particles();
+
+    wze::speaker _ambiance_music;
+    wze::speaker _fight_music;
+    void update_music();
 
   public:
     space();

@@ -1,6 +1,9 @@
 #ifndef GAME_ASSETS_HPP
 #define GAME_ASSETS_HPP
 
+#include "wizard_engine/assets.hpp"
+#include <memory>
+#include <vector>
 #include <wizard_engine/wizard_engine.hpp>
 
 class assets final {
@@ -83,6 +86,9 @@ class assets final {
 
     static std::vector<std::shared_ptr<wze::texture>>
         _enemies_explosion_animation;
+
+    static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
+    static std::shared_ptr<wze::sound> _space_fight_music_sound;
 
     assets() = default;
 
@@ -171,6 +177,9 @@ class assets final {
 
     static std::vector<std::shared_ptr<wze::texture>> const&
     enemies_explosion_animation();
+
+    static std::shared_ptr<wze::sound> const& space_ambiance_music_sound();
+    static std::shared_ptr<wze::sound> const& space_fight_music_sound();
 
     static void initialize();
 };

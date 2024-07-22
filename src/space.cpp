@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <game/assets.hpp>
 #include <game/asteroid.hpp>
 #include <game/asteroid_loot.hpp>
@@ -5,6 +6,7 @@
 #include <game/laser.hpp>
 #include <game/save_data.hpp>
 #include <game/space.hpp>
+#include <limits>
 
 std::tuple<float, float, float> space::sphere_coordinate(float minimum,
                                                          float maximum) const {
@@ -197,6 +199,17 @@ void space::update_particles() {
     });
 }
 
+void space::update_music(){
+    if(!_enemy_ships.size() && !_fight_music.playing()){
+        _ambiance_music.stop(1500);
+        _fight_music.play(2000, std::numeric_limits<uint16_t>::max());
+    }
+    else if (!_ambiance_music.playing()) {
+        _fight_music.stop(1500);
+        _ambiance_music.play(2000, std::numeric_limits<uint16_t>::max());
+    }
+}
+
 space::space() {
     size_t i;
 
@@ -236,6 +249,8 @@ space::space() {
             },
             sphere_coordinate(10'000, 100'000));
     }
+
+    
 }
 
 space::~space() {
@@ -251,4 +266,5 @@ void space::update() {
     update_asteroid_loots();
     update_lasers();
     update_particles();
+    update_music();
 }
