@@ -90,7 +90,7 @@ bool laser::update(player_ship& player_ship,
         if (enemy_ship.z() - abs(z_movement) < z() &&
             z() < enemy_ship.z() + abs(z_movement) &&
             enemy_ship.hitbox()->inside(x(), y())) {
-            enemy_ship.damage(_damage);
+            enemy_ship.damage(speakers, _damage);
             _destroyed = true;
         }
     }

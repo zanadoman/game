@@ -62,7 +62,7 @@ class enemy_ship final : public wze::entity {
                 std::vector<asteroid> const& asteroids,
                 std::vector<laser>& lasers,
                 std::vector<wze::speaker>& speakers);
-    void damage(uint16_t hitpoints);
+    void damage(std::vector<wze::speaker>& speakers, uint16_t hitpoints);
 };
 
 #endif

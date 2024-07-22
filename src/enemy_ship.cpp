@@ -347,7 +347,8 @@ bool enemy_ship::update(player_ship const& player_ship,
     return true;
 }
 
-void enemy_ship::damage(uint16_t hitpoints) {
+void enemy_ship::damage(std::vector<wze::speaker>& speakers,
+                        uint16_t hitpoints) {
     if (_current_hitpoints) {
         _current_hitpoints = std::max(0, _current_hitpoints - hitpoints);
         _particles_color_r =
@@ -356,5 +357,12 @@ void enemy_ship::damage(uint16_t hitpoints) {
             44 + ((float)_current_hitpoints / (float)_max_hitpoints) * 133;
         _particles_color_b =
             56 + ((float)_current_hitpoints / (float)_max_hitpoints) * 144;
+        if (!_current_hitpoints) {
+            speakers.push_back({assets::enemies_explosion_sound(),
+                                std::numeric_limits<int8_t>::max(), 100'000,
+                                false, x(), y(), z(), true});
+        }
+        speakers.back().align_panning();
+        speakers.back().play();
     }
 }
