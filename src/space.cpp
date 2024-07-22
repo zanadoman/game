@@ -62,7 +62,7 @@ void space::update_enemy_ships() {
         _last_spawn + _spawn_time < wze::timer::current_time()) {
         switch (_difficulty) {
         case 1:
-            enemy_difficulty = ENEMY_DIFFICULTY_NORMAL;
+            enemy_difficulty = ENEMY_DIFFICULTY_EASY;
             count = wze::math::random(1, 2);
             _spawn_time = wze::math::random(60'000, 80'000);
             break;

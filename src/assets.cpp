@@ -796,5 +796,5 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
     _space_fight_music_sound =
         wze::assets::load_sound("./assets/sounds/space_fight.mp3");
-    _laser_sound = wze::assets::load_sound("./assets/sounds/laser.wav");
+    _laser_sound = wze::assets::load_sound("./assets/sounds/laser.ogg");
 }
