@@ -26,6 +26,7 @@ class laser final : public wze::entity {
     uint16_t _damage;
     bool _destroyed;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
+    std::shared_ptr<wze::speaker> _sound;
 
   public:
     float z() const;

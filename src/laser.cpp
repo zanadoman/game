@@ -52,6 +52,12 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
         _sprites, [this](std::shared_ptr<wze::sprite> const& sprite) -> void {
             components().push_back(sprite);
         });
+
+    _sound = std::shared_ptr<wze::speaker>(new wze::speaker(
+        assets::laser_sound(), std::numeric_limits<int8_t>::max(), 100'000,
+        false, x, y, z, true));
+    _sound->align_panning();
+    _sound->play();
 }
 
 bool laser::update(player_ship& player_ship,

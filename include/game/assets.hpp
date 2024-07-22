@@ -86,6 +86,7 @@ class assets final {
 
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
     static std::shared_ptr<wze::sound> _space_fight_music_sound;
+    static std::shared_ptr<wze::sound> _laser_sound;
 
     assets() = default;
 
@@ -177,6 +178,7 @@ class assets final {
 
     static std::shared_ptr<wze::sound> const& space_ambiance_music_sound();
     static std::shared_ptr<wze::sound> const& space_fight_music_sound();
+    static std::shared_ptr<wze::sound> const& laser_sound();
 
     static void initialize();
 };
