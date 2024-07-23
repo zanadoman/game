@@ -57,8 +57,8 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
     _passed_by = false;
 
     speakers.push_back({assets::laser_sound(),
-                        std::numeric_limits<int8_t>::max(), 50'000, false, x,
-                        y, z, true});
+                        std::numeric_limits<int8_t>::max() / 2, 50'000, false,
+                        x, y, z, true});
     speakers.back().align_panning();
     speakers.back().play();
 }

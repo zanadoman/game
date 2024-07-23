@@ -109,8 +109,8 @@ void asteroid::damage(std::vector<asteroid_loot>& asteroid_loots,
     if (_hitpoints && !(_hitpoints = std::max(0, _hitpoints - hitpoints))) {
         asteroid_loots.push_back({x(), y(), z(), _material});
         speakers.push_back({assets::explosion_sound(),
-                            std::numeric_limits<int8_t>::max(), 300'000, false,
-                            x(), y(), z(), true});
+                            std::numeric_limits<int8_t>::max() / 2, 300'000,
+                            false, x(), y(), z(), true});
         speakers.back().align_panning();
         speakers.back().play();
     }
