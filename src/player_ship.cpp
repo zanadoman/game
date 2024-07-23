@@ -302,6 +302,8 @@ player_ship::player_ship() {
 
     _warning_sound = {assets::player_ship_warning_sound(),
                       std::numeric_limits<int8_t>::max() / 2};
+    _asteroid_loot_sound = {assets::player_ship_asteroid_loot_sound(),
+                            std::numeric_limits<int8_t>::max()};
 
     components().push_back(_hitbox);
 }
@@ -369,5 +371,9 @@ void player_ship::asteroid_loot(material material) {
         _sapphire_icon.set_width(80);
         _sapphire_icon.set_height(80);
         break;
+    }
+
+    if (!_asteroid_loot_sound.playing()) {
+        _asteroid_loot_sound.play();
     }
 }
