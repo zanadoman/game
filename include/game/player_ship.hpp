@@ -54,6 +54,9 @@ class player_ship final : public wze::entity {
 
     uint16_t _storage;
 
+    wze::speaker _warning_sound;
+    wze::speaker _asteroid_loot_sound;
+
   public:
     std::shared_ptr<wze::polygon> const& hitbox() const;
     void set_x(float x) final;

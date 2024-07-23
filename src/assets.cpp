@@ -76,6 +76,7 @@ std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
+std::shared_ptr<wze::sound> assets::_player_ship_warning_sound;
 std::shared_ptr<wze::sound> assets::_laser_sound;
 std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
 std::shared_ptr<wze::sound> assets::_laser_passing_sound;
@@ -302,6 +303,10 @@ std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
 
 std::shared_ptr<wze::sound> const& assets::space_fight_music_sound() {
     return _space_fight_music_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::player_ship_warning_sound() {
+    return _player_ship_warning_sound;
 }
 
 std::shared_ptr<wze::sound> const& assets::laser_sound() {
@@ -812,6 +817,8 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
     _space_fight_music_sound =
         wze::assets::load_sound("./assets/sounds/space_fight.mp3");
+    _player_ship_warning_sound =
+        wze::assets::load_sound("./assets/sounds/player_ship_warning.ogg");
     _laser_sound = wze::assets::load_sound("./assets/sounds/laser.wav");
     _laser_explosion_sound =
         wze::assets::load_sound("./assets/sounds/laser_explosion.ogg");

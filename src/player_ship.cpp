@@ -300,6 +300,9 @@ player_ship::player_ship() {
 
     _storage = 50;
 
+    _warning_sound = {assets::player_ship_warning_sound(),
+                      std::numeric_limits<int8_t>::max() / 2};
+
     components().push_back(_hitbox);
 }
 
@@ -321,6 +324,9 @@ void player_ship::damage(float hitpoints) {
         _current_hitpoints = std::max(0.f, _current_hitpoints - hitpoints);
         _warning.set_color_a(_warning_opacity =
                                  std::numeric_limits<uint8_t>::max());
+        if (!_warning_sound.playing()) {
+            _warning_sound.play();
+        }
     }
 }
 
