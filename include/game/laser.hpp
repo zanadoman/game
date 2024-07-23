@@ -11,6 +11,7 @@ class asteroid_loot;
 class laser final : public wze::entity {
   private:
     std::shared_ptr<wze::sprite> _appearance;
+    std::shared_ptr<wze::sprite> _marker;
     wze::animator _explosion;
     float _diameter;
     uint8_t _color_r;
@@ -27,7 +28,7 @@ class laser final : public wze::entity {
     bool _destroyed;
     std::vector<std::shared_ptr<wze::sprite>> _sprites;
 
-    bool _passed_by;
+    bool _passed;
 
   public:
     float z() const;

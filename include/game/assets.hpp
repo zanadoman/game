@@ -22,6 +22,7 @@ class assets final {
         _player_ship_difficulty_textures;
 
     static std::shared_ptr<wze::texture> _laser_texture;
+    static std::shared_ptr<wze::texture> _laser_marker_texture;
     static std::vector<std::shared_ptr<wze::texture>>
         _laser_explosion_animation;
 
@@ -92,6 +93,7 @@ class assets final {
     static std::shared_ptr<wze::sound>
         _player_ship_asteroid_loot_rejected_sound;
     static std::shared_ptr<wze::sound> _laser_sound;
+    static std::shared_ptr<wze::sound> _laser_marker_sound;
     static std::shared_ptr<wze::sound> _laser_explosion_sound;
     static std::shared_ptr<wze::sound> _laser_passing_sound;
     static std::vector<std::shared_ptr<wze::sound>> _explosion_sounds;
@@ -116,6 +118,7 @@ class assets final {
     player_ship_difficulty_textures();
 
     static std::shared_ptr<wze::texture> const& laser_texture();
+    static std::shared_ptr<wze::texture> const& laser_marker_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     laser_explosion_animation();
 
@@ -192,6 +195,7 @@ class assets final {
     static std::shared_ptr<wze::sound> const&
     player_ship_asteroid_loot_rejected_sound();
     static std::shared_ptr<wze::sound> const& laser_sound();
+    static std::shared_ptr<wze::sound> const& laser_marker_sound();
     static std::shared_ptr<wze::sound> const& laser_explosion_sound();
     static std::shared_ptr<wze::sound> const& laser_passing_sound();
     static std::shared_ptr<wze::sound> const& explosion_sound();

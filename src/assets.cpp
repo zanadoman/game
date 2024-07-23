@@ -17,6 +17,7 @@ std::vector<std::shared_ptr<wze::texture>>
     assets::_player_ship_difficulty_textures;
 
 std::shared_ptr<wze::texture> assets::_laser_texture;
+std::shared_ptr<wze::texture> assets::_laser_marker_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_laser_explosion_animation;
 
 std::vector<std::shared_ptr<wze::texture>> assets::_asteroids_pyrite_textures;
@@ -80,6 +81,7 @@ std::shared_ptr<wze::sound> assets::_player_ship_warning_sound;
 std::shared_ptr<wze::sound> assets::_player_ship_asteroid_loot_accepted_sound;
 std::shared_ptr<wze::sound> assets::_player_ship_asteroid_loot_rejected_sound;
 std::shared_ptr<wze::sound> assets::_laser_sound;
+std::shared_ptr<wze::sound> assets::_laser_marker_sound;
 std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
 std::shared_ptr<wze::sound> assets::_laser_passing_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_explosion_sounds;
@@ -129,6 +131,10 @@ assets::player_ship_difficulty_textures() {
 
 std::shared_ptr<wze::texture> const& assets::laser_texture() {
     return _laser_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::laser_marker_texture() {
+    return _laser_marker_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -325,6 +331,10 @@ std::shared_ptr<wze::sound> const& assets::laser_sound() {
     return _laser_sound;
 }
 
+std::shared_ptr<wze::sound> const& assets::laser_marker_sound() {
+    return _laser_marker_sound;
+}
+
 std::shared_ptr<wze::sound> const& assets::laser_explosion_sound() {
     return _laser_explosion_sound;
 }
@@ -415,6 +425,8 @@ void assets::initialize() {
 
     _laser_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/laser/laser.png"));
+    _laser_marker_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/laser/marker.png"));
     _laser_explosion_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/laser/explosion/1.png")),
@@ -836,6 +848,8 @@ void assets::initialize() {
     _player_ship_asteroid_loot_rejected_sound = wze::assets::load_sound(
         "./assets/sounds/player_ship_asteroid_loot_rejected.ogg");
     _laser_sound = wze::assets::load_sound("./assets/sounds/laser.wav");
+    _laser_marker_sound =
+        wze::assets::load_sound("./assets/sounds/laser_marker.mp3");
     _laser_explosion_sound =
         wze::assets::load_sound("./assets/sounds/laser_explosion.ogg");
     _laser_passing_sound =
