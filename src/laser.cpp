@@ -57,7 +57,7 @@ laser::laser(float x, float y, float z, float x_speed, float y_speed,
     _passed_by = false;
 
     speakers.push_back({assets::laser_sound(),
-                        std::numeric_limits<int8_t>::max(), 100'000, false, x,
+                        std::numeric_limits<int8_t>::max(), 50'000, false, x,
                         y, z, true});
     speakers.back().align_panning();
     speakers.back().play();
@@ -124,7 +124,7 @@ bool laser::update(player_ship& player_ship,
             0, 0, true, true, false, false, false));
         _explosion.targets().push_back(_appearance);
         speakers.push_back({assets::laser_explosion_sound(),
-                            std::numeric_limits<int8_t>::max() / 4, 100'000,
+                            std::numeric_limits<int8_t>::max() / 4, 50'000,
                             false, x(), y(), z(), true});
         speakers.back().align_panning();
         speakers.back().play();
