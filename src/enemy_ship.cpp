@@ -238,6 +238,10 @@ enemy_ship::enemy_ship(float x, float y, float z,
         std::numeric_limits<uint8_t>::max(), 0, wze::FLIP_NONE, true,
         std::numeric_limits<uint8_t>::max(), true, 0, 0, 0, true, true, true,
         false, false));
+    _sound = std::shared_ptr<wze::speaker>(new wze::speaker(
+        assets::ship_sound(), std::numeric_limits<int8_t>::max(), 300'000, true,
+        this->x(), this->y(), this->z(), true));
+    _sound->play(0, std::numeric_limits<uint16_t>::max());
     _rear_loop.set_frame_time(150);
     _rear_loop.targets().push_back({_appearance});
     _front_loop.set_frame_time(150);
@@ -270,6 +274,7 @@ enemy_ship::enemy_ship(float x, float y, float z,
     _particles_color_b = 200;
 
     components().push_back(_appearance);
+    components().push_back(_sound);
     components().push_back(_hitbox);
 }
 
@@ -303,6 +308,8 @@ bool enemy_ship::update(player_ship const& player_ship,
     } else if (player_ship.angle() + wze::math::to_radians(10) < angle()) {
         set_angle(angle() - _speed / 1'500 * wze::timer::delta_time());
     }
+
+    _sound->set_z(z());
 
     if (_attacking && _attack_begin + 2'500 < wze::timer::current_time()) {
         _attacking = false;

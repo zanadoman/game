@@ -85,6 +85,7 @@ std::shared_ptr<wze::sound> assets::_laser_marker_sound;
 std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
 std::shared_ptr<wze::sound> assets::_laser_passing_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_explosion_sounds;
+std::shared_ptr<wze::sound> assets::_ship_sound;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
     return _normal_font;
@@ -346,6 +347,10 @@ std::shared_ptr<wze::sound> const& assets::laser_passing_sound() {
 std::shared_ptr<wze::sound> const& assets::explosion_sound() {
     return _explosion_sounds.at(
         wze::math::random<size_t>(0, _explosion_sounds.size() - 1));
+}
+
+std::shared_ptr<wze::sound> const& assets::ship_sound() {
+    return _ship_sound;
 }
 
 void assets::initialize() {
@@ -858,4 +863,5 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/explosion1.ogg"),
         wze::assets::load_sound("./assets/sounds/explosion2.ogg"),
         wze::assets::load_sound("./assets/sounds/explosion3.ogg")};
+    _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
 }

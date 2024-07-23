@@ -115,30 +115,41 @@ void player_ship::update_crosshair() {
 }
 
 void player_ship::update_movement() {
+    bool moved;
+
+    moved = false;
+
     if ((wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP)) &&
         !(wze::input::key(wze::KEY_S) || wze::input::key(wze::KEY_DOWN))) {
         set_z(z() + _speed * wze::timer::delta_time());
+        moved = true;
     } else if ((wze::input::key(wze::KEY_S) ||
                 wze::input::key(wze::KEY_DOWN)) &&
                !(wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP))) {
         set_z(z() - _speed * wze::timer::delta_time());
+        moved = true;
     }
 
     if ((wze::input::key(wze::KEY_A) || wze::input::key(wze::KEY_LEFT)) &&
         !(wze::input::key(wze::KEY_D) || wze::input::key(wze::KEY_RIGHT))) {
         set_angle(angle() - _speed / 7'500 * wze::timer::delta_time());
+        moved = true;
     } else if ((wze::input::key(wze::KEY_D) ||
                 wze::input::key(wze::KEY_RIGHT)) &&
                !(wze::input::key(wze::KEY_A) ||
                  wze::input::key(wze::KEY_LEFT))) {
         set_angle(angle() + _speed / 7'500 * wze::timer::delta_time());
+        moved = true;
     }
 
     update_crosshair();
     if (50 < wze::math::length(_crosshair_x, _crosshair_y)) {
         set_x(x() + _crosshair_x * _speed / 75 * wze::timer::delta_time());
         set_y(y() + _crosshair_y * _speed / 75 * wze::timer::delta_time());
+        moved = true;
     }
+
+    _sound.set_volume(std::numeric_limits<int8_t>::max() / (moved ? 2 : 3));
 }
 
 void player_ship::update_cannons_x() {
@@ -314,6 +325,8 @@ player_ship::player_ship() {
                       std::numeric_limits<int8_t>::max() / 2};
     _asteroid_loot_sound = {assets::player_ship_asteroid_loot_accepted_sound(),
                             std::numeric_limits<int8_t>::max()};
+    _sound = {assets::ship_sound(), std::numeric_limits<int8_t>::max() / 3};
+    _sound.play(0, std::numeric_limits<uint16_t>::max());
 
     components().push_back(_hitbox);
 }

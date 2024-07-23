@@ -14,6 +14,7 @@ class enemy_ship final : public wze::entity {
     std::function<std::vector<std::shared_ptr<wze::texture>> const&(void)>
         _textures;
     std::shared_ptr<wze::sprite> _appearance;
+    std::shared_ptr<wze::speaker> _sound;
     wze::animator _rear_loop;
     wze::animator _front_loop;
     wze::animator _explosion;
