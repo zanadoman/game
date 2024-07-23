@@ -149,7 +149,7 @@ bool laser::update(player_ship& player_ship,
         }
         _explosion.targets().push_back(_appearance);
         speakers.push_back({assets::laser_explosion_sound(),
-                            std::numeric_limits<int8_t>::max() / 4, 75'000,
+                            std::numeric_limits<int8_t>::max() / 2, 75'000,
                             false, x(), y(), z(), true});
         speakers.back().align_panning();
         speakers.back().play();
