@@ -98,10 +98,20 @@ void player_ship::update_hud(uint8_t difficulty) {
 }
 
 void player_ship::update_joy_stick() {
-    _joy_stick.update();
-    _joy_stick_x = wze::math::transform_x(_joy_stick.x(), _joy_stick.y(),
+    
+    float value;
+
+    _crosshair.set_x(_crosshair.x() + wze::input::cursor_relative_x());
+    _crosshair.set_y(_crosshair.y() + wze::input::cursor_relative_y());
+
+    if (200 < (value = wze::math::length(_crosshair.x(), _crosshair.y()))) {
+        _crosshair.set_x(_crosshair.x() / value * 200);
+        _crosshair.set_y(_crosshair.y() / value * 200);
+    }
+
+    _joy_stick_x = wze::math::transform_x(_crosshair.x(), _crosshair.y(),
                                           transformation_matrix());
-    _joy_stick_y = wze::math::transform_y(_joy_stick.x(), _joy_stick.y(),
+    _joy_stick_y = wze::math::transform_y(_crosshair.x(), _crosshair.y(),
                                           transformation_matrix());
 }
 
@@ -282,7 +292,8 @@ player_ship::player_ship() {
     _hitbox = std::shared_ptr<wze::polygon>(new wze::polygon(
         {{-1'280, -720}, {-1'280, 720}, {1'280, 720}, {1'280, -720}}));
 
-    _joy_stick = {};
+    _crosshair = {0,  0,  0,     0,
+                  36, 36, false, assets::player_ship_crosshair_texture()};
     _joy_stick_x = 0;
     _joy_stick_y = 0;
 

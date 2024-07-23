@@ -2,7 +2,6 @@
 #define GAME_PLAYER_SHIP_HPP
 
 #include <game/enums.hpp>
-#include <game/joy_stick.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class laser;
@@ -30,7 +29,7 @@ class player_ship final : public wze::entity {
     std::shared_ptr<wze::polygon> _hitbox;
     void update_hud(uint8_t difficulty);
 
-    joy_stick _joy_stick;
+    wze::sprite _crosshair;
     float _joy_stick_x;
     float _joy_stick_y;
     void update_joy_stick();
