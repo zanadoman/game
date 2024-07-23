@@ -230,8 +230,10 @@ space::space() {
     _asteroid_loots = {};
     _lasers = {};
     _particles = {};
-    _ambiance_music = {assets::space_ambiance_music_sound()};
-    _fight_music = {assets::space_fight_music_sound()};
+    _ambiance_music = {assets::space_ambiance_music_sound(),
+                       std::numeric_limits<int8_t>::max() / 2};
+    _fight_music = {assets::space_fight_music_sound(),
+                    std::numeric_limits<int8_t>::max() / 2};
 
     update_difficulty();
 
