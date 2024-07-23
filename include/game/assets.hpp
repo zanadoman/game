@@ -89,7 +89,7 @@ class assets final {
     static std::shared_ptr<wze::sound> _laser_sound;
     static std::shared_ptr<wze::sound> _laser_explosion_sound;
     static std::shared_ptr<wze::sound> _laser_passing_sound;
-    static std::vector<std::shared_ptr<wze::sound>> _enemies_explosion_sounds;
+    static std::vector<std::shared_ptr<wze::sound>> _explosion_sounds;
 
     assets() = default;
 
@@ -184,7 +184,7 @@ class assets final {
     static std::shared_ptr<wze::sound> const& laser_sound();
     static std::shared_ptr<wze::sound> const& laser_explosion_sound();
     static std::shared_ptr<wze::sound> const& laser_passing_sound();
-    static std::shared_ptr<wze::sound> const& enemies_explosion_sound();
+    static std::shared_ptr<wze::sound> const& explosion_sound();
 
     static void initialize();
 };

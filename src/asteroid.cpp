@@ -83,7 +83,8 @@ asteroid::asteroid(float x, float y, float z, material material) {
 }
 
 bool asteroid::update(player_ship& player_ship,
-                      std::vector<asteroid_loot>& asteroid_loots) {
+                      std::vector<asteroid_loot>& asteroid_loots,
+                      std::vector<wze::speaker>& speakers) {
     if (!_hitpoints) {
         return !_explosion.play();
     }
@@ -97,15 +98,20 @@ bool asteroid::update(player_ship& player_ship,
     if (z() - 2'000 < player_ship.z() && player_ship.z() < z() + 2'000 &&
         player_ship.hitbox()->overlap(_hitbox)) {
         player_ship.damage(_hitpoints);
-        damage(asteroid_loots, _hitpoints);
+        damage(asteroid_loots, speakers, _hitpoints);
     }
 
     return true;
 }
 
 void asteroid::damage(std::vector<asteroid_loot>& asteroid_loots,
-                      uint16_t hitpoints) {
+                      std::vector<wze::speaker>& speakers, uint16_t hitpoints) {
     if (_hitpoints && !(_hitpoints = std::max(0, _hitpoints - hitpoints))) {
         asteroid_loots.push_back({x(), y(), z(), _material});
+        speakers.push_back({assets::explosion_sound(),
+                            std::numeric_limits<int8_t>::max(), 300'000, false,
+                            x(), y(), z(), true});
+        speakers.back().align_panning();
+        speakers.back().play();
     }
 }

@@ -135,7 +135,7 @@ void space::update_asteroids() {
         if (300'000 < sqrtf(powf(asteroid.x() - _player_ship.x(), 2) +
                             powf(asteroid.y() - _player_ship.y(), 2) +
                             powf(asteroid.z() - _player_ship.z(), 2)) ||
-            !asteroid.update(_player_ship, _asteroid_loots)) {
+            !asteroid.update(_player_ship, _asteroid_loots, _speakers)) {
             asteroid.~asteroid();
             std::apply(
                 [&asteroid](float x, float y, float z,

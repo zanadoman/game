@@ -83,7 +83,7 @@ bool laser::update(player_ship& player_ship,
         if (asteroid.z() - abs(z_movement) < z() &&
             z() < asteroid.z() + abs(z_movement) &&
             asteroid.hitbox().inside(x(), y())) {
-            asteroid.damage(asteroid_loots, _damage);
+            asteroid.damage(asteroid_loots, speakers, _damage);
             _destroyed = true;
         }
     }
