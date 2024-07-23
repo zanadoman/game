@@ -79,7 +79,6 @@ bool laser::update(player_ship& player_ship,
                     [this](float x, float y) -> void {
                         _marker->set_x(x);
                         _marker->set_y(y);
-                        printf("%f, %f\n", (double)x, (double)y);
                     },
                     wze::camera::project(x(), y(), z()));
                 _marker->set_visible(true);
