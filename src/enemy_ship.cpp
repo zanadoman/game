@@ -239,7 +239,7 @@ enemy_ship::enemy_ship(float x, float y, float z,
         std::numeric_limits<uint8_t>::max(), true, 0, 0, 0, true, true, true,
         false, false));
     _sound = std::shared_ptr<wze::speaker>(new wze::speaker(
-        assets::ship_sound(), std::numeric_limits<int8_t>::max(), 300'000, true,
+        assets::ship_sound(), std::numeric_limits<int8_t>::max(), 75'000, true,
         this->x(), this->y(), this->z(), true));
     _sound->play(0, std::numeric_limits<uint16_t>::max());
     _rear_loop.set_frame_time(150);

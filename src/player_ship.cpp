@@ -149,7 +149,7 @@ void player_ship::update_movement() {
         moved = true;
     }
 
-    _sound.set_volume(std::numeric_limits<int8_t>::max() / (moved ? 2 : 3));
+    _sound.set_volume(std::numeric_limits<int8_t>::max() / (moved ? 3 : 4));
 }
 
 void player_ship::update_cannons_x() {
@@ -325,7 +325,7 @@ player_ship::player_ship() {
                       std::numeric_limits<int8_t>::max() / 2};
     _asteroid_loot_sound = {assets::player_ship_asteroid_loot_accepted_sound(),
                             std::numeric_limits<int8_t>::max()};
-    _sound = {assets::ship_sound(), std::numeric_limits<int8_t>::max() / 3};
+    _sound = {assets::ship_sound(), std::numeric_limits<int8_t>::max() / 4};
     _sound.play(0, std::numeric_limits<uint16_t>::max());
 
     components().push_back(_hitbox);
