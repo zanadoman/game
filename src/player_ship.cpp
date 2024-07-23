@@ -97,8 +97,7 @@ void player_ship::update_hud(uint8_t difficulty) {
         assets::player_ship_difficulty_textures().at(difficulty));
 }
 
-void player_ship::update_joy_stick() {
-    
+void player_ship::update_crosshair() {
     float value;
 
     _crosshair.set_x(_crosshair.x() + wze::input::cursor_relative_x());
@@ -109,9 +108,9 @@ void player_ship::update_joy_stick() {
         _crosshair.set_y(_crosshair.y() / value * 200);
     }
 
-    _joy_stick_x = wze::math::transform_x(_crosshair.x(), _crosshair.y(),
+    _crosshair_x = wze::math::transform_x(_crosshair.x(), _crosshair.y(),
                                           transformation_matrix());
-    _joy_stick_y = wze::math::transform_y(_crosshair.x(), _crosshair.y(),
+    _crosshair_y = wze::math::transform_y(_crosshair.x(), _crosshair.y(),
                                           transformation_matrix());
 }
 
@@ -135,10 +134,10 @@ void player_ship::update_movement() {
         set_angle(angle() + _speed / 7'500 * wze::timer::delta_time());
     }
 
-    update_joy_stick();
-    if (50 < wze::math::length(_joy_stick_x, _joy_stick_y)) {
-        set_x(x() + _joy_stick_x * _speed / 75 * wze::timer::delta_time());
-        set_y(y() + _joy_stick_y * _speed / 75 * wze::timer::delta_time());
+    update_crosshair();
+    if (50 < wze::math::length(_crosshair_x, _crosshair_y)) {
+        set_x(x() + _crosshair_x * _speed / 75 * wze::timer::delta_time());
+        set_y(y() + _crosshair_y * _speed / 75 * wze::timer::delta_time());
     }
 }
 
@@ -163,13 +162,13 @@ void player_ship::shoot(std::vector<laser>& lasers,
     float speed;
 
     cannon = (_active_cannon = !_active_cannon) ? _left_cannon : _right_cannon;
-    normalization = sqrtf(powf(_joy_stick_x, 2) + powf(_joy_stick_y, 2) +
+    normalization = sqrtf(powf(_crosshair_x, 2) + powf(_crosshair_y, 2) +
                           powf(wze::camera::focus(), 2));
     speed = _speed * 20;
 
     lasers.push_back({cannon.first, cannon.second, z(),
-                      _joy_stick_x / normalization * speed,
-                      _joy_stick_y / normalization * speed,
+                      _crosshair_x / normalization * speed,
+                      _crosshair_y / normalization * speed,
                       wze::camera::focus() / normalization * speed, 1'000, 300,
                       137, 221, 71, _damage, speakers});
 }
@@ -294,8 +293,8 @@ player_ship::player_ship() {
 
     _crosshair = {0,  0,  0,     0,
                   36, 36, false, assets::player_ship_crosshair_texture()};
-    _joy_stick_x = 0;
-    _joy_stick_y = 0;
+    _crosshair_x = 0;
+    _crosshair_y = 0;
 
     _speed = 5;
 

@@ -30,9 +30,9 @@ class player_ship final : public wze::entity {
     void update_hud(uint8_t difficulty);
 
     wze::sprite _crosshair;
-    float _joy_stick_x;
-    float _joy_stick_y;
-    void update_joy_stick();
+    float _crosshair_x;
+    float _crosshair_y;
+    void update_crosshair();
 
     float _speed;
     void update_movement();
