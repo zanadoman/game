@@ -13,6 +13,7 @@ enum button_state {
 class button final {
   private:
     wze::sprite _appearance;
+    wze::sprite _text;
     wze::polygon _hitbox;
     button_state _state;
     std::shared_ptr<wze::texture> _texture_none;
@@ -20,30 +21,16 @@ class button final {
     std::shared_ptr<wze::texture> _texture_onclick;
 
   public:
-    wze::sprite const& appearance() const;
-
-    wze::polygon const& hitbox() const;
-
     button_state state() const;
-
-    std::shared_ptr<wze::texture> const& texture_none() const;
-    void set_texture_none(std::shared_ptr<wze::texture> const& texture_none);
-
-    std::shared_ptr<wze::texture> const& texture_hovered() const;
-    void
-    set_texture_hovered(std::shared_ptr<wze::texture> const& texture_hovered);
-
-    std::shared_ptr<wze::texture> const& texture_onclick() const;
-    void
-    set_texture_onclick(std::shared_ptr<wze::texture> const& texture_onclick);
 
     button(float x, float y, float z, float angle, float width, float height,
            bool spatial, uint8_t priority,
            std::vector<std::pair<float, float>> const& hitbox,
            std::shared_ptr<wze::texture> const& texture_none,
            std::shared_ptr<wze::texture> const& texture_hovered,
-           std::shared_ptr<wze::texture> const& texture_onclick);
-
+           std::shared_ptr<wze::texture> const& texture_onclick,
+           std::string const& text, uint8_t text_color_r, uint8_t text_color_g,
+           uint8_t text_color_b);
     void update();
 };
 

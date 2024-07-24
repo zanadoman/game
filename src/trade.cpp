@@ -7,7 +7,7 @@ trade::trade(float x, float y, trade_type trade_type)
               std::numeric_limits<uint8_t>::max(),
               {{-50, 25}, {-50, -25}, {50, -25}, {50, 25}},
               assets::placeholder_texture(), assets::shop_background_texture(),
-              assets::space_texture()) {
+              assets::space_texture(), "Vásárol", 0, 0, 0) {
     _trade_type = trade_type;
     _background = {x,
                    y,
@@ -62,30 +62,36 @@ trade::trade(float x, float y, trade_type trade_type)
         _level1.set_texture(assets::placeholder_texture());
         _level2.set_texture(assets::placeholder_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 1000;
         break;
     case 1:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::placeholder_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 2000;
         break;
     case 2:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::asteroids_ruby_gem_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 3000;
         break;
     default:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::asteroids_ruby_gem_texture());
         _level3.set_texture(assets::asteroids_ruby_gem_texture());
+        _price = 0;
         break;
     }
 }
 
 void trade::update() {
     _button.update();
-    
-    if (_button.state() & BUTTON_STATE_POSTCLICK) {
+
+    if (_button.state() & BUTTON_STATE_POSTCLICK && _level() < 3 &&
+        _price <= save_data::player_money()) {
         _set_level(_level() + 1);
+        save_data::set_player_money(save_data::player_money() - _price);
     }
 
     switch (_level()) {
@@ -93,21 +99,25 @@ void trade::update() {
         _level1.set_texture(assets::placeholder_texture());
         _level2.set_texture(assets::placeholder_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 1000;
         break;
     case 1:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::placeholder_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 2000;
         break;
     case 2:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::asteroids_ruby_gem_texture());
         _level3.set_texture(assets::placeholder_texture());
+        _price = 3000;
         break;
     default:
         _level1.set_texture(assets::asteroids_ruby_gem_texture());
         _level2.set_texture(assets::asteroids_ruby_gem_texture());
         _level3.set_texture(assets::asteroids_ruby_gem_texture());
+        _price = 0;
         break;
     }
 }
