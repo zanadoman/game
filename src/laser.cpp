@@ -142,6 +142,7 @@ bool laser::update(player_ship& player_ship,
             _marker->set_width(25);
             _marker->set_height(25);
             _marker->set_texture(assets::laser_marker_texture());
+            _marker->set_visible(false);
             speakers.push_back({assets::laser_marker_sound(),
                                 std::numeric_limits<int8_t>::max() / 2});
             speakers.back().play();
