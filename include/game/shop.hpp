@@ -21,8 +21,12 @@ class shop final {
 
     std::shared_ptr<wze::sprite> _door;
     wze::animator _door_animation;
+    wze::speaker _door_sound;
     bool _door_open;
+    bool _door_animating;
     void update_door();
+
+    
 
   public:
     shop();

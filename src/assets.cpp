@@ -88,6 +88,7 @@ std::shared_ptr<wze::sound> assets::_laser_explosion_sound;
 std::shared_ptr<wze::sound> assets::_laser_passing_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_explosion_sounds;
 std::shared_ptr<wze::sound> assets::_ship_sound;
+std::shared_ptr<wze::sound> assets::_shop_door_open_sound;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
     return _normal_font;
@@ -362,6 +363,10 @@ std::shared_ptr<wze::sound> const& assets::explosion_sound() {
 
 std::shared_ptr<wze::sound> const& assets::ship_sound() {
     return _ship_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::shop_door_open_sound(){
+    return _shop_door_open_sound;
 }
 
 void assets::initialize() {
@@ -904,4 +909,5 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/explosion2.ogg"),
         wze::assets::load_sound("./assets/sounds/explosion3.ogg")};
     _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
+    _shop_door_open_sound = wze::assets::load_sound("./assets/sounds/shop_door_open.mp3");
 }
