@@ -307,7 +307,20 @@ player_ship::player_ship() {
     _crosshair_x = 0;
     _crosshair_y = 0;
 
-    _speed = 5;
+    switch (save_data::player_ship_speed_tier()) {
+    case 0:
+        _speed = 5;
+        break;
+    case 1:
+        _speed = 6.5;
+        break;
+    case 2:
+        _speed = 8.5;
+        break;
+    default:
+        _speed = 10;
+        break;
+    }
 
     _left_cannon = {x() - 500, y() + 300};
     _right_cannon = {x() + 500, y() + 300};
@@ -315,9 +328,36 @@ player_ship::player_ship() {
     _active_cannon = false;
     _last_shot = 0;
     _reload_time = 300;
-    _damage = 10;
+    switch (save_data::player_ship_damage_tier()) {
+    case 0:
+        _damage = 10;
+        break;
+    case 1:
+        _damage = 17;
+        break;
+    case 2:
+        _damage = 23;
+        break;
+    default:
+        _damage = 30;
+        break;
+    }
 
-    _current_hitpoints = _max_hitpoints = 300;
+    switch (save_data::player_ship_hitpoints_tier()) {
+    case 0:
+        _max_hitpoints = 300;
+        break;
+    case 1:
+        _max_hitpoints = 500;
+        break;
+    case 2:
+        _max_hitpoints = 700;
+        break;
+    default:
+        _max_hitpoints = 900;
+        break;
+    }
+    _current_hitpoints = _max_hitpoints;
 
     _storage = 50;
 
