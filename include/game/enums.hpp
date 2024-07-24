@@ -1,6 +1,13 @@
 #ifndef GAME_ENUMS_HPP
 #define GAME_ENUMS_HPP
 
+enum trade_type {
+    TRADE_TYPE_CANNON,
+    TRADE_TYPE_ENGINE,
+    TRADE_TYPE_ARMOR,
+    TRADE_TYPE_STORAGE
+};
+
 enum enemy_difficulty {
     ENEMY_DIFFICULTY_EASY,
     ENEMY_DIFFICULTY_NORMAL,

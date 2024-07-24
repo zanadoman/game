@@ -6,13 +6,13 @@ void shop::update_door() {
 
     open = wze::math::length(_player.x() - 1815, _player.y() + 397.5f) <= 500;
 
-    if(open != _door_open){
+    if (!_door_animating && open != _door_open) {
         _door_animating = true;
+        _door_sound.play();
     }
 
-    if(_door_animating && _door_animation.play()){
+    if (_door_animating && _door_animation.play()) {
         _door->set_texture(_door_animation.frames().back());
-        _door_sound.play();
         _door_animation.reverse();
         _door_animation.reset();
         _door_open = !_door_open;
@@ -68,8 +68,8 @@ shop::shop() {
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
     _door_animation = {assets::shop_door_animation(), 100, {_door}};
-    _door_open = false;
     _door_animating = false;
+    _door_open = false;
 
     _door_sound = {assets::shop_door_open_sound()};
 }

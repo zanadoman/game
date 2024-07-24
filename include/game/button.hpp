@@ -37,8 +37,9 @@ class button final {
     void
     set_texture_onclick(std::shared_ptr<wze::texture> const& texture_onclick);
 
-    button(float x, float y, float angle, float width, float height,
-           uint8_t priority, std::vector<std::pair<float, float>> const& hitbox,
+    button(float x, float y, float z, float angle, float width, float height,
+           bool spatial, uint8_t priority,
+           std::vector<std::pair<float, float>> const& hitbox,
            std::shared_ptr<wze::texture> const& texture_none,
            std::shared_ptr<wze::texture> const& texture_hovered,
            std::shared_ptr<wze::texture> const& texture_onclick);

@@ -39,13 +39,13 @@ void button::set_texture_onclick(
     _texture_onclick = texture_onclick;
 }
 
-button::button(float x, float y, float angle, float width, float height,
-               uint8_t priority,
+button::button(float x, float y, float z, float angle, float width,
+               float height, bool spatial, uint8_t priority,
                std::vector<std::pair<float, float>> const& hitbox,
                std::shared_ptr<wze::texture> const& texture_none,
                std::shared_ptr<wze::texture> const& texture_hovered,
                std::shared_ptr<wze::texture> const& texture_onclick)
-    : _appearance(x, y, 0, angle, width, height, false, texture_none,
+    : _appearance(x, y, z, angle, width, height, spatial, texture_none,
                   std::numeric_limits<uint8_t>::max(),
                   std::numeric_limits<uint8_t>::max(),
                   std::numeric_limits<uint8_t>::max(),
@@ -63,8 +63,12 @@ void button::update() {
 
     state = this->state();
 
-    if (hitbox().inside(wze::input::cursor_absolute_x(),
-                        wze::input::cursor_absolute_y())) {
+    if (std::apply(
+            [this](float x, float y) -> bool { return _hitbox.inside(x, y); },
+            _appearance.spatial()
+                ? wze::input::cursor_spatial(_appearance.z())
+                : std::pair<float, float>(wze::input::cursor_absolute_x(),
+                                          wze::input::cursor_absolute_y()))) {
         state |= BUTTON_STATE_HOVERED;
         if (wze::input::key(wze::KEY_MOUSE_LEFT)) {
             state |= BUTTON_STATE_ONCLICK;
