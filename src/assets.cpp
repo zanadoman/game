@@ -74,7 +74,8 @@ std::vector<std::shared_ptr<wze::texture>>
     assets::_enemies_hard_front_loop_animation;
 std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 
-std::shared_ptr<wze::texture> assets::_shop_background;
+std::shared_ptr<wze::texture> assets::_shop_background_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_shop_door_animation;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
@@ -307,8 +308,13 @@ assets::enemies_explosion_animation() {
     return _enemies_explosion_animation;
 }
 
-std::shared_ptr<wze::texture> const& assets::shop_background() {
-    return _shop_background;
+std::shared_ptr<wze::texture> const& assets::shop_background_texture() {
+    return _shop_background_texture;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::shop_door_animation() {
+    return _shop_door_animation;
 }
 
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
@@ -846,8 +852,35 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/10.png"))};
 
-    _shop_background = wze::assets::create_texture(
+    _shop_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/shop/background.png"));
+    _shop_door_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/5.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/6.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/7.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/8.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/9.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/10.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/11.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/12.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/shop/door/13.png"))};
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
