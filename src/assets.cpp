@@ -72,8 +72,9 @@ std::vector<std::shared_ptr<wze::texture>>
     assets::_enemies_hard_rear_loop_animation;
 std::vector<std::shared_ptr<wze::texture>>
     assets::_enemies_hard_front_loop_animation;
-
 std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
+
+std::shared_ptr<wze::texture> assets::_shop_background;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
@@ -304,6 +305,10 @@ assets::enemies_hard_front_loop_animation() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::enemies_explosion_animation() {
     return _enemies_explosion_animation;
+}
+
+std::shared_ptr<wze::texture> const& assets::shop_background() {
+    return _shop_background;
 }
 
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
@@ -819,7 +824,6 @@ void assets::initialize() {
             wze::assets::load_image("./assets/enemies/hard/front_loop2.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/hard/front_loop3.png"))};
-
     _enemies_explosion_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/1.png")),
@@ -841,6 +845,9 @@ void assets::initialize() {
             wze::assets::load_image("./assets/enemies/explosion/9.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/enemies/explosion/10.png"))};
+
+    _shop_background = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/background.png"));
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");

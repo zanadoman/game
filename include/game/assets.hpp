@@ -81,9 +81,10 @@ class assets final {
         _enemies_hard_rear_loop_animation;
     static std::vector<std::shared_ptr<wze::texture>>
         _enemies_hard_front_loop_animation;
-
     static std::vector<std::shared_ptr<wze::texture>>
         _enemies_explosion_animation;
+
+    static std::shared_ptr<wze::texture> _shop_background;
 
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
     static std::shared_ptr<wze::sound> _space_fight_music_sound;
@@ -184,9 +185,10 @@ class assets final {
     enemies_hard_rear_loop_animation();
     static std::vector<std::shared_ptr<wze::texture>> const&
     enemies_hard_front_loop_animation();
-
     static std::vector<std::shared_ptr<wze::texture>> const&
     enemies_explosion_animation();
+
+    static std::shared_ptr<wze::texture> const& shop_background();
 
     static std::shared_ptr<wze::sound> const& space_ambiance_music_sound();
     static std::shared_ptr<wze::sound> const& space_fight_music_sound();
