@@ -2,11 +2,12 @@
 #define GAME_SHOP_HPP
 
 #include <game/player.hpp>
+#include <game/scene.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class trade;
 
-class shop final {
+class shop final : public scene {
   private:
     wze::sprite _background;
 
@@ -34,7 +35,7 @@ class shop final {
   public:
     shop();
     ~shop();
-    void update();
+    scene_type update() final;
 };
 
 #endif

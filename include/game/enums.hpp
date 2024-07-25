@@ -1,6 +1,12 @@
 #ifndef GAME_ENUMS_HPP
 #define GAME_ENUMS_HPP
 
+enum scene_type {
+    SCENE_TYPE_SHOP,
+    SCENE_TYPE_SPACE,
+    SCENE_TYPE_HANGAR
+};
+
 enum trade_type {
     TRADE_TYPE_CANNON,
     TRADE_TYPE_ENGINE,

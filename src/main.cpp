@@ -1,23 +1,40 @@
 #include <game/assets.hpp>
 #include <game/save_data.hpp>
+#include <game/scene.hpp>
+#include <game/shop.hpp>
 #include <game/space.hpp>
 #include <iostream>
 #include <wizard_engine/wizard_engine.hpp>
-#include <game/shop.hpp>
 
 wze_main(2560, 1440) {
+    std::unique_ptr<scene> scene;
+    scene_type current_scene;
+    scene_type next_scene;
+
     assets::initialize();
     save_data::load();
-
-    shop shop;
-    // space space;
 
     // wze::timer::set_frame_time(50);
     wze::audio::set_volume(std::numeric_limits<int8_t>::max() / 2);
 
+    scene = std::unique_ptr<class scene>(new shop);
+    current_scene = SCENE_TYPE_SHOP;
+
     wze_while(true) {
-        shop.update();
-        // space.update();
+        next_scene = scene->update();
+        if (current_scene != next_scene) {
+            switch (current_scene = next_scene) {
+            case SCENE_TYPE_SHOP:
+                scene.reset(new shop);
+                break;
+            case SCENE_TYPE_SPACE:
+                throw std::runtime_error("unimplemented");
+                break;
+            case SCENE_TYPE_HANGAR:
+                throw std::runtime_error("unimplemented");
+                break;
+            }
+        }
         std::cout << wze::timer::delta_time() << std::endl;
     };
 

@@ -1,4 +1,5 @@
 #include <game/assets.hpp>
+#include <game/enums.hpp>
 #include <game/shop.hpp>
 #include <game/trade.hpp>
 
@@ -115,8 +116,9 @@ shop::~shop() {
     wze::renderer::set_background_color_b(0);
 }
 
-void shop::update() {
+scene_type shop::update() {
     _player.update();
     update_trade();
     update_door();
+    return SCENE_TYPE_SHOP;
 }
