@@ -26,6 +26,7 @@ class shop final : public scene {
     void update_trade();
 
     std::shared_ptr<wze::sprite> _door;
+    wze::sprite _door_light;
     wze::animator _door_animation;
     wze::speaker _door_sound;
     bool _door_animating;

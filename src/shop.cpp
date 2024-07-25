@@ -45,6 +45,15 @@ void shop::update_door() {
     if (!_door_animating && open != _door_open) {
         _door_animating = true;
         _door_sound.play();
+        if (!_door_animation.reversed()) {
+            _door_light.set_color_r(137);
+            _door_light.set_color_g(221);
+            _door_light.set_color_b(70);
+        } else {
+            _door_light.set_color_r(228);
+            _door_light.set_color_g(44);
+            _door_light.set_color_b(56);
+        }
     }
 
     if (_door_animating && _door_animation.play()) {
@@ -103,6 +112,17 @@ shop::shop() {
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
+    _door_light = {0,
+                   0,
+                   wze::camera::focus(),
+                   0,
+                   5120,
+                   2880,
+                   true,
+                   assets::shop_door_light_texture(),
+                   228,
+                   44,
+                   56};
     _door_animation = {assets::shop_door_animation(), 100, {_door}};
     _door_animating = false;
     _door_open = false;

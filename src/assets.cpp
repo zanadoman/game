@@ -76,6 +76,7 @@ std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 
 std::shared_ptr<wze::texture> assets::_shop_background_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_shop_door_animation;
+std::shared_ptr<wze::texture> assets::_shop_door_light_texture;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
@@ -318,6 +319,10 @@ assets::shop_door_animation() {
     return _shop_door_animation;
 }
 
+std::shared_ptr<wze::texture> const& assets::shop_door_light_texture() {
+    return _shop_door_light_texture;
+}
+
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
     return _space_ambiance_music_sound;
 }
@@ -365,7 +370,7 @@ std::shared_ptr<wze::sound> const& assets::ship_sound() {
     return _ship_sound;
 }
 
-std::shared_ptr<wze::sound> const& assets::shop_door_open_sound(){
+std::shared_ptr<wze::sound> const& assets::shop_door_open_sound() {
     return _shop_door_open_sound;
 }
 
@@ -886,6 +891,8 @@ void assets::initialize() {
             wze::assets::load_image("./assets/shop/door/12.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/shop/door/13.png"))};
+    _shop_door_light_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/door/light.png"));
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
@@ -909,5 +916,6 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/explosion2.ogg"),
         wze::assets::load_sound("./assets/sounds/explosion3.ogg")};
     _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
-    _shop_door_open_sound = wze::assets::load_sound("./assets/sounds/shop_door_open.mp3");
+    _shop_door_open_sound =
+        wze::assets::load_sound("./assets/sounds/shop_door_open.mp3");
 }
