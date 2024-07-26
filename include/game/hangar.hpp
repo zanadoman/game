@@ -9,14 +9,15 @@
 class hangar final : public scene {
   private:
     wze::sprite _background;
-    wze::collider _top;
-    wze::collider _bottom;
-    wze::collider _left;
-    wze::collider _right;
-    wze::collider _top_left;
-    wze::collider _top_right;
-    wze::collider _bottom_left;
-    wze::collider _bottom_right;
+    wze::collider _top_hitbox;
+    wze::collider _bottom_hitbox;
+    wze::collider _left_hitbox;
+    wze::collider _right_hitbox;
+    wze::collider _top_right_hitbox;
+    wze::collider _bottom_left_hitbox;
+    wze::collider _bottom_right_hitbox;
+    wze::collider _boss_hitbox;
+    wze::collider _ornament_hitbox;
 
     player _player;
 
