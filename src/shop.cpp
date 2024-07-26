@@ -87,7 +87,7 @@ shop::shop() {
                           std::numeric_limits<uint8_t>::max(),
                           wze::FLIP_NONE,
                           true,
-                          0};
+                          1};
     _storage_sprite = {0,
                        0,
                        wze::camera::focus(),

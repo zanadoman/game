@@ -8,6 +8,9 @@
 
 class hangar final : public scene {
   private:
+    std::tuple<float, float, float> sphere_coordinate(float minimum,
+                                                      float maximum) const;
+
     wze::sprite _background;
     wze::collider _top_hitbox;
     wze::collider _bottom_hitbox;
@@ -20,6 +23,9 @@ class hangar final : public scene {
     wze::collider _ornament_hitbox;
 
     player _player;
+
+    std::vector<wze::sprite> _asteroids;
+    std::vector<wze::sprite> _particles;
 
   public:
     hangar();

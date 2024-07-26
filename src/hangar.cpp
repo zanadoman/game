@@ -1,7 +1,31 @@
 #include <game/assets.hpp>
 #include <game/hangar.hpp>
 
+std::tuple<float, float, float> hangar::sphere_coordinate(float minimum,
+                                                          float maximum) const {
+    float x;
+    float y;
+    float z;
+    float normalization;
+    float radius;
+
+    x = wze::math::random(-1.f, 1.f);
+    y = wze::math::random(-1.f, 1.f);
+    z = wze::math::random(-1.f, 1.f);
+
+    if ((normalization = sqrt(powf(x, 2) + powf(y, 2) + powf(z, 2)))) {
+        x /= normalization;
+        y /= normalization;
+        z /= normalization;
+    }
+
+    radius = wze::math::random(minimum, maximum);
+    return {x * radius, y * radius, z * radius};
+}
+
 hangar::hangar() {
+    size_t i;
+
     wze::renderer::set_space_texture(assets::space_texture());
 
     _background = {0,
@@ -41,6 +65,33 @@ hangar::hangar() {
         {{{-870, 870}, {0, 0}, {2375, 0}, {1510, 870}}, -2775, -1750}, 0, 0, 0};
     _ornament_hitbox = {
         {{{0, 0}, {2375, 0}, {0, 2425}}, -4037.5, -490}, 0, 0, 0};
+
+    for (i = 0; i != 500; ++i) {
+        std::apply(
+            [this](float x, float y, float z) -> void {
+                float diameter;
+                diameter = wze::math::random(4'000.f, 8'000.f);
+                _asteroids.push_back(
+                    {x, y, abs(z), 0, diameter, diameter, true,
+                     wze::math::random<bool>(0.5)
+                         ? assets::asteroids_pyrite_texture()
+                         : assets::asteroids_wolframite_texture()});
+            },
+            sphere_coordinate(50'000, 300'000));
+    }
+
+    for (i = 0; i != 200; ++i) {
+        std::apply(
+            [this](float x, float y, float z) -> void {
+                _particles.push_back(
+                    {x, y, abs(z),
+                     wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                     wze::math::random(50.f, 100.f),
+                     wze::math::random(50.f, 100.f), true,
+                     assets::placeholder_texture()});
+            },
+            sphere_coordinate(10'000, 100'000));
+    }
 }
 
 hangar::~hangar() {
