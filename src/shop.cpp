@@ -73,40 +73,136 @@ shop::shop() {
     wze::renderer::set_background_color_g(18);
     wze::renderer::set_background_color_b(38);
 
-    _background = {0,
-                   0,
-                   wze::camera::focus(),
-                   0,
-                   5120,
-                   2880,
-                   true,
-                   assets::shop_background_texture()};
+    _background_sprite = {0,
+                          0,
+                          wze::camera::focus(),
+                          0,
+                          5120,
+                          2880,
+                          true,
+                          assets::shop_background_texture(),
+                          std::numeric_limits<uint8_t>::max(),
+                          std::numeric_limits<uint8_t>::max(),
+                          std::numeric_limits<uint8_t>::max(),
+                          std::numeric_limits<uint8_t>::max(),
+                          wze::FLIP_NONE,
+                          true,
+                          0};
+    _storage_sprite = {0,
+                       0,
+                       wze::camera::focus(),
+                       0,
+                       5120,
+                       2880,
+                       true,
+                       assets::shop_storage_texture(),
+                       std::numeric_limits<uint8_t>::max(),
+                       std::numeric_limits<uint8_t>::max(),
+                       std::numeric_limits<uint8_t>::max(),
+                       std::numeric_limits<uint8_t>::max(),
+                       wze::FLIP_NONE,
+                       true,
+                       std::numeric_limits<uint8_t>::max()};
+    _damage_sprite = {0,
+                      0,
+                      wze::camera::focus(),
+                      0,
+                      5120,
+                      2880,
+                      true,
+                      assets::shop_damage_texture(),
+                      std::numeric_limits<uint8_t>::max(),
+                      std::numeric_limits<uint8_t>::max(),
+                      std::numeric_limits<uint8_t>::max(),
+                      std::numeric_limits<uint8_t>::max(),
+                      wze::FLIP_NONE,
+                      true,
+                      std::numeric_limits<uint8_t>::max()};
+    _hitpoints_sprite = {0,
+                         0,
+                         wze::camera::focus(),
+                         0,
+                         5120,
+                         2880,
+                         true,
+                         assets::shop_hitpoints_texture(),
+                         std::numeric_limits<uint8_t>::max(),
+                         std::numeric_limits<uint8_t>::max(),
+                         std::numeric_limits<uint8_t>::max(),
+                         std::numeric_limits<uint8_t>::max(),
+                         wze::FLIP_NONE,
+                         true,
+                         std::numeric_limits<uint8_t>::max()};
+    _speed_sprite = {0,
+                     0,
+                     wze::camera::focus(),
+                     0,
+                     5120,
+                     2880,
+                     true,
+                     assets::shop_speed_texture(),
+                     std::numeric_limits<uint8_t>::max(),
+                     std::numeric_limits<uint8_t>::max(),
+                     std::numeric_limits<uint8_t>::max(),
+                     std::numeric_limits<uint8_t>::max(),
+                     wze::FLIP_NONE,
+                     true,
+                     std::numeric_limits<uint8_t>::max()};
 
-    _top = {{{{-1495, 100}, {-1495, -0}, {1495, -0}, {1495, 100}}, 0, -820},
-            0,
-            0,
-            0};
-    _bottom = {{{{-1495, 0}, {-1495, -100}, {1495, -100}, {1495, 0}}, 0, 1535},
-               0,
-               0,
-               0};
-    _left = {{
-                 {{0, 422.5}, {0, -422.5}, {100, -422.5}, {100, 422.5}},
-                 -2250,
-                 342.5,
-             },
-             0,
-             0,
-             0};
-    _right = {
+    _top_hitbox = {
+        {{{-1495, 100}, {-1495, -0}, {1495, -0}, {1495, 100}}, 0, -820},
+        0,
+        0,
+        0};
+    _bottom_hitbox = {
+        {{{-1495, 0}, {-1495, -100}, {1495, -100}, {1495, 0}}, 0, 1535},
+        0,
+        0,
+        0};
+    _left_hitbox = {{
+                        {{0, 422.5}, {0, -422.5}, {100, -422.5}, {100, 422.5}},
+                        -2250,
+                        342.5,
+                    },
+                    0,
+                    0,
+                    0};
+    _right_hitbox = {
         {{{-100, 422.5}, {-100, -422.5}, {0, -422.5}, {0, 422.5}}, 2250, 342.5},
         0,
         0,
         0};
-    _top_left = {{{{0, 0}, {640, 0}, {0, 650}}, -2135, -720}, 0, 0, 0};
-    _top_right = {{{{0, 0}, {-640, 0}, {0, 650}}, 2135, -720}, 0, 0, 0};
-    _bottom_left = {{{{0, 0}, {640, 0}, {0, -650}}, -2135, 1415}, 0, 0, 0};
-    _bottom_right = {{{{0, 0}, {-640, 0}, {0, -650}}, 2135, 1415}, 0, 0, 0};
+    _top_left_hitbox = {{{{0, 0}, {640, 0}, {0, 650}}, -2135, -720}, 0, 0, 0};
+    _top_right_hitbox = {{{{0, 0}, {-640, 0}, {0, 650}}, 2135, -720}, 0, 0, 0};
+    _bottom_left_hitbox = {
+        {{{0, 0}, {640, 0}, {0, -650}}, -2135, 1415}, 0, 0, 0};
+    _bottom_right_hitbox = {
+        {{{0, 0}, {-640, 0}, {0, -650}}, 2135, 1415}, 0, 0, 0};
+    _gems_hitbox = {
+        {{{0, 125}, {-645, 70}, {-685, 0}, {685, 0}, {645, 70}}, 0, -720},
+        0,
+        0,
+        0};
+    _storage_hitbox = {
+        {{{-427, 50}, {-322, -50}, {427, -50}, {322, 50}}, -697.5, -37.5},
+        0,
+        0,
+        0};
+    _damage_hitbox = {
+        {{{-427, 50}, {-322, -50}, {427, -50}, {322, 50}}, 697.5, -37.5},
+        0,
+        0,
+        0};
+    _hitpoints_hitbox = {
+        {{{-427, 50}, {-322, -50}, {427, -50}, {322, 50}}, -697.5, 785},
+        0,
+        0,
+        0};
+    _speed_hitbox = {
+        {{{-427, 50}, {-322, -50}, {427, -50}, {322, 50}}, 697.5, 785},
+        0,
+        0,
+        0};
 
     _door = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 5120, 2880, true,
@@ -142,5 +238,22 @@ shop::~shop() {
 scene_type shop::update() {
     _player.update();
     update_trade();
+
+    if (_player.y() < -87.5f) {
+        _storage_sprite.set_priority(128);
+        _damage_sprite.set_priority(128);
+    } else {
+        _storage_sprite.set_priority(126);
+        _damage_sprite.set_priority(126);
+    }
+
+    if (_player.y() < 735) {
+        _hitpoints_sprite.set_priority(128);
+        _speed_sprite.set_priority(128);
+    } else {
+        _hitpoints_sprite.set_priority(126);
+        _speed_sprite.set_priority(126);
+    }
+
     return update_door();
 }

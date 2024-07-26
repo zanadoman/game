@@ -10,16 +10,25 @@ class trade;
 
 class shop final : public scene {
   private:
-    wze::sprite _background;
+    wze::sprite _background_sprite;
+    wze::sprite _storage_sprite;
+    wze::sprite _damage_sprite;
+    wze::sprite _hitpoints_sprite;
+    wze::sprite _speed_sprite;
 
-    wze::collider _top;
-    wze::collider _bottom;
-    wze::collider _left;
-    wze::collider _right;
-    wze::collider _top_left;
-    wze::collider _top_right;
-    wze::collider _bottom_left;
-    wze::collider _bottom_right;
+    wze::collider _top_hitbox;
+    wze::collider _bottom_hitbox;
+    wze::collider _left_hitbox;
+    wze::collider _right_hitbox;
+    wze::collider _top_left_hitbox;
+    wze::collider _top_right_hitbox;
+    wze::collider _bottom_left_hitbox;
+    wze::collider _bottom_right_hitbox;
+    wze::collider _gems_hitbox;
+    wze::collider _storage_hitbox;
+    wze::collider _damage_hitbox;
+    wze::collider _hitpoints_hitbox;
+    wze::collider _speed_hitbox;
 
     player _player;
 

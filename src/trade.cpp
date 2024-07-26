@@ -78,7 +78,8 @@ void trade::update() {
     _tier_sprite.set_texture(assets::trade_tier_textures().at(_tier()));
     _price = (_tier() + 1) * 1000;
 
-    image = wze::assets::create_image(std::to_string(_price) + '$',
+    image = wze::assets::create_image(_tier() < 3 ? std::to_string(_price) + '$'
+                                                  : "Maximum",
                                       assets::bold_font());
     _price_sprite.set_width((float)image->w / (float)image->h * 70);
     _price_sprite.set_texture(wze::assets::create_texture(image));

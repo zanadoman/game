@@ -78,8 +78,13 @@ std::vector<std::shared_ptr<wze::texture>>
 std::vector<std::shared_ptr<wze::texture>> assets::_enemies_explosion_animation;
 
 std::shared_ptr<wze::texture> assets::_shop_background_texture;
+std::shared_ptr<wze::texture> assets::_shop_foreground_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_shop_door_animation;
 std::shared_ptr<wze::texture> assets::_shop_door_light_texture;
+std::shared_ptr<wze::texture> assets::_shop_storage_texture;
+std::shared_ptr<wze::texture> assets::_shop_damage_texture;
+std::shared_ptr<wze::texture> assets::_shop_hitpoints_texture;
+std::shared_ptr<wze::texture> assets::_shop_speed_texture;
 
 std::shared_ptr<wze::texture> assets::_trade_background_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_trade_tier_textures;
@@ -330,6 +335,10 @@ std::shared_ptr<wze::texture> const& assets::shop_background_texture() {
     return _shop_background_texture;
 }
 
+std::shared_ptr<wze::texture> const& assets::shop_foreground_texture() {
+    return _shop_foreground_texture;
+}
+
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::shop_door_animation() {
     return _shop_door_animation;
@@ -337,6 +346,22 @@ assets::shop_door_animation() {
 
 std::shared_ptr<wze::texture> const& assets::shop_door_light_texture() {
     return _shop_door_light_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::shop_storage_texture() {
+    return _shop_storage_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::shop_damage_texture() {
+    return _shop_damage_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::shop_hitpoints_texture() {
+    return _shop_hitpoints_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::shop_speed_texture() {
+    return _shop_speed_texture;
 }
 
 std::shared_ptr<wze::texture> const& assets::trade_background_texture() {
@@ -898,6 +923,8 @@ void assets::initialize() {
 
     _shop_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/shop/background.png"));
+    _shop_foreground_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/foreground.png"));
     _shop_door_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/shop/door/1.png")),
@@ -927,6 +954,14 @@ void assets::initialize() {
             wze::assets::load_image("./assets/shop/door/13.png"))};
     _shop_door_light_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/shop/door/light.png"));
+    _shop_storage_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/storage.png"));
+    _shop_damage_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/damage.png"));
+    _shop_hitpoints_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/hitpoints.png"));
+    _shop_speed_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/shop/speed.png"));
 
     _trade_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/trade/background.png"));

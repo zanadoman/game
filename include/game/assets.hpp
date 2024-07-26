@@ -88,8 +88,13 @@ class assets final {
         _enemies_explosion_animation;
 
     static std::shared_ptr<wze::texture> _shop_background_texture;
+    static std::shared_ptr<wze::texture> _shop_foreground_texture;
     static std::vector<std::shared_ptr<wze::texture>> _shop_door_animation;
     static std::shared_ptr<wze::texture> _shop_door_light_texture;
+    static std::shared_ptr<wze::texture> _shop_storage_texture;
+    static std::shared_ptr<wze::texture> _shop_damage_texture;
+    static std::shared_ptr<wze::texture> _shop_hitpoints_texture;
+    static std::shared_ptr<wze::texture> _shop_speed_texture;
 
     static std::shared_ptr<wze::texture> _trade_background_texture;
     static std::vector<std::shared_ptr<wze::texture>> _trade_tier_textures;
@@ -203,9 +208,14 @@ class assets final {
     enemies_explosion_animation();
 
     static std::shared_ptr<wze::texture> const& shop_background_texture();
+    static std::shared_ptr<wze::texture> const& shop_foreground_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     shop_door_animation();
     static std::shared_ptr<wze::texture> const& shop_door_light_texture();
+    static std::shared_ptr<wze::texture> const& shop_storage_texture();
+    static std::shared_ptr<wze::texture> const& shop_damage_texture();
+    static std::shared_ptr<wze::texture> const& shop_hitpoints_texture();
+    static std::shared_ptr<wze::texture> const& shop_speed_texture();
 
     static std::shared_ptr<wze::texture> const& trade_background_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&

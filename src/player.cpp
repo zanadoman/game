@@ -8,8 +8,8 @@ player::player() : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}}, 0, 0, 0) {
         std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
-        std::numeric_limits<uint8_t>::max(), true, 0, -80, 0, true, true, false,
-        false, false));
+        std::numeric_limits<uint8_t>::max() / 2, true, 0, -80, 0, true, true,
+        false, false, false));
 
     wze::camera::set_x(x());
     wze::camera::set_y(y() - 80);
