@@ -3,6 +3,7 @@
 #include <game/scene.hpp>
 #include <game/shop.hpp>
 #include <game/space.hpp>
+#include <game/hangar.hpp>
 #include <iostream>
 #include <wizard_engine/wizard_engine.hpp>
 
@@ -31,7 +32,7 @@ wze_main(2560, 1440) {
                 throw std::runtime_error("unimplemented");
                 break;
             case SCENE_TYPE_HANGAR:
-                throw std::runtime_error("unimplemented");
+                scene.reset(new hangar);
                 break;
             }
         }

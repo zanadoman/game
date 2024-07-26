@@ -78,6 +78,8 @@ std::shared_ptr<wze::texture> assets::_shop_background_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_shop_door_animation;
 std::shared_ptr<wze::texture> assets::_shop_door_light_texture;
 
+std::shared_ptr<wze::texture> assets::_hangar_background_texture;
+
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
 std::shared_ptr<wze::sound> assets::_player_ship_warning_sound;
@@ -321,6 +323,10 @@ assets::shop_door_animation() {
 
 std::shared_ptr<wze::texture> const& assets::shop_door_light_texture() {
     return _shop_door_light_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::hangar_background_texture() {
+    return _hangar_background_texture;
 }
 
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
@@ -893,6 +899,9 @@ void assets::initialize() {
             wze::assets::load_image("./assets/shop/door/13.png"))};
     _shop_door_light_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/shop/door/light.png"));
+
+    _hangar_background_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/hangar/background.png"));
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");

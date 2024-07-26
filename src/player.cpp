@@ -4,9 +4,9 @@
 player::player() : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}}, 0, 0, 0) {
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
         x(), y(), wze::camera::focus(), 0, 160, 160, true,
-        assets::placeholder_texture(), std::numeric_limits<uint8_t>::max(),
-        std::numeric_limits<uint8_t>::max(),
-        std::numeric_limits<uint8_t>::max(),
+        assets::placeholder_texture(), std::numeric_limits<uint8_t>::max() / 2,
+        std::numeric_limits<uint8_t>::max() / 2,
+        std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
         std::numeric_limits<uint8_t>::max(), true, 0, -40, 0, true, true, false,
         false, false));

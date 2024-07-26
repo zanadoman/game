@@ -37,12 +37,12 @@ void shop::update_trade() {
     }
 }
 
-void shop::update_door() {
-    bool open;
+scene_type shop::update_door() {
+    float distance;
 
-    open = wze::math::length(_player.x() - 1815, _player.y() + 397.5f) <= 500;
+    distance = wze::math::length(_player.x() - 1815, _player.y() + 397.5f);
 
-    if (!_door_animating && open != _door_open) {
+    if (!_door_animating && (distance <= 500) != _door_open) {
         _door_animating = true;
         _door_sound.play();
         if (!_door_animation.reversed()) {
@@ -63,6 +63,9 @@ void shop::update_door() {
         _door_open = !_door_open;
         _door_animating = false;
     }
+
+    return _door_open && !_door_animating && distance <= 150 ? SCENE_TYPE_HANGAR
+                                                             : SCENE_TYPE_SHOP;
 }
 
 shop::shop() {
@@ -139,6 +142,5 @@ shop::~shop() {
 scene_type shop::update() {
     _player.update();
     update_trade();
-    update_door();
-    return SCENE_TYPE_SHOP;
+    return update_door();
 }
