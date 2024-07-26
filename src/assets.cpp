@@ -6,6 +6,9 @@ std::shared_ptr<wze::font> assets::_bold_font;
 std::shared_ptr<wze::texture> assets::_placeholder_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
 
+std::shared_ptr<wze::texture> assets::_button_none_texture;
+std::shared_ptr<wze::texture> assets::_button_hovered_texture;
+
 std::shared_ptr<wze::texture> assets::_player_ship_base_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_crosshair_texture;
 std::shared_ptr<wze::texture> assets::_player_ship_warning_texture;
@@ -78,6 +81,9 @@ std::shared_ptr<wze::texture> assets::_shop_background_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_shop_door_animation;
 std::shared_ptr<wze::texture> assets::_shop_door_light_texture;
 
+std::shared_ptr<wze::texture> assets::_trade_background_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_trade_tier_textures;
+
 std::shared_ptr<wze::texture> assets::_hangar_background_texture;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
@@ -107,6 +113,14 @@ std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
 
 std::shared_ptr<wze::texture> const& assets::space_texture() {
     return _space_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::button_none_texture() {
+    return _button_none_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::button_hovered_texture() {
+    return _button_hovered_texture;
 }
 
 std::shared_ptr<wze::texture> const& assets::player_ship_base_texture() {
@@ -325,6 +339,15 @@ std::shared_ptr<wze::texture> const& assets::shop_door_light_texture() {
     return _shop_door_light_texture;
 }
 
+std::shared_ptr<wze::texture> const& assets::trade_background_texture() {
+    return _trade_background_texture;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::trade_tier_textures() {
+    return _trade_tier_textures;
+}
+
 std::shared_ptr<wze::texture> const& assets::hangar_background_texture() {
     return _hangar_background_texture;
 }
@@ -391,6 +414,11 @@ void assets::initialize() {
         wze::assets::load_image("./assets/placeholder.png"));
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
+
+    _button_none_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/button/none.png"));
+    _button_hovered_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/button/hovered.png"));
 
     _player_ship_base_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player_ship/base.png"));
@@ -899,6 +927,18 @@ void assets::initialize() {
             wze::assets::load_image("./assets/shop/door/13.png"))};
     _shop_door_light_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/shop/door/light.png"));
+
+    _trade_background_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/trade/background.png"));
+    _trade_tier_textures = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/trade/tier/0.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/trade/tier/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/trade/tier/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/trade/tier/3.png"))};
 
     _hangar_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/hangar/background.png"));

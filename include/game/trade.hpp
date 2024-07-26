@@ -11,11 +11,11 @@ class trade final {
     trade_type _trade_type;
     uint16_t _price;
     wze::sprite _background;
-    std::function<uint8_t()> _level;
-    std::function<void(uint8_t)> _set_level;
-    wze::sprite _level1;
-    wze::sprite _level2;
-    wze::sprite _level3;
+    wze::sprite _tier_sprite;
+    wze::sprite _price_sprite;
+    wze::sprite _text_sprite;
+    std::function<uint8_t()> _tier;
+    std::function<void(uint8_t)> _set_tier;
     button _button;
 
   public:

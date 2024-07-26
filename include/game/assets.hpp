@@ -11,6 +11,9 @@ class assets final {
     static std::shared_ptr<wze::texture> _placeholder_texture;
     static std::shared_ptr<wze::texture> _space_texture;
 
+    static std::shared_ptr<wze::texture> _button_none_texture;
+    static std::shared_ptr<wze::texture> _button_hovered_texture;
+
     static std::shared_ptr<wze::texture> _player_ship_base_texture;
     static std::shared_ptr<wze::texture> _player_ship_crosshair_texture;
     static std::shared_ptr<wze::texture> _player_ship_warning_texture;
@@ -88,6 +91,9 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>> _shop_door_animation;
     static std::shared_ptr<wze::texture> _shop_door_light_texture;
 
+    static std::shared_ptr<wze::texture> _trade_background_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _trade_tier_textures;
+
     static std::shared_ptr<wze::texture> _hangar_background_texture;
 
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
@@ -113,6 +119,9 @@ class assets final {
 
     static std::shared_ptr<wze::texture> const& placeholder_texture();
     static std::shared_ptr<wze::texture> const& space_texture();
+
+    static std::shared_ptr<wze::texture> const& button_none_texture();
+    static std::shared_ptr<wze::texture> const& button_hovered_texture();
 
     static std::shared_ptr<wze::texture> const& player_ship_base_texture();
     static std::shared_ptr<wze::texture> const& player_ship_crosshair_texture();
@@ -197,6 +206,10 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>> const&
     shop_door_animation();
     static std::shared_ptr<wze::texture> const& shop_door_light_texture();
+
+    static std::shared_ptr<wze::texture> const& trade_background_texture();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    trade_tier_textures();
 
     static std::shared_ptr<wze::texture> const& hangar_background_texture();
 

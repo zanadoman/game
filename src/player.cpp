@@ -8,8 +8,11 @@ player::player() : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}}, 0, 0, 0) {
         std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true,
-        std::numeric_limits<uint8_t>::max(), true, 0, -40, 0, true, true, false,
+        std::numeric_limits<uint8_t>::max(), true, 0, -80, 0, true, true, false,
         false, false));
+
+    wze::camera::set_x(x());
+    wze::camera::set_y(y() - 80);
 
     components().push_back(_appearance);
     recompose();
@@ -36,7 +39,7 @@ void player::update() {
     }
 
     wze::camera::set_x(x());
-    wze::camera::set_y(y());
+    wze::camera::set_y(y() - 80);
 
     printf("%f, %f\n", (double)x(), (double)y());
 }
