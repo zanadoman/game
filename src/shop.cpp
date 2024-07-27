@@ -64,14 +64,37 @@ scene_type shop::update_door() {
         _door_animating = false;
     }
 
-    return _door_open && !_door_animating && distance <= 150 ? SCENE_TYPE_HANGAR
-                                                             : SCENE_TYPE_SHOP;
+    if (_door_open && !_door_animating && distance <= 150) {
+        if (_color != 0) {
+            _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
+        }
+    } else {
+        if (_color != std::numeric_limits<uint8_t>::max()) {
+            _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+        }
+    }
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
+
+    return !_color ? SCENE_TYPE_HANGAR : SCENE_TYPE_SHOP;
 }
 
-shop::shop() {
-    wze::renderer::set_background_color_r(18);
-    wze::renderer::set_background_color_g(18);
-    wze::renderer::set_background_color_b(38);
+shop::shop() : _player(1615, -397.5) {
+    _color = 0.2;
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(_color);
+    wze::renderer::set_background_color_g(_color);
+    wze::renderer::set_background_color_b(_color);
 
     _background_sprite = {0,
                           0,
@@ -206,7 +229,7 @@ shop::shop() {
 
     _door = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 5120, 2880, true,
-        assets::shop_door_animation().front(),
+        assets::shop_door_animation().back(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
@@ -219,12 +242,13 @@ shop::shop() {
                    2880,
                    true,
                    assets::shop_door_light_texture(),
-                   228,
-                   44,
-                   56};
+                   137,
+                   221,
+                   70};
     _door_animation = {assets::shop_door_animation(), 100, {_door}};
+    _door_animation.reverse();
     _door_animating = false;
-    _door_open = false;
+    _door_open = true;
     _door_sound = {assets::door_sound(),
                    std::numeric_limits<int8_t>::max(),
                    1500,
@@ -237,6 +261,9 @@ shop::~shop() {
     wze::renderer::set_background_color_r(0);
     wze::renderer::set_background_color_g(0);
     wze::renderer::set_background_color_b(0);
+    wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max());
 }
 
 scene_type shop::update() {

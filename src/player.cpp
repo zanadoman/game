@@ -1,9 +1,10 @@
 #include <game/assets.hpp>
 #include <game/player.hpp>
 
-player::player() : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}}, 0, 0, 0) {
+player::player(float x, float y)
+    : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}, x, y}, 0, 0, 0) {
     _appearance = std::shared_ptr<wze::sprite>(new wze::sprite(
-        x(), y(), wze::camera::focus(), 0, 160, 160, true,
+        this->x(), this->y(), wze::camera::focus(), 0, 160, 160, true,
         assets::placeholder_texture(), std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max() / 2,
         std::numeric_limits<uint8_t>::max() / 2,
@@ -11,8 +12,8 @@ player::player() : collider({{{-40, 0}, {0, -40}, {40, 0}, {0, 40}}}, 0, 0, 0) {
         std::numeric_limits<uint8_t>::max() / 2, true, 0, -80, 0, true, true,
         false, false, false));
 
-    wze::camera::set_x(x());
-    wze::camera::set_y(y() - 80);
+    wze::camera::set_x(this->x());
+    wze::camera::set_y(this->y() - 80);
 
     components().push_back(_appearance);
     recompose();

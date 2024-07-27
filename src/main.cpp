@@ -26,12 +26,14 @@ wze_main(2560, 1440) {
         if (current_scene != next_scene) {
             switch (current_scene = next_scene) {
             case SCENE_TYPE_SHOP:
+                scene.reset();
                 scene.reset(new shop);
                 break;
             case SCENE_TYPE_SPACE:
                 throw std::runtime_error("unimplemented");
                 break;
             case SCENE_TYPE_HANGAR:
+                scene.reset();
                 scene.reset(new hangar);
                 break;
             }

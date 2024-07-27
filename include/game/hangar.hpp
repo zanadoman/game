@@ -11,6 +11,8 @@ class hangar final : public scene {
     std::tuple<float, float, float> sphere_coordinate(float minimum,
                                                       float maximum) const;
 
+    float _color;
+
     wze::sprite _background;
     wze::collider _top_hitbox;
     wze::collider _bottom_hitbox;

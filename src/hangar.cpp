@@ -50,15 +50,32 @@ scene_type hangar::update_door() {
         _door_animating = false;
     }
 
-    return _door_open && !_door_animating && distance <= 150
-               ? SCENE_TYPE_SHOP
-               : SCENE_TYPE_HANGAR;
+    if (_door_open && !_door_animating && distance <= 150) {
+        if (_color != 0) {
+            _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
+        }
+    } else {
+        if (_color != std::numeric_limits<uint8_t>::max()) {
+            _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+        }
+    }
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+
+    return !_color ? SCENE_TYPE_SHOP : SCENE_TYPE_HANGAR;
 }
 
-hangar::hangar() {
+hangar::hangar() : _player(-3637.5, -705) {
     size_t i;
 
     wze::renderer::set_space_texture(assets::space_texture());
+
+    _color = 0.2;
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
 
     _background = {0,
                    0,
@@ -100,14 +117,15 @@ hangar::hangar() {
 
     _door = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 13'105, 6'380, true,
-        assets::hangar_door_animation().front(),
+        assets::hangar_door_animation().back(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
     _door_animation = {assets::hangar_door_animation(), 100, {_door}};
+    _door_animation.reverse();
     _door_animating = false;
-    _door_open = false;
+    _door_open = true;
     _door_sound = {assets::door_sound(),
                    std::numeric_limits<int8_t>::max(),
                    1500,
@@ -145,6 +163,9 @@ hangar::hangar() {
 
 hangar::~hangar() {
     wze::renderer::set_space_texture({});
+    wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max());
 }
 
 scene_type hangar::update() {

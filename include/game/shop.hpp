@@ -10,6 +10,8 @@ class trade;
 
 class shop final : public scene {
   private:
+    float _color;
+
     wze::sprite _background_sprite;
     wze::sprite _storage_sprite;
     wze::sprite _damage_sprite;

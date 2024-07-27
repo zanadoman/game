@@ -8,7 +8,7 @@ class player final : public wze::collider {
     std::shared_ptr<wze::sprite> _appearance;
 
   public:
-    player();
+    player(float x, float y);
     void update();
 };
 
