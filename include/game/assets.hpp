@@ -100,6 +100,7 @@ class assets final {
     static std::vector<std::shared_ptr<wze::texture>> _trade_tier_textures;
 
     static std::shared_ptr<wze::texture> _hangar_background_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _hangar_door_animation;
 
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
     static std::shared_ptr<wze::sound> _space_fight_music_sound;
@@ -114,7 +115,7 @@ class assets final {
     static std::shared_ptr<wze::sound> _laser_passing_sound;
     static std::vector<std::shared_ptr<wze::sound>> _explosion_sounds;
     static std::shared_ptr<wze::sound> _ship_sound;
-    static std::shared_ptr<wze::sound> _shop_door_open_sound;
+    static std::shared_ptr<wze::sound> _door_sound;
 
     assets() = default;
 
@@ -222,6 +223,8 @@ class assets final {
     trade_tier_textures();
 
     static std::shared_ptr<wze::texture> const& hangar_background_texture();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    hangar_door_animation();
 
     static std::shared_ptr<wze::sound> const& space_ambiance_music_sound();
     static std::shared_ptr<wze::sound> const& space_fight_music_sound();
@@ -236,7 +239,7 @@ class assets final {
     static std::shared_ptr<wze::sound> const& laser_passing_sound();
     static std::shared_ptr<wze::sound> const& explosion_sound();
     static std::shared_ptr<wze::sound> const& ship_sound();
-    static std::shared_ptr<wze::sound> const& shop_door_open_sound();
+    static std::shared_ptr<wze::sound> const& door_sound();
 
     static void initialize();
 };

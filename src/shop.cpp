@@ -225,8 +225,12 @@ shop::shop() {
     _door_animation = {assets::shop_door_animation(), 100, {_door}};
     _door_animating = false;
     _door_open = false;
-
-    _door_sound = {assets::shop_door_open_sound()};
+    _door_sound = {assets::door_sound(),
+                   std::numeric_limits<int8_t>::max(),
+                   1500,
+                   true,
+                   1815,
+                   -397.5};
 }
 
 shop::~shop() {

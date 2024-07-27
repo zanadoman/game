@@ -23,6 +23,38 @@ std::tuple<float, float, float> hangar::sphere_coordinate(float minimum,
     return {x * radius, y * radius, z * radius};
 }
 
+scene_type hangar::update_door() {
+    float distance;
+
+    distance = wze::math::length(_player.x() + 3837.5f, _player.y() + 705);
+
+    if (!_door_animating && (distance <= 500) != _door_open) {
+        _door_animating = true;
+        _door_sound.play();
+        // if (!_door_animation.reversed()) {
+        //     _door_light.set_color_r(137);
+        //     _door_light.set_color_g(221);
+        //     _door_light.set_color_b(70);
+        // } else {
+        //     _door_light.set_color_r(228);
+        //     _door_light.set_color_g(44);
+        //     _door_light.set_color_b(56);
+        // }
+    }
+
+    if (_door_animating && _door_animation.play()) {
+        _door->set_texture(_door_animation.frames().back());
+        _door_animation.reverse();
+        _door_animation.reset();
+        _door_open = !_door_open;
+        _door_animating = false;
+    }
+
+    return _door_open && !_door_animating && distance <= 150
+               ? SCENE_TYPE_SHOP
+               : SCENE_TYPE_HANGAR;
+}
+
 hangar::hangar() {
     size_t i;
 
@@ -66,6 +98,23 @@ hangar::hangar() {
     _ornament_hitbox = {
         {{{0, 0}, {2375, 0}, {0, 2425}}, -4037.5, -490}, 0, 0, 0};
 
+    _door = std::shared_ptr<wze::sprite>(new wze::sprite(
+        0, 0, wze::camera::focus(), 0, 13'105, 6'380, true,
+        assets::hangar_door_animation().front(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
+    _door_animation = {assets::hangar_door_animation(), 100, {_door}};
+    _door_animating = false;
+    _door_open = false;
+    _door_sound = {assets::door_sound(),
+                   std::numeric_limits<int8_t>::max(),
+                   1500,
+                   true,
+                   -3837.5,
+                   -705};
+
     for (i = 0; i != 500; ++i) {
         std::apply(
             [this](float x, float y, float z) -> void {
@@ -100,5 +149,5 @@ hangar::~hangar() {
 
 scene_type hangar::update() {
     _player.update();
-    return SCENE_TYPE_HANGAR;
+    return update_door();
 }
