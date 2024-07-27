@@ -265,13 +265,16 @@ space::~space() {
     wze::input::set_cursor_visible(true);
 }
 
-void space::update() {
+scene_type space::update() {
     update_difficulty();
-    _player_ship.update(_difficulty, _lasers, _speakers);
+    if (!_player_ship.update(_difficulty, _lasers, _speakers)) {
+        return SCENE_TYPE_HANGAR;
+    }
     update_enemy_ships();
     update_asteroids();
     update_asteroid_loots();
     update_lasers();
     update_particles();
     update_speakers();
+    return SCENE_TYPE_SPACE;
 }

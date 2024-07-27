@@ -14,6 +14,7 @@ player::player(float x, float y)
 
     wze::camera::set_x(this->x());
     wze::camera::set_y(this->y() - 80);
+    wze::camera::set_z(0);
 
     components().push_back(_appearance);
     recompose();

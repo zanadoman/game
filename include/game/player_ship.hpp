@@ -48,8 +48,8 @@ class player_ship final : public wze::entity {
     uint16_t _damage;
     void shoot(std::vector<laser>& lasers, std::vector<wze::speaker>& speakers);
 
-    float _current_hitpoints;
-    float _max_hitpoints;
+    uint16_t _current_hitpoints;
+    uint16_t _max_hitpoints;
 
     uint16_t _storage;
 
@@ -66,9 +66,9 @@ class player_ship final : public wze::entity {
     void set_angle(float angle) final;
 
     player_ship();
-    void update(uint8_t difficulty, std::vector<laser>& lasers,
+    bool update(uint8_t difficulty, std::vector<laser>& lasers,
                 std::vector<wze::speaker>& speakers);
-    void damage(float hitpoints);
+    void damage(uint16_t hitpoints);
     void asteroid_loot(material material);
 };
 

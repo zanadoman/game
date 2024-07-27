@@ -3,6 +3,7 @@
 
 #include <game/enums.hpp>
 #include <game/player_ship.hpp>
+#include <game/scene.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class enemy_ship;
@@ -10,7 +11,7 @@ class asteroid;
 class asteroid_loot;
 class laser;
 
-class space final {
+class space final : public scene {
   private:
     std::tuple<float, float, float> sphere_coordinate(float minimum,
                                                       float maximum) const;
@@ -46,7 +47,7 @@ class space final {
   public:
     space();
     ~space();
-    void update();
+    scene_type update();
 };
 
 #endif

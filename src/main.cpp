@@ -1,9 +1,9 @@
 #include <game/assets.hpp>
+#include <game/hangar.hpp>
 #include <game/save_data.hpp>
 #include <game/scene.hpp>
 #include <game/shop.hpp>
 #include <game/space.hpp>
-#include <game/hangar.hpp>
 #include <iostream>
 #include <wizard_engine/wizard_engine.hpp>
 
@@ -18,8 +18,8 @@ wze_main(2560, 1440) {
     // wze::timer::set_frame_time(50);
     wze::audio::set_volume(std::numeric_limits<int8_t>::max() / 2);
 
-    scene = std::unique_ptr<class scene>(new shop);
-    current_scene = SCENE_TYPE_SHOP;
+    scene = std::unique_ptr<class scene>(new space);
+    current_scene = SCENE_TYPE_SPACE;
 
     wze_while(true) {
         next_scene = scene->update();
@@ -30,7 +30,8 @@ wze_main(2560, 1440) {
                 scene.reset(new shop);
                 break;
             case SCENE_TYPE_SPACE:
-                throw std::runtime_error("unimplemented");
+                scene.reset();
+                scene.reset(new space);
                 break;
             case SCENE_TYPE_HANGAR:
                 scene.reset();

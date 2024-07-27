@@ -80,12 +80,13 @@ void player_ship::update_hud(uint8_t difficulty) {
     _sapphire_count.set_texture(wze::assets::create_texture(image));
 
     _hitpoints_count.set_texture(assets::player_ship_hitpoints_textures().at(
-        ceilf(_current_hitpoints / _max_hitpoints * 10)));
-    _hitpoints_count.set_color_r(228 -
-                                 _current_hitpoints / _max_hitpoints * 91);
-    _hitpoints_count.set_color_g(44 +
-                                 _current_hitpoints / _max_hitpoints * 177);
-    _hitpoints_count.set_color_b(56 + _current_hitpoints / _max_hitpoints * 14);
+        ceilf((float)_current_hitpoints / _max_hitpoints * 10)));
+    _hitpoints_count.set_color_r(228 - (float)_current_hitpoints /
+                                           _max_hitpoints * 91);
+    _hitpoints_count.set_color_g(44 + (float)_current_hitpoints /
+                                          _max_hitpoints * 177);
+    _hitpoints_count.set_color_b(56 + (float)_current_hitpoints /
+                                          _max_hitpoints * 14);
 
     _storage_count.set_texture(assets::player_ship_storage_textures().at(
         floorf((save_data::pyrite_count() + save_data::wolframite_count() +
@@ -371,8 +372,12 @@ player_ship::player_ship() {
     components().push_back(_hitbox);
 }
 
-void player_ship::update(uint8_t difficulty, std::vector<laser>& lasers,
+bool player_ship::update(uint8_t difficulty, std::vector<laser>& lasers,
                          std::vector<wze::speaker>& speakers) {
+    if (!_current_hitpoints) {
+        return false;
+    }
+
     update_movement();
 
     if (wze::input::key(wze::key::KEY_MOUSE_LEFT) &&
@@ -382,11 +387,13 @@ void player_ship::update(uint8_t difficulty, std::vector<laser>& lasers,
     }
 
     update_hud(difficulty);
+
+    return true;
 }
 
-void player_ship::damage(float hitpoints) {
-    if (0 < _current_hitpoints) {
-        _current_hitpoints = std::max(0.f, _current_hitpoints - hitpoints);
+void player_ship::damage(uint16_t hitpoints) {
+    if (_current_hitpoints) {
+        _current_hitpoints = std::max(0, _current_hitpoints - hitpoints);
         _warning.set_color_a(_warning_opacity =
                                  std::numeric_limits<uint8_t>::max());
         if (!_warning_sound.playing()) {
