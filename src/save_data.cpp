@@ -2,12 +2,12 @@
 #include <game/save_data.hpp>
 #include <ios>
 
-uint64_t save_data::_pyrite_count;
-uint64_t save_data::_wolframite_count;
-uint64_t save_data::_carneol_count;
-uint64_t save_data::_moldavite_count;
-uint64_t save_data::_ruby_count;
-uint64_t save_data::_sapphire_count;
+int16_t save_data::_pyrite_count;
+int16_t save_data::_wolframite_count;
+int16_t save_data::_carneol_count;
+int16_t save_data::_moldavite_count;
+int16_t save_data::_ruby_count;
+int16_t save_data::_sapphire_count;
 
 uint8_t save_data::_player_ship_speed_tier;
 uint8_t save_data::_player_ship_damage_tier;
@@ -19,51 +19,51 @@ uint64_t save_data::_player_money;
 bool save_data::_tutorial_completed;
 bool save_data::_final_boss_completed;
 
-uint64_t save_data::pyrite_count() {
+int16_t save_data::pyrite_count() {
     return _pyrite_count;
 }
 
-void save_data::set_pyrite_count(uint64_t pyrite_count) {
+void save_data::set_pyrite_count(int16_t pyrite_count) {
     _pyrite_count = pyrite_count;
 }
 
-uint64_t save_data::wolframite_count() {
+int16_t save_data::wolframite_count() {
     return _wolframite_count;
 }
 
-void save_data::set_wolframite_count(uint64_t wolframite_count) {
+void save_data::set_wolframite_count(int16_t wolframite_count) {
     _wolframite_count = wolframite_count;
 }
 
-uint64_t save_data::carneol_count() {
+int16_t save_data::carneol_count() {
     return _carneol_count;
 }
 
-void save_data::set_carneol_count(uint64_t carneol_count) {
+void save_data::set_carneol_count(int16_t carneol_count) {
     _carneol_count = carneol_count;
 }
 
-uint64_t save_data::moldavite_count() {
+int16_t save_data::moldavite_count() {
     return _moldavite_count;
 }
 
-void save_data::set_moldavite_count(uint64_t moldavite_count) {
+void save_data::set_moldavite_count(int16_t moldavite_count) {
     _moldavite_count = moldavite_count;
 }
 
-uint64_t save_data::ruby_count() {
+int16_t save_data::ruby_count() {
     return _ruby_count;
 }
 
-void save_data::set_ruby_count(uint64_t ruby_count) {
+void save_data::set_ruby_count(int16_t ruby_count) {
     _ruby_count = ruby_count;
 }
 
-uint64_t save_data::sapphire_count() {
+int16_t save_data::sapphire_count() {
     return _sapphire_count;
 }
 
-void save_data::set_sapphire_count(uint64_t sapphire_count) {
+void save_data::set_sapphire_count(int16_t sapphire_count) {
     _sapphire_count = sapphire_count;
 }
 
@@ -130,12 +130,12 @@ void save_data::load() {
     file.open("./save_data.bin", std::ios::binary);
 
     if (!file) {
-        _pyrite_count = 0;
-        _wolframite_count = 0;
-        _carneol_count = 0;
-        _moldavite_count = 0;
-        _ruby_count = 0;
-        _sapphire_count = 0;
+        _pyrite_count = 2;
+        _wolframite_count = 16;
+        _carneol_count = 34;
+        _moldavite_count = 2;
+        _ruby_count = 1;
+        _sapphire_count = 14;
 
         _player_ship_speed_tier = 0;
         _player_ship_damage_tier = 0;

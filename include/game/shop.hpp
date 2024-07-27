@@ -7,6 +7,7 @@
 #include <wizard_engine/wizard_engine.hpp>
 
 class trade;
+class gem_trade;
 
 class shop final : public scene {
   private:
@@ -35,6 +36,7 @@ class shop final : public scene {
     player _player;
 
     std::unique_ptr<trade> _trade;
+    std::unique_ptr<gem_trade> _gem_trade;
     void update_trade();
 
     std::shared_ptr<wze::sprite> _door;

@@ -3,7 +3,7 @@
 #include <game/trade.hpp>
 
 trade::trade(float x, float y, trade_type trade_type)
-    : _button(x + 147.5f, y + 120, wze::camera::focus() * 0.9f, 0, 270, 70,
+    : _button(x + 147.5f, y + 120, wze::camera::focus() * 0.95f, 0, 270, 70,
               true, std::numeric_limits<uint8_t>::max(),
               {{-135, 35}, {-135, -35}, {135, -35}, {135, 35}},
               assets::button_none_texture(), assets::button_hovered_texture(),
@@ -11,7 +11,7 @@ trade::trade(float x, float y, trade_type trade_type)
     std::shared_ptr<wze::image> image;
 
     _trade_type = trade_type;
-    _background = {x,   y,    wze::camera::focus() * 0.9f,       0, 725,
+    _background = {x,   y,    wze::camera::focus() * 0.95f,      0, 725,
                    390, true, assets::trade_background_texture()};
 
     switch (_trade_type) {
@@ -49,14 +49,14 @@ trade::trade(float x, float y, trade_type trade_type)
         break;
     }
 
-    _tier_sprite = {x - 145, y + 42.5f, wze::camera::focus() * 0.9f, 0, 165,
+    _tier_sprite = {x - 145, y + 42.5f, wze::camera::focus() * 0.95f, 0, 165,
                     25,      true};
     _price = 0;
-    _price_sprite = {x - 147.5f, y + 115, wze::camera::focus() * 0.9f, 0, 270,
+    _price_sprite = {x - 147.5f, y + 115, wze::camera::focus() * 0.95f, 0, 270,
                      70,         true};
     _text_sprite = {x + 142.5f,
                     y - 50,
-                    wze::camera::focus() * 0.9f,
+                    wze::camera::focus() * 0.95f,
                     0,
                     290,
                     (float)image->h / (float)image->w * 290,
@@ -78,9 +78,9 @@ void trade::update() {
     _tier_sprite.set_texture(assets::trade_tier_textures().at(_tier()));
     _price = (_tier() + 1) * 1000;
 
-    image = wze::assets::create_image(_tier() < 3 ? std::to_string(_price) + '$'
-                                                  : "Maximum",
-                                      assets::bold_font());
+    image = wze::assets::create_image(
+        _tier() < 3 ? std::to_string(_price) + " ST" : "Elfogyott",
+        assets::bold_font());
     _price_sprite.set_width((float)image->w / (float)image->h * 70);
     _price_sprite.set_texture(wze::assets::create_texture(image));
 }

@@ -15,8 +15,6 @@ button::button(float x, float y, float z, float angle, float width,
                uint8_t text_color_g, uint8_t text_color_b) {
     std::shared_ptr<wze::image> image;
 
-    image = wze::assets::create_image(text, assets::normal_font());
-
     _appearance = {x,
                    y,
                    z,
@@ -32,22 +30,28 @@ button::button(float x, float y, float z, float angle, float width,
                    wze::FLIP_NONE,
                    true,
                    priority};
-    _text = {x,
-             y - 0.1f * height,
-             z,
-             angle,
-             (float)image->w / (float)image->h * 0.7f * height,
-             0.7f * height,
-             spatial,
-             wze::assets::create_texture(image),
-             text_color_r,
-             text_color_g,
-             text_color_b,
-             std::numeric_limits<uint8_t>::max(),
-             wze::FLIP_NONE,
-             true,
-             (uint8_t)std::min((priority + 1),
-                               (int32_t)std::numeric_limits<uint8_t>::max())};
+
+    if (!text.empty()) {
+        image = wze::assets::create_image(text, assets::normal_font());
+        _text = {
+            x,
+            y - 0.1f * height,
+            z,
+            angle,
+            (float)image->w / (float)image->h * 0.7f * height,
+            0.7f * height,
+            spatial,
+            wze::assets::create_texture(image),
+            text_color_r,
+            text_color_g,
+            text_color_b,
+            std::numeric_limits<uint8_t>::max(),
+            wze::FLIP_NONE,
+            true,
+            (uint8_t)std::min((priority + 1),
+                              (int32_t)std::numeric_limits<uint8_t>::max())};
+    }
+
     _hitbox = {hitbox, x, y, angle};
     _state = BUTTON_STATE_NONE;
     _texture_none = texture_none;
@@ -83,6 +87,14 @@ void button::update() {
     } else {
         state = BUTTON_STATE_NONE;
         _appearance.set_texture(_texture_none);
+    }
+
+    if (~_state & state & BUTTON_STATE_HOVERED) {
+        wze::input::set_cursor_appearance(
+            wze::assets::create_cursor(wze::SYSTEM_CURSOR_HAND));
+    } else if (_state & ~state & BUTTON_STATE_HOVERED) {
+        wze::input::set_cursor_appearance(
+            wze::assets::create_cursor(wze::SYSTEM_CURSOR_ARROW));
     }
 
     _state = (button_state)state;

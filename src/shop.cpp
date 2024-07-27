@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/enums.hpp>
+#include <game/gem_trade.hpp>
 #include <game/shop.hpp>
 #include <game/trade.hpp>
 
@@ -32,8 +33,15 @@ void shop::update_trade() {
         } else {
             _trade->update();
         }
+    } else if (wze::math::length(_player.x(), _player.y() + 595) < 300) {
+        if (!_gem_trade) {
+            _gem_trade.reset(new gem_trade);
+        } else {
+            _gem_trade->update();
+        }
     } else {
         _trade.reset();
+        _gem_trade.reset();
     }
 }
 
