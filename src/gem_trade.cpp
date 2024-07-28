@@ -1,9 +1,35 @@
+#include "game/button.hpp"
+#include "game/enums.hpp"
 #include <game/assets.hpp>
 #include <game/gem_trade.hpp>
 #include <game/save_data.hpp>
 #include <string>
 
 #define Z (wze::camera::focus() * 0.95f)
+
+void gem_trade::add_item(
+    material material,
+    std::function<std::shared_ptr<wze::texture> const&()> texture) {
+    _items.push_back(
+        {material,
+         {_background.x() + 365, 0, Z, 0, 45, 45, true, texture()},
+         {_background.x() + 507.5f, 0, Z, 0, 0, 45, true, {}, 0, 0, 0}});
+}
+
+void gem_trade::update_item(
+    std::vector<std::tuple<material, wze::sprite, wze::sprite>>::iterator const&
+        iterator,
+    uint8_t count, uint16_t price) {
+    std::shared_ptr<wze::image> image;
+
+    image = wze::assets::create_image(" x " + std::to_string(count) + " = " +
+                                          std::to_string(count * price) + " ST",
+                                      assets::normal_font());
+    std::get<2>(*iterator).set_width((float)image->w / (float)image->h * 45);
+    std::get<2>(*iterator).set_x(_background.x() + 380 +
+                                 std::get<2>(*iterator).width() / 2);
+    std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+}
 
 gem_trade::gem_trade()
     : _pyrite_decrease(-566.5, -595 - 60, Z, 0, 30, 35, true,
@@ -77,7 +103,12 @@ gem_trade::gem_trade()
                          {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                          assets::placeholder_texture(),
                          assets::placeholder_texture(),
-                         assets::placeholder_texture(), "", 0, 0, 0) {
+                         assets::placeholder_texture(), "", 0, 0, 0),
+      _sell(507.5, -595 + 440, Z, 0, 310, 70, true,
+            std::numeric_limits<uint8_t>::max(),
+            {{-155, 35}, {-155, -35}, {155, -35}, {155, 35}},
+            assets::button_none_texture(), assets::button_hovered_texture(),
+            assets::button_hovered_texture(), "Eladás", 0, 0, 0) {
     std::shared_ptr<wze::image> image;
 
     _background = {0,    -595, Z,    0,
@@ -176,6 +207,18 @@ gem_trade::gem_trade()
                        45,
                        true,
                        wze::assets::create_texture(image)};
+
+    _summary = {_background.x() + 507.5f,
+                _background.y() + 345,
+                Z,
+                0,
+                0,
+                45,
+                true,
+                {},
+                0,
+                0,
+                0};
 }
 
 void gem_trade::update() {
@@ -325,28 +368,10 @@ void gem_trade::update() {
         });
     if (_pyrite_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_PYRITE,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_pyrite_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_PYRITE, assets::asteroids_pyrite_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 40 = " + std::to_string(_pyrite_sell_count * 50),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _pyrite_sell_count, 50);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
@@ -358,28 +383,11 @@ void gem_trade::update() {
         });
     if (_wolframite_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_WOLFRAMITE,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_wolframite_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_WOLFRAMITE,
+                     assets::asteroids_wolframite_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 100 = " + std::to_string(_wolframite_sell_count * 100),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _wolframite_sell_count, 100);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
@@ -391,28 +399,11 @@ void gem_trade::update() {
         });
     if (_carneol_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_CARNEOL,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_carneol_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_CARNEOL,
+                     assets::asteroids_carneol_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 150 = " + std::to_string(_carneol_sell_count * 150),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _carneol_sell_count, 150);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
@@ -424,28 +415,11 @@ void gem_trade::update() {
         });
     if (_moldavite_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_MOLDAVITE,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_moldavite_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_MOLDAVITE,
+                     assets::asteroids_moldavite_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 250 = " + std::to_string(_moldavite_sell_count * 250),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _moldavite_sell_count, 250);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
@@ -457,28 +431,10 @@ void gem_trade::update() {
         });
     if (_ruby_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_RUBY,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_ruby_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_RUBY, assets::asteroids_ruby_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 400 = " + std::to_string(_ruby_sell_count * 400),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _ruby_sell_count, 400);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
@@ -490,36 +446,30 @@ void gem_trade::update() {
         });
     if (_sapphire_sell_count) {
         if (iterator == _items.end()) {
-            _items.push_back({MATERIAL_SAPPHIRE,
-                              {_background.x() + 507.5f, 0, Z, 0, 40, 40, true,
-                               assets::asteroids_sapphire_gem_ui_texture()},
-                              {_background.x() + 507.5f,
-                               0,
-                               Z,
-                               0,
-                               0,
-                               40,
-                               true,
-                               {},
-                               0,
-                               0,
-                               0}});
+            add_item(MATERIAL_SAPPHIRE,
+                     assets::asteroids_sapphire_gem_ui_texture);
             iterator = _items.end() - 1;
         }
-        image = wze::assets::create_image(
-            " x 650 = " + std::to_string(_sapphire_sell_count * 650),
-            assets::normal_font());
-        std::get<2>(*iterator).set_width((float)image->w / (float)image->h *
-                                         40);
-        std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
+        update_item(iterator, _sapphire_sell_count, 650);
     } else if (iterator != _items.end()) {
         _items.erase(iterator);
     }
 
     for (i = 0; i != _items.size(); ++i) {
-        std::get<1>(_items.at(i)).set_y(_background.y() - 350 + i * 50);
+        std::get<1>(_items.at(i)).set_y(_background.y() - 350 + i * 60);
         std::get<2>(_items.at(i)).set_y(std::get<1>(_items.at(i)).y());
     }
+
+    image = wze::assets::create_image(
+        "Összesen: " +
+            std::to_string(
+                _pyrite_sell_count * 50 + _wolframite_sell_count * 100 +
+                _carneol_sell_count * 150 + _moldavite_sell_count * 250 +
+                _ruby_sell_count * 400 + _sapphire_sell_count * 650) +
+            " ST",
+        assets::normal_font());
+    _summary.set_width((float)image->w / (float)image->h * 45);
+    _summary.set_texture(wze::assets::create_texture(image));
 
     image = wze::assets::create_image(std::to_string(_pyrite_sell_count),
                                       assets::bold_font());
@@ -545,4 +495,30 @@ void gem_trade::update() {
                                       assets::bold_font());
     _sapphire_sell.set_width((float)image->w / (float)image->h * 30);
     _sapphire_sell.set_texture(wze::assets::create_texture(image));
+
+    _sell.update();
+    if (_sell.state() & BUTTON_STATE_POSTCLICK) {
+        save_data::set_player_money(
+            save_data::player_money() + _pyrite_sell_count * 50 +
+            _wolframite_sell_count * 100 + _carneol_sell_count * 150 +
+            _moldavite_sell_count * 250 + _ruby_sell_count * 400 +
+            _sapphire_sell_count * 650);
+        save_data::set_pyrite_count(save_data::pyrite_count() -
+                                    _pyrite_sell_count);
+        save_data::set_wolframite_count(save_data::wolframite_count() -
+                                        _wolframite_sell_count);
+        save_data::set_carneol_count(save_data::carneol_count() -
+                                     _carneol_sell_count);
+        save_data::set_moldavite_count(save_data::moldavite_count() -
+                                       _moldavite_sell_count);
+        save_data::set_ruby_count(save_data::ruby_count() - _ruby_sell_count);
+        save_data::set_sapphire_count(save_data::sapphire_count() -
+                                      _sapphire_sell_count);
+        _pyrite_sell_count = 0;
+        _wolframite_sell_count = 0;
+        _carneol_sell_count = 0;
+        _moldavite_sell_count = 0;
+        _ruby_sell_count = 0;
+        _sapphire_sell_count = 0;
+    }
 }

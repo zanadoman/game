@@ -51,6 +51,17 @@ class gem_trade final {
     wze::sprite _sapphire_price;
 
     std::vector<std::tuple<material, wze::sprite, wze::sprite>> _items;
+    void
+    add_item(material material,
+             std::function<std::shared_ptr<wze::texture> const&()> texture);
+    void
+    update_item(std::vector<std::tuple<material, wze::sprite,
+                                       wze::sprite>>::iterator const& iterator,
+                uint8_t count, uint16_t price);
+
+    wze::sprite _summary;
+
+    button _sell;
 
   public:
     gem_trade();

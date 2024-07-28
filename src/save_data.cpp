@@ -135,7 +135,7 @@ void save_data::load() {
         _carneol_count = 34;
         _moldavite_count = 2;
         _ruby_count = 1;
-        _sapphire_count = 14;
+        _sapphire_count = 150;
 
         _player_ship_speed_tier = 0;
         _player_ship_damage_tier = 0;
