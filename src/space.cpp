@@ -215,6 +215,32 @@ void space::update_speakers() {
     }
 }
 
+bool space::update_callback() {
+    float color;
+
+    _player_ship.set_z(player_ship().z() +
+                       (_callback_speed +=
+                        _callback_speed * 0.0005f * wze::timer::delta_time()) *
+                           wze::timer::delta_time());
+
+    color = 1 - (_callback_speed - 50) / 450;
+
+    wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max() *
+                                     color);
+    wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max() *
+                                     color);
+    wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max() *
+                                     color);
+    wze::renderer::set_plane_color_r(std::numeric_limits<uint8_t>::max() *
+                                     color);
+    wze::renderer::set_plane_color_g(std::numeric_limits<uint8_t>::max() *
+                                     color);
+    wze::renderer::set_plane_color_b(std::numeric_limits<uint8_t>::max() *
+                                     color);
+
+    return _callback_speed < 500;
+}
+
 space::space() {
     size_t i;
 
@@ -234,6 +260,8 @@ space::space() {
                        std::numeric_limits<int8_t>::max() / 2};
     _fight_music = {assets::space_fight_music_sound(),
                     std::numeric_limits<int8_t>::max() / 2};
+    _callback = false;
+    _callback_speed = 50;
 
     update_difficulty();
 
@@ -263,18 +291,42 @@ space::space() {
 space::~space() {
     wze::renderer::set_space_texture({});
     wze::input::set_cursor_visible(true);
+    wze::camera::set_x(0);
+    wze::camera::set_y(0);
+    wze::camera::set_z(0);
+    wze::camera::set_angle(0);
+    wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_r(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_g(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_b(std::numeric_limits<uint8_t>::max());
 }
 
 scene_type space::update() {
-    update_difficulty();
-    if (!_player_ship.update(_difficulty, _lasers, _speakers)) {
-        return SCENE_TYPE_HANGAR;
+
+    if (_callback) {
+        _player_ship.dodge_asteroids(_asteroids);
+        update_asteroids();
+        update_particles();
+        update_speakers();
+        return update_callback() ? SCENE_TYPE_SPACE : SCENE_TYPE_HANGAR;
+    } else {
+        update_difficulty();
+        if (!_player_ship.update(_difficulty, _lasers, _speakers)) {
+            return SCENE_TYPE_HANGAR;
+        }
+        update_enemy_ships();
+        update_asteroids();
+        update_asteroid_loots();
+        update_lasers();
+        update_particles();
+        update_speakers();
+        if (_enemy_ships.empty() && _lasers.empty() &&
+            wze::input::key(wze::KEY_SPACE)) {
+            _callback = true;
+        }
     }
-    update_enemy_ships();
-    update_asteroids();
-    update_asteroid_loots();
-    update_lasers();
-    update_particles();
-    update_speakers();
+
     return SCENE_TYPE_SPACE;
 }

@@ -4,10 +4,13 @@
 #include <game/enums.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
+class asteroid;
 class laser;
 
 class player_ship final : public wze::entity {
   private:
+    bool dodge(float x, float y, float z, float near);
+
     wze::sprite _cockpit;
     wze::sprite _warning;
     float _warning_opacity;
@@ -58,6 +61,7 @@ class player_ship final : public wze::entity {
     wze::speaker _sound;
 
   public:
+    bool dodge_asteroids(std::vector<asteroid> const& asteroids);
     std::shared_ptr<wze::polygon> const& hitbox() const;
     void set_x(float x) final;
     void set_y(float y) final;

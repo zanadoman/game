@@ -1,7 +1,29 @@
 #include <game/assets.hpp>
+#include <game/asteroid.hpp>
 #include <game/laser.hpp>
 #include <game/player_ship.hpp>
 #include <game/save_data.hpp>
+
+bool player_ship::dodge(float x, float y, float z, float near) {
+    float x_distance;
+    float y_distance;
+    float distance;
+
+    if (z - near < this->z() && this->z() < z + near &&
+        (distance = wze::math::length(x_distance = this->x() - x,
+                                      y_distance = this->y() - y)) < near) {
+        if (!x_distance && !y_distance) {
+            x_distance = wze::math::random(-1.f, 1.f);
+            y_distance = wze::math::random(-1.f, 1.f);
+            distance = wze::math::length(x_distance, y_distance);
+        }
+        set_x(this->x() + x_distance / distance * 50);
+        set_y(this->y() + y_distance / distance * 50);
+        return true;
+    }
+
+    return false;
+}
 
 void player_ship::update_hud(uint8_t difficulty) {
     std::shared_ptr<wze::image> image;
@@ -183,6 +205,16 @@ void player_ship::shoot(std::vector<laser>& lasers,
                       _crosshair_y / normalization * speed,
                       wze::camera::focus() / normalization * speed, 1'000, 300,
                       137, 221, 71, _damage, speakers});
+}
+
+bool player_ship::dodge_asteroids(std::vector<asteroid> const& asteroids) {
+    for (asteroid const& asteroid : asteroids) {
+        if (dodge(asteroid.x(), asteroid.y(), asteroid.z(), 7'000)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 std::shared_ptr<wze::polygon> const& player_ship::hitbox() const {

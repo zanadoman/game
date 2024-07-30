@@ -44,6 +44,10 @@ class space final : public scene {
     wze::speaker _fight_music;
     void update_speakers();
 
+    bool _callback;
+    float _callback_speed;
+    bool update_callback();
+
   public:
     space();
     ~space();
