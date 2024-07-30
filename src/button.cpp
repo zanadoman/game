@@ -59,6 +59,13 @@ button::button(float x, float y, float z, float angle, float width,
     _texture_onclick = texture_onclick;
 }
 
+button::~button() {
+    if (_state & BUTTON_STATE_HOVERED) {
+        wze::input::set_cursor_appearance(
+            wze::assets::create_cursor(wze::SYSTEM_CURSOR_ARROW));
+    }
+}
+
 void button::update() {
     uint8_t state;
 

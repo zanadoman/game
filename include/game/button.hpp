@@ -31,6 +31,7 @@ class button final {
            std::shared_ptr<wze::texture> const& texture_onclick,
            std::string const& text, uint8_t text_color_r, uint8_t text_color_g,
            uint8_t text_color_b);
+    ~button();
     void update();
 };
 
