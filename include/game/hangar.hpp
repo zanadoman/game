@@ -14,6 +14,8 @@ class hangar final : public scene {
     float _color;
 
     wze::sprite _background;
+    wze::sprite _rail;
+    wze::sprite _ships;
     wze::collider _top_hitbox;
     wze::collider _bottom_hitbox;
     wze::collider _left_hitbox;
@@ -23,6 +25,12 @@ class hangar final : public scene {
     wze::collider _bottom_right_hitbox;
     wze::collider _boss_hitbox;
     wze::collider _ornament_hitbox;
+    wze::collider _hitbox1;
+    wze::collider _hitbox2;
+    wze::collider _hitbox3;
+    wze::collider _hitbox4;
+    wze::collider _hitbox5;
+    wze::collider _hitbox6;
 
     player _player;
 
@@ -34,7 +42,11 @@ class hangar final : public scene {
     wze::speaker _door_sound;
     bool _door_animating;
     bool _door_open;
+    bool _door_proxy;
     scene_type update_door();
+
+    bool _ship_proxy;
+    scene_type update_ship();
 
   public:
     hangar();

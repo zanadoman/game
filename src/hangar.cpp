@@ -50,11 +50,11 @@ scene_type hangar::update_door() {
         _door_animating = false;
     }
 
-    if (_door_open && !_door_animating && distance <= 150) {
+    if (_door_open && !_door_animating && (_door_proxy = distance <= 150)) {
         if (_color != 0) {
             _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
         }
-    } else {
+    } else if (!_ship_proxy) {
         if (_color != std::numeric_limits<uint8_t>::max()) {
             _color = std::min(_color + 0.2f * wze::timer::delta_time(),
                               (float)std::numeric_limits<uint8_t>::max());
@@ -65,6 +65,27 @@ scene_type hangar::update_door() {
     wze::renderer::set_space_color_b(_color);
 
     return !_color ? SCENE_TYPE_SHOP : SCENE_TYPE_HANGAR;
+}
+
+scene_type hangar::update_ship() {
+    _ship_proxy =
+        wze::math::length(_player.x() - 1592.5f, _player.y() - 252.5f) <= 750;
+
+    if (_ship_proxy) {
+        if (_color != 0) {
+            _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
+        }
+    } else if (!_door_proxy) {
+        if (_color != std::numeric_limits<uint8_t>::max()) {
+            _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+        }
+    }
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+
+    return !_color ? SCENE_TYPE_SPACE : SCENE_TYPE_HANGAR;
 }
 
 hangar::hangar() : _player(-3637.5, -705) {
@@ -84,7 +105,43 @@ hangar::hangar() : _player(-3637.5, -705) {
                    13'105,
                    6'380,
                    true,
-                   assets::hangar_background_texture()};
+                   assets::hangar_background_texture(),
+                   std::numeric_limits<uint8_t>::max(),
+                   std::numeric_limits<uint8_t>::max(),
+                   std::numeric_limits<uint8_t>::max(),
+                   std::numeric_limits<uint8_t>::max(),
+                   wze::FLIP_NONE,
+                   true,
+                   1};
+    _rail = {0,
+             0,
+             wze::camera::focus(),
+             0,
+             13'105,
+             6'380,
+             true,
+             assets::hangar_rail_texture(),
+             std::numeric_limits<uint8_t>::max(),
+             std::numeric_limits<uint8_t>::max(),
+             std::numeric_limits<uint8_t>::max(),
+             std::numeric_limits<uint8_t>::max(),
+             wze::FLIP_NONE,
+             true};
+    _ships = {0,
+              0,
+              wze::camera::focus(),
+              0,
+              13'105,
+              6'380,
+              true,
+              assets::hangar_ships_texture(),
+              std::numeric_limits<uint8_t>::max(),
+              std::numeric_limits<uint8_t>::max(),
+              std::numeric_limits<uint8_t>::max(),
+              std::numeric_limits<uint8_t>::max(),
+              wze::FLIP_NONE,
+              true,
+              std::numeric_limits<uint8_t>::max() / 2 + 1};
 
     _top_hitbox = {
         {{{-850, 100}, {-850, 0}, {850, 0}, {850, 100}}, 447.5, -1850},
@@ -114,6 +171,78 @@ hangar::hangar() : _player(-3637.5, -705) {
         {{{-870, 870}, {0, 0}, {2375, 0}, {1510, 870}}, -2775, -1750}, 0, 0, 0};
     _ornament_hitbox = {
         {{{0, 0}, {2375, 0}, {0, 2425}}, -4037.5, -490}, 0, 0, 0};
+    _hitbox1 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 507.5,
+                 -872},
+                0,
+                0,
+                0};
+    _hitbox2 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 -787.5,
+                 252.5},
+                0,
+                0,
+                0};
+    _hitbox3 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 1592.5,
+                 252.5},
+                0,
+                0,
+                0};
+    _hitbox4 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 -2082.5,
+                 1377.5},
+                0,
+                0,
+                0};
+    _hitbox5 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 297.5,
+                 1377.5},
+                0,
+                0,
+                0};
+    _hitbox6 = {{{{-982.5, 242},
+                  {
+                      -510,
+                      -242,
+                  },
+                  {982.5, -242},
+                  {510, 242}},
+                 2790,
+                 1377.5},
+                0,
+                0,
+                0};
 
     _door = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 13'105, 6'380, true,
@@ -126,12 +255,15 @@ hangar::hangar() : _player(-3637.5, -705) {
     _door_animation.reverse();
     _door_animating = false;
     _door_open = true;
+    _door_proxy = false;
     _door_sound = {assets::door_sound(),
                    std::numeric_limits<int8_t>::max(),
                    1500,
                    true,
                    -3837.5,
                    -705};
+
+    _ship_proxy = false;
 
     for (i = 0; i != 500; ++i) {
         std::apply(
@@ -169,6 +301,26 @@ hangar::~hangar() {
 }
 
 scene_type hangar::update() {
+    scene_type door;
+    scene_type ship;
+
     _player.update();
-    return update_door();
+
+    if (_player.y() < -475) {
+        _rail.set_priority(std::numeric_limits<uint8_t>::max() / 2 + 1);
+    } else {
+        _rail.set_priority(std::numeric_limits<uint8_t>::max() / 2 - 1);
+    }
+
+    door = update_door();
+    if (_door_proxy) {
+        return door;
+    }
+
+    ship = update_ship();
+    if (_ship_proxy) {
+        return ship;
+    }
+
+    return SCENE_TYPE_HANGAR;
 }

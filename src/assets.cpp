@@ -92,6 +92,8 @@ std::vector<std::shared_ptr<wze::texture>> assets::_trade_tier_textures;
 std::shared_ptr<wze::texture> assets::_gem_trade_background_texture;
 
 std::shared_ptr<wze::texture> assets::_hangar_background_texture;
+std::shared_ptr<wze::texture> assets::_hangar_rail_texture;
+std::shared_ptr<wze::texture> assets::_hangar_ships_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_hangar_door_animation;
 
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
@@ -382,6 +384,14 @@ std::shared_ptr<wze::texture> const& assets::gem_trade_background_texture() {
 
 std::shared_ptr<wze::texture> const& assets::hangar_background_texture() {
     return _hangar_background_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::hangar_rail_texture() {
+    return _hangar_rail_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::hangar_ships_texture() {
+    return _hangar_ships_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
@@ -992,6 +1002,10 @@ void assets::initialize() {
 
     _hangar_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/hangar/background.png"));
+    _hangar_rail_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/hangar/rail.png"));
+    _hangar_ships_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/hangar/ships.png"));
     _hangar_door_animation = {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/hangar/door/1.png")),

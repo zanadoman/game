@@ -102,6 +102,8 @@ class assets final {
     static std::shared_ptr<wze::texture> _gem_trade_background_texture;
 
     static std::shared_ptr<wze::texture> _hangar_background_texture;
+    static std::shared_ptr<wze::texture> _hangar_rail_texture;
+    static std::shared_ptr<wze::texture> _hangar_ships_texture;
     static std::vector<std::shared_ptr<wze::texture>> _hangar_door_animation;
 
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
@@ -227,6 +229,8 @@ class assets final {
     static std::shared_ptr<wze::texture> const& gem_trade_background_texture();
 
     static std::shared_ptr<wze::texture> const& hangar_background_texture();
+    static std::shared_ptr<wze::texture> const& hangar_rail_texture();
+    static std::shared_ptr<wze::texture> const& hangar_ships_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     hangar_door_animation();
 
