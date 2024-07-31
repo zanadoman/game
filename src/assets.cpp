@@ -108,6 +108,7 @@ std::shared_ptr<wze::sound> assets::_laser_passing_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_explosion_sounds;
 std::shared_ptr<wze::sound> assets::_ship_sound;
 std::shared_ptr<wze::sound> assets::_door_sound;
+std::shared_ptr<wze::sound> assets::_shop_selling_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_player_step_sounds;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
@@ -449,6 +450,10 @@ std::shared_ptr<wze::sound> const& assets::ship_sound() {
 
 std::shared_ptr<wze::sound> const& assets::door_sound() {
     return _door_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::shop_selling_sound(){
+    return _shop_selling_sound;
 }
 
 std::shared_ptr<wze::sound> const& assets::player_step_sounds(){
@@ -1063,6 +1068,7 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/explosion3.ogg")};
     _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
     _door_sound = wze::assets::load_sound("./assets/sounds/door.mp3");
+    _shop_selling_sound = wze::assets::load_sound("./assets/sounds/shop_selling.mp3");
     _player_step_sounds = {
         wze::assets::load_sound("./assets/sounds/player_step1.mp3"),
         wze::assets::load_sound("./assets/sounds/player_step2.mp3"),
