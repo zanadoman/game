@@ -109,6 +109,10 @@ std::vector<std::shared_ptr<wze::sound>> assets::_explosion_sounds;
 std::shared_ptr<wze::sound> assets::_ship_sound;
 std::shared_ptr<wze::sound> assets::_door_sound;
 std::shared_ptr<wze::sound> assets::_shop_selling_sound;
+std::shared_ptr<wze::sound> assets::_damage_upgrade_sound;
+std::shared_ptr<wze::sound> assets::_health_upgrade_sound;
+std::shared_ptr<wze::sound> assets::_speed_upgrade_sound;
+std::shared_ptr<wze::sound> assets::_storage_upgrade_sound;
 std::vector<std::shared_ptr<wze::sound>> assets::_player_step_sounds;
 
 std::shared_ptr<wze::font> const& assets::normal_font() {
@@ -454,6 +458,22 @@ std::shared_ptr<wze::sound> const& assets::door_sound() {
 
 std::shared_ptr<wze::sound> const& assets::shop_selling_sound(){
     return _shop_selling_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::damage_upgrade_sound(){
+    return _damage_upgrade_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::health_upgrade_sound(){
+    return _health_upgrade_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::speed_upgrade_sound(){
+    return _speed_upgrade_sound;
+}
+
+std::shared_ptr<wze::sound> const& assets::storage_upgrade_sound(){
+    return _storage_upgrade_sound;
 }
 
 std::shared_ptr<wze::sound> const& assets::player_step_sounds(){
@@ -1069,6 +1089,10 @@ void assets::initialize() {
     _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
     _door_sound = wze::assets::load_sound("./assets/sounds/door.mp3");
     _shop_selling_sound = wze::assets::load_sound("./assets/sounds/shop_selling.mp3");
+    _damage_upgrade_sound = wze::assets::load_sound("./assets/sounds/damage_upgrade.mp3");
+    _health_upgrade_sound = wze::assets::load_sound("./assets/sounds/health_upgrade.mp3");
+    _speed_upgrade_sound = wze::assets::load_sound("./assets/sounds/speed_upgrade.mp3");
+    _storage_upgrade_sound = wze::assets::load_sound("./assets/sounds/storage_upgrade.mp3");
     _player_step_sounds = {
         wze::assets::load_sound("./assets/sounds/player_step1.mp3"),
         wze::assets::load_sound("./assets/sounds/player_step2.mp3"),

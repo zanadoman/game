@@ -121,6 +121,10 @@ class assets final {
     static std::shared_ptr<wze::sound> _ship_sound;
     static std::shared_ptr<wze::sound> _door_sound;
     static std::shared_ptr<wze::sound> _shop_selling_sound;
+    static std::shared_ptr<wze::sound> _damage_upgrade_sound;
+    static std::shared_ptr<wze::sound> _health_upgrade_sound;
+    static std::shared_ptr<wze::sound> _speed_upgrade_sound;
+    static std::shared_ptr<wze::sound> _storage_upgrade_sound;
     static std::vector<std::shared_ptr<wze::sound>> _player_step_sounds;
 
     assets() = default;
@@ -251,6 +255,10 @@ class assets final {
     static std::shared_ptr<wze::sound> const& ship_sound();
     static std::shared_ptr<wze::sound> const& door_sound();
     static std::shared_ptr<wze::sound> const& shop_selling_sound();
+    static std::shared_ptr<wze::sound> const& damage_upgrade_sound();
+    static std::shared_ptr<wze::sound> const& health_upgrade_sound();
+    static std::shared_ptr<wze::sound> const& speed_upgrade_sound();
+    static std::shared_ptr<wze::sound> const& storage_upgrade_sound();
     static std::shared_ptr<wze::sound> const& player_step_sounds();
 
     static void initialize();
