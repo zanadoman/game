@@ -12,6 +12,12 @@ player::player(float x, float y)
         std::numeric_limits<uint8_t>::max() / 2, true, 0, -80, 0, true, true,
         false, false, false));
 
+    _step_sounds =
+        {
+            {},
+            std::numeric_limits<int8_t>::max(),
+        };
+
     wze::camera::set_x(this->x());
     wze::camera::set_y(this->y() - 80);
     wze::camera::set_z(0);
@@ -21,23 +27,34 @@ player::player(float x, float y)
 }
 
 void player::update() {
+    bool moved = false;
+
     if ((wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP)) &&
         !(wze::input::key(wze::KEY_S) || wze::input::key(wze::KEY_DOWN))) {
         set_y(y() - 0.75f * wze::timer::delta_time());
+        moved = true;
     } else if ((wze::input::key(wze::KEY_S) ||
                 wze::input::key(wze::KEY_DOWN)) &&
                !(wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP))) {
         set_y(y() + 0.75f * wze::timer::delta_time());
+        moved=true;
     }
 
     if ((wze::input::key(wze::KEY_A) || wze::input::key(wze::KEY_LEFT)) &&
         !(wze::input::key(wze::KEY_D) || wze::input::key(wze::KEY_RIGHT))) {
         set_x(x() - 0.75f * wze::timer::delta_time());
+        moved=true;
     } else if ((wze::input::key(wze::KEY_D) ||
                 wze::input::key(wze::KEY_RIGHT)) &&
                !(wze::input::key(wze::KEY_A) ||
                  wze::input::key(wze::KEY_LEFT))) {
         set_x(x() + 0.75f * wze::timer::delta_time());
+        moved = true;
+    }
+
+    if(moved && !_step_sounds.playing()){
+        _step_sounds.set_sound(assets::player_step_sounds());
+        _step_sounds.play();  
     }
 
     wze::camera::set_x(x());

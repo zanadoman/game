@@ -6,6 +6,7 @@
 class player final : public wze::collider {
   private:
     std::shared_ptr<wze::sprite> _appearance;
+    wze::speaker _step_sounds;
 
   public:
     player(float x, float y);
