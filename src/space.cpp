@@ -304,7 +304,6 @@ space::~space() {
 }
 
 scene_type space::update() {
-
     if (_callback) {
         _player_ship.dodge_asteroids(_asteroids);
         update_asteroids();

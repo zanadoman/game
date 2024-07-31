@@ -20,7 +20,22 @@ std::tuple<float, float, float> hangar::sphere_coordinate(float minimum,
     }
 
     radius = wze::math::random(minimum, maximum);
-    return {x * radius, y * radius, z * radius};
+    return {20'000 + x * radius, y * radius, z * radius};
+}
+
+void hangar::update_space() {
+    for (wze::sprite& asteroid : _asteroids) {
+        asteroid.set_x(asteroid.x() + wze::timer::delta_time());
+        if (170'000 < asteroid.x()) {
+            asteroid.set_x(-130'000);
+        }
+    }
+    for (wze::sprite& particle : _particles) {
+        particle.set_x(particle.x() + wze::timer::delta_time());
+        if (110'000 < particle.x()) {
+            particle.set_x(-90'000);
+        }
+    }
 }
 
 scene_type hangar::update_door() {
@@ -69,7 +84,7 @@ scene_type hangar::update_door() {
 
 scene_type hangar::update_ship() {
     _ship_proxy =
-        wze::math::length(_player.x() - 1592.5f, _player.y() - 252.5f) <= 750;
+        wze::math::length(_player.x() - 1592.5f, _player.y() - 252.5f) <= 500;
 
     if (_ship_proxy) {
         if (_color != 0) {
@@ -311,6 +326,8 @@ scene_type hangar::update() {
     } else {
         _rail.set_priority(std::numeric_limits<uint8_t>::max() / 2 - 1);
     }
+
+    update_space();
 
     door = update_door();
     if (_door_proxy) {

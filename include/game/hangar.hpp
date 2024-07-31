@@ -36,6 +36,7 @@ class hangar final : public scene {
 
     std::vector<wze::sprite> _asteroids;
     std::vector<wze::sprite> _particles;
+    void update_space();
 
     std::shared_ptr<wze::sprite> _door;
     wze::animator _door_animation;
