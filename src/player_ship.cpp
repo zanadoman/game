@@ -392,7 +392,20 @@ player_ship::player_ship() {
     }
     _current_hitpoints = _max_hitpoints;
 
-    _storage = 50;
+    switch (save_data::player_ship_storage_tier()){
+        case 0:
+        _storage = 50;
+        break;
+        case 1:
+        _storage = 80;
+        break;
+        case 2:
+        _storage = 120;
+        break;
+        default:
+        _storage = 150;
+        break;
+    }
 
     _warning_sound = {assets::player_ship_warning_sound(),
                       std::numeric_limits<int8_t>::max() / 2};
