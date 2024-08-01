@@ -1,4 +1,5 @@
 #include <game/assets.hpp>
+#include <game/save_data.hpp>
 #include <game/hangar.hpp>
 
 std::tuple<float, float, float> hangar::sphere_coordinate(float minimum,
@@ -101,6 +102,16 @@ scene_type hangar::update_ship() {
     wze::renderer::set_space_color_b(_color);
 
     return !_color ? SCENE_TYPE_SPACE : SCENE_TYPE_HANGAR;
+}
+
+void hangar::update_money() {
+    std::shared_ptr<wze::image> image;
+
+    image = wze::assets::create_image(std::to_string(save_data::player_money()),
+                                      assets::bold_font());
+    _money_count.set_width((float)image->w / (float)image->h * 92);
+    _money_count.set_x(1180 - _money_count.width() / 2 - 75);
+    _money_count.set_texture(wze::assets::create_texture(image));
 }
 
 hangar::hangar() : _player(-3637.5, -705) {
@@ -306,6 +317,9 @@ hangar::hangar() : _player(-3637.5, -705) {
             },
             sphere_coordinate(10'000, 100'000));
     }
+
+    _money = {1180, -620, 0, 0, 100, 100, false, assets::stellar_token()};
+    _money_count = {0, -620, 0, 0, 0, 92, false, {}};
 }
 
 hangar::~hangar() {
@@ -328,6 +342,7 @@ scene_type hangar::update() {
     }
 
     update_space();
+    update_money();
 
     door = update_door();
     if (_door_proxy) {

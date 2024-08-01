@@ -49,6 +49,10 @@ class hangar final : public scene {
     bool _ship_proxy;
     scene_type update_ship();
 
+    wze::sprite _money;
+    wze::sprite _money_count;
+    void update_money();
+
   public:
     hangar();
     ~hangar();
