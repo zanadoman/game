@@ -19,6 +19,8 @@ class button final {
     std::shared_ptr<wze::texture> _texture_none;
     std::shared_ptr<wze::texture> _texture_hovered;
     std::shared_ptr<wze::texture> _texture_onclick;
+    std::shared_ptr<wze::sound> _accept_sound;
+    std::shared_ptr<wze::sound> _refuse_sound;
 
   public:
     button_state state() const;
@@ -30,8 +32,10 @@ class button final {
            std::shared_ptr<wze::texture> const& texture_hovered,
            std::shared_ptr<wze::texture> const& texture_onclick,
            std::string const& text, uint8_t text_color_r, uint8_t text_color_g,
-           uint8_t text_color_b);
+           uint8_t text_color_b, std::shared_ptr<wze::sound> accept_sound,
+           std::shared_ptr<wze::sound> refuse_sound);
     ~button();
+
     void update();
 };
 

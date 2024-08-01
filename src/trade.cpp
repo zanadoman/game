@@ -7,7 +7,7 @@ trade::trade(float x, float y, trade_type trade_type)
               true, std::numeric_limits<uint8_t>::max(),
               {{-135, 35}, {-135, -35}, {135, -35}, {135, 35}},
               assets::button_none_texture(), assets::button_hovered_texture(),
-              assets::button_hovered_texture(), "Vásárol", 0, 0, 0) {
+              assets::button_hovered_texture(), "Vásárol", 0, 0, 0, {},{}) {
     std::shared_ptr<wze::image> image;
 
     _trade_type = trade_type;
@@ -22,6 +22,7 @@ trade::trade(float x, float y, trade_type trade_type)
             assets::normal_font());
         _tier = save_data::player_ship_hitpoints_tier;
         _set_tier = save_data::set_player_ship_hitpoints_tier;
+        
         break;
     case TRADE_TYPE_ENGINE:
         image = wze::assets::create_image(

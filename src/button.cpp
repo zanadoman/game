@@ -12,7 +12,9 @@ button::button(float x, float y, float z, float angle, float width,
                std::shared_ptr<wze::texture> const& texture_hovered,
                std::shared_ptr<wze::texture> const& texture_onclick,
                std::string const& text, uint8_t text_color_r,
-               uint8_t text_color_g, uint8_t text_color_b) {
+               uint8_t text_color_g, uint8_t text_color_b,
+               std::shared_ptr<wze::sound> accept_sound,
+               std::shared_ptr<wze::sound> refuse_sound) {
     std::shared_ptr<wze::image> image;
 
     _appearance = {x,
@@ -57,6 +59,8 @@ button::button(float x, float y, float z, float angle, float width,
     _texture_none = texture_none;
     _texture_hovered = texture_hovered;
     _texture_onclick = texture_onclick;
+    _accept_sound = accept_sound;
+    _refuse_sound = refuse_sound;
 }
 
 button::~button() {
