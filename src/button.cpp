@@ -101,7 +101,9 @@ void button::update() {
             state |= BUTTON_STATE_POSTCLICK;
             _appearance.set_texture(_texture_onclick);
             _speaker.set_sound(enabled() ? _accept_sound : _refuse_sound);
-            _speaker.play();
+            if (_speaker.sound()) {
+                _speaker.play();
+            }
         } else {
             state &= ~BUTTON_STATE_ONCLICK;
             state &= ~BUTTON_STATE_POSTCLICK;

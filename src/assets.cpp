@@ -5,6 +5,7 @@ std::shared_ptr<wze::font> assets::_bold_font;
 
 std::shared_ptr<wze::texture> assets::_placeholder_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
+std::shared_ptr<wze::texture> assets::_stellar_token;
 
 std::shared_ptr<wze::texture> assets::_button_none_texture;
 std::shared_ptr<wze::texture> assets::_button_hovered_texture;
@@ -127,6 +128,10 @@ std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
 
 std::shared_ptr<wze::texture> const& assets::space_texture() {
     return _space_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::stellar_token() {
+    return _stellar_token;
 }
 
 std::shared_ptr<wze::texture> const& assets::button_none_texture() {
@@ -482,6 +487,8 @@ void assets::initialize() {
         wze::assets::load_image("./assets/placeholder.png"));
     _space_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/space.png"));
+    _stellar_token = wze::assets::create_texture(
+        wze::assets::load_image("./assets/stellar_token.png"));
 
     _button_none_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/button/none.png"));

@@ -10,6 +10,7 @@ class assets final {
 
     static std::shared_ptr<wze::texture> _placeholder_texture;
     static std::shared_ptr<wze::texture> _space_texture;
+    static std::shared_ptr<wze::texture> _stellar_token;
 
     static std::shared_ptr<wze::texture> _button_none_texture;
     static std::shared_ptr<wze::texture> _button_hovered_texture;
@@ -133,6 +134,7 @@ class assets final {
 
     static std::shared_ptr<wze::texture> const& placeholder_texture();
     static std::shared_ptr<wze::texture> const& space_texture();
+    static std::shared_ptr<wze::texture> const& stellar_token();
 
     static std::shared_ptr<wze::texture> const& button_none_texture();
     static std::shared_ptr<wze::texture> const& button_hovered_texture();

@@ -1,6 +1,7 @@
 #include <game/assets.hpp>
 #include <game/enums.hpp>
 #include <game/gem_trade.hpp>
+#include <game/save_data.hpp>
 #include <game/shop.hpp>
 #include <game/trade.hpp>
 
@@ -93,6 +94,16 @@ scene_type shop::update_door() {
         _color / std::numeric_limits<uint8_t>::max() * 38);
 
     return !_color ? SCENE_TYPE_HANGAR : SCENE_TYPE_SHOP;
+}
+
+void shop::update_money() {
+    std::shared_ptr<wze::image> image;
+
+    image = wze::assets::create_image(std::to_string(save_data::player_money()),
+                                      assets::bold_font());
+    _money_count.set_width((float)image->w / (float)image->h * 92);
+    _money_count.set_x(1180 - _money_count.width() / 2 - 75);
+    _money_count.set_texture(wze::assets::create_texture(image));
 }
 
 shop::shop() : _player(1615, -397.5) {
@@ -263,6 +274,9 @@ shop::shop() : _player(1615, -397.5) {
                    true,
                    1815,
                    -397.5};
+
+    _money = {1180, -620, 0, 0, 100, 100, false, assets::stellar_token()};
+    _money_count = {0, -620, 0, 0, 0, 92, false, {}};
 }
 
 shop::~shop() {
@@ -293,6 +307,8 @@ scene_type shop::update() {
         _hitpoints_sprite.set_priority(126);
         _speed_sprite.set_priority(126);
     }
+
+    update_money();
 
     return update_door();
 }

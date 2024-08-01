@@ -47,6 +47,10 @@ class shop final : public scene {
     bool _door_open;
     scene_type update_door();
 
+    wze::sprite _money;
+    wze::sprite _money_count;
+    void update_money();
+
   public:
     shop();
     ~shop();

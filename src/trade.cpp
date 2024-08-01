@@ -85,7 +85,7 @@ void trade::update() {
 
     image = wze::assets::create_image(
         _tier() < 3 ? std::to_string(_price) + " ST" : "Elfogyott",
-        assets::bold_font());
+        _tier() < 3 ? assets::bold_font() : assets::normal_font());
     _price_sprite.set_width((float)image->w / (float)image->h * 60);
     _price_sprite.set_texture(wze::assets::create_texture(image));
 }
