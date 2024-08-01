@@ -16,14 +16,18 @@ class button final {
     wze::sprite _text;
     wze::polygon _hitbox;
     button_state _state;
+    bool _enabled;
     std::shared_ptr<wze::texture> _texture_none;
     std::shared_ptr<wze::texture> _texture_hovered;
     std::shared_ptr<wze::texture> _texture_onclick;
     std::shared_ptr<wze::sound> _accept_sound;
     std::shared_ptr<wze::sound> _refuse_sound;
+    wze::speaker _speaker;
 
   public:
     button_state state() const;
+    bool enabled() const;
+    void set_enabled(bool enabled);
 
     button(float x, float y, float z, float angle, float width, float height,
            bool spatial, uint8_t priority,

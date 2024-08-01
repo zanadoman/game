@@ -122,6 +122,8 @@ class assets final {
     static std::shared_ptr<wze::sound> _door_sound;
     static std::shared_ptr<wze::sound> _shop_selling_sound;
     static std::vector<std::shared_ptr<wze::sound>> _player_step_sounds;
+    static std::shared_ptr<wze::sound> _accept_sound;
+    static std::shared_ptr<wze::sound> _refuse_sound;
 
     assets() = default;
 
@@ -252,6 +254,8 @@ class assets final {
     static std::shared_ptr<wze::sound> const& door_sound();
     static std::shared_ptr<wze::sound> const& shop_selling_sound();
     static std::shared_ptr<wze::sound> const& player_step_sounds();
+    static std::shared_ptr<wze::sound> const& accept_sound();
+    static std::shared_ptr<wze::sound> const& refuse_sound();
 
     static void initialize();
 };

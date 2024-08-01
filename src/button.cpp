@@ -5,6 +5,14 @@ button_state button::state() const {
     return _state;
 }
 
+bool button::enabled() const {
+    return _enabled;
+}
+
+void button::set_enabled(bool enabled) {
+    _enabled = enabled;
+}
+
 button::button(float x, float y, float z, float angle, float width,
                float height, bool spatial, uint8_t priority,
                std::vector<std::pair<float, float>> const& hitbox,
@@ -56,11 +64,13 @@ button::button(float x, float y, float z, float angle, float width,
 
     _hitbox = {hitbox, x, y, angle};
     _state = BUTTON_STATE_NONE;
+    set_enabled(true);
     _texture_none = texture_none;
     _texture_hovered = texture_hovered;
     _texture_onclick = texture_onclick;
     _accept_sound = accept_sound;
     _refuse_sound = refuse_sound;
+    _speaker = {};
 }
 
 button::~button() {
@@ -90,6 +100,8 @@ void button::update() {
             state &= ~BUTTON_STATE_ONCLICK;
             state |= BUTTON_STATE_POSTCLICK;
             _appearance.set_texture(_texture_onclick);
+            _speaker.set_sound(enabled() ? _accept_sound : _refuse_sound);
+            _speaker.play();
         } else {
             state &= ~BUTTON_STATE_ONCLICK;
             state &= ~BUTTON_STATE_POSTCLICK;
