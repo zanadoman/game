@@ -1084,7 +1084,7 @@ void assets::initialize() {
         wze::assets::load_sound("./assets/sounds/explosion2.ogg"),
         wze::assets::load_sound("./assets/sounds/explosion3.ogg")};
     _ship_sound = wze::assets::load_sound("./assets/sounds/ship.wav");
-    _door_sound = wze::assets::load_sound("./assets/sounds/door.mp3");
+    _door_sound = wze::assets::load_sound("./assets/sounds/door.ogg");
     _shop_selling_sound =
         wze::assets::load_sound("./assets/sounds/shop_selling.mp3");
     _player_step_sounds = {
