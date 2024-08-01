@@ -7,7 +7,7 @@
 void shop::update_trade() {
     if (wze::math::length(_player.x() + 675, _player.y() + 152.5f) < 300) {
         if (!_trade) {
-            _trade.reset(new trade(-675, -352.5, TRADE_TYPE_ARMOR));
+            _trade.reset(new trade(-675, -352.5, TRADE_TYPE_STORAGE));
         } else {
             _trade->update();
         }
@@ -21,14 +21,14 @@ void shop::update_trade() {
     } else if (wze::math::length(_player.x() + 675, _player.y() - 657.5f) <
                300) {
         if (!_trade) {
-            _trade.reset(new trade(-675, 457.5, TRADE_TYPE_ENGINE));
+            _trade.reset(new trade(-675, 457.5, TRADE_TYPE_ARMOR));
         } else {
             _trade->update();
         }
     } else if (wze::math::length(_player.x() - 675, _player.y() - 657.5f) <
                300) {
         if (!_trade) {
-            _trade.reset(new trade(675, 457.5, TRADE_TYPE_STORAGE));
+            _trade.reset(new trade(675, 457.5, TRADE_TYPE_ENGINE));
 
         } else {
             _trade->update();

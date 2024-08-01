@@ -17,8 +17,8 @@ trade::trade(float x, float y, trade_type trade_type)
     switch (_trade_type) {
     case TRADE_TYPE_ARMOR:
         image = wze::assets::create_image(
-            "Extra kemény\nűrpáncélzat, mely\nhatékonyan védi hajódat\naz "
-            "űrbanditák\ntámadásaitól.\nNem bánod meg!",
+            "Extra kemény\nűrpáncélzat, mely\nhatékonyan\nvédi rakományod az\n"
+            "űrbanditák\ntámadásaitól!",
             assets::normal_font());
         _tier = save_data::player_ship_hitpoints_tier;
         _set_tier = save_data::set_player_ship_hitpoints_tier;
@@ -26,7 +26,7 @@ trade::trade(float x, float y, trade_type trade_type)
     case TRADE_TYPE_ENGINE:
         image = wze::assets::create_image(
             "Gyorsabb hajtómű,\ngyorsabb bányászás,\nmagasabb órabér!\nVálassz "
-            "szomszédos\nrendszerekből importált\nhajtóműveink közül!",
+            "legújabb\nhajtóműveink közül!",
             assets::normal_font());
         _tier = save_data::player_ship_speed_tier;
         _set_tier = save_data::set_player_ship_speed_tier;
@@ -41,7 +41,7 @@ trade::trade(float x, float y, trade_type trade_type)
         break;
     case TRADE_TYPE_CANNON:
         image = wze::assets::create_image(
-            "Nincs biztonságos\nbányászás elrettentő\ntűzerő nélkül, vegyél\n"
+            "Nincs biztonságos\nbányászás megfelelő\ntűzerő nélkül, vegyél\n"
             "tőlem extra erős\nlézer ágyúkat, hogy\nmegvédhesd magad!",
             assets::normal_font());
         _tier = save_data::player_ship_damage_tier;
@@ -53,7 +53,7 @@ trade::trade(float x, float y, trade_type trade_type)
                     25,      true};
     _price = 0;
     _price_sprite = {x - 147.5f, y + 115, wze::camera::focus() * 0.95f, 0, 270,
-                     70,         true};
+                     60,         true};
     _text_sprite = {x + 142.5f,
                     y - 50,
                     wze::camera::focus() * 0.95f,
@@ -81,6 +81,6 @@ void trade::update() {
     image = wze::assets::create_image(
         _tier() < 3 ? std::to_string(_price) + " ST" : "Elfogyott",
         assets::bold_font());
-    _price_sprite.set_width((float)image->w / (float)image->h * 70);
+    _price_sprite.set_width((float)image->w / (float)image->h * 60);
     _price_sprite.set_texture(wze::assets::create_texture(image));
 }
