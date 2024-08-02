@@ -14,6 +14,7 @@ trade::trade(float x, float y, trade_type trade_type)
     _trade_type = trade_type;
     _background = {x,   y,    wze::camera::focus() * 0.95f,      0, 725,
                    390, true, assets::trade_background_texture()};
+    _icon_sprite = {x-147,y-75, wze::camera::focus() * 0.95f, 0, 283, 135, true};
 
     switch (_trade_type) {
     case TRADE_TYPE_ARMOR:
@@ -23,7 +24,7 @@ trade::trade(float x, float y, trade_type trade_type)
             assets::normal_font());
         _tier = save_data::player_ship_hitpoints_tier;
         _set_tier = save_data::set_player_ship_hitpoints_tier;
-
+        _icon_sprite.set_texture(assets::health_upgrade_icon());
         break;
     case TRADE_TYPE_ENGINE:
         image = wze::assets::create_image(
@@ -32,6 +33,7 @@ trade::trade(float x, float y, trade_type trade_type)
             assets::normal_font());
         _tier = save_data::player_ship_speed_tier;
         _set_tier = save_data::set_player_ship_speed_tier;
+        _icon_sprite.set_texture(assets::speed_upgrade_icon());
         break;
     case TRADE_TYPE_STORAGE:
         image = wze::assets::create_image(
@@ -40,6 +42,7 @@ trade::trade(float x, float y, trade_type trade_type)
             assets::normal_font());
         _tier = save_data::player_ship_storage_tier;
         _set_tier = save_data::set_player_ship_storage_tier;
+        _icon_sprite.set_texture(assets::storage_upgrade_icon());
         break;
     case TRADE_TYPE_CANNON:
         image = wze::assets::create_image(
@@ -48,6 +51,7 @@ trade::trade(float x, float y, trade_type trade_type)
             assets::normal_font());
         _tier = save_data::player_ship_damage_tier;
         _set_tier = save_data::set_player_ship_damage_tier;
+        _icon_sprite.set_texture(assets::damage_upgrade_icon());
         break;
     }
 

@@ -237,7 +237,7 @@ class assets final {
     trade_tier_textures();
     static std::shared_ptr<wze::texture> const& damage_upgrade_icon();
     static std::shared_ptr<wze::texture> const& speed_upgrade_icon();
-    static std::shared_ptr<wze::texture> const& storage_upgrde_icon();
+    static std::shared_ptr<wze::texture> const& storage_upgrade_icon();
     static std::shared_ptr<wze::texture> const& health_upgrade_icon();
 
     static std::shared_ptr<wze::texture> const& gem_trade_background_texture();

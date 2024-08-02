@@ -14,6 +14,7 @@ class trade final {
     wze::sprite _tier_sprite;
     wze::sprite _price_sprite;
     wze::sprite _text_sprite;
+    wze::sprite _icon_sprite;
     std::function<uint8_t()> _tier;
     std::function<void(uint8_t)> _set_tier;
     button _button;
