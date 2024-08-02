@@ -235,6 +235,7 @@ gem_trade::gem_trade()
 }
 
 void gem_trade::update() {
+    uint64_t price;
     std::shared_ptr<wze::image> image;
     std::vector<std::tuple<material, wze::sprite, wze::sprite>>::iterator
         iterator;
@@ -265,10 +266,6 @@ void gem_trade::update() {
     _sapphire_count.set_width((float)image->w / (float)image->h * 30);
     _sapphire_count.set_texture(wze::assets::create_texture(image));
 
-
-
-
-
     _pyrite_decrease.update();
     if (_pyrite_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _pyrite_sell_count) {
@@ -290,10 +287,8 @@ void gem_trade::update() {
             _pyrite_sell_count = save_data::pyrite_count();
         }
     }
-    _pyrite_increase.set_enabled(_pyrite_sell_count < save_data::pyrite_count());
-
-
-
+    _pyrite_increase.set_enabled(_pyrite_sell_count <
+                                 save_data::pyrite_count());
 
     _wolframite_decrease.update();
     if (_wolframite_decrease.state() & BUTTON_STATE_POSTCLICK &&
@@ -315,9 +310,8 @@ void gem_trade::update() {
             _wolframite_sell_count = save_data::wolframite_count();
         }
     }
-    _wolframite_increase.set_enabled(_wolframite_sell_count < save_data::wolframite_count());
-   
-
+    _wolframite_increase.set_enabled(_wolframite_sell_count <
+                                     save_data::wolframite_count());
 
     _carneol_decrease.update();
     if (_carneol_decrease.state() & BUTTON_STATE_POSTCLICK &&
@@ -339,11 +333,8 @@ void gem_trade::update() {
             _carneol_sell_count = save_data::carneol_count();
         }
     }
-    _carneol_increase.set_enabled(_carneol_sell_count < save_data::carneol_count());
-    
-
-
-
+    _carneol_increase.set_enabled(_carneol_sell_count <
+                                  save_data::carneol_count());
 
     _moldavite_decrease.update();
     if (_moldavite_decrease.state() & BUTTON_STATE_POSTCLICK &&
@@ -355,7 +346,7 @@ void gem_trade::update() {
         }
     }
     _moldavite_decrease.set_enabled(_moldavite_sell_count);
-    
+
     _moldavite_increase.update();
     if (_moldavite_increase.state() & BUTTON_STATE_POSTCLICK &&
         _moldavite_sell_count < save_data::moldavite_count()) {
@@ -365,10 +356,8 @@ void gem_trade::update() {
             _moldavite_sell_count = save_data::moldavite_count();
         }
     }
-    _moldavite_increase.set_enabled(_moldavite_sell_count < save_data::moldavite_count());
-    
-
-
+    _moldavite_increase.set_enabled(_moldavite_sell_count <
+                                    save_data::moldavite_count());
 
     _ruby_decrease.update();
     if (_ruby_decrease.state() & BUTTON_STATE_POSTCLICK && _ruby_sell_count) {
@@ -379,7 +368,7 @@ void gem_trade::update() {
         }
     }
     _ruby_decrease.set_enabled(_ruby_sell_count);
-    
+
     _ruby_increase.update();
     if (_ruby_increase.state() & BUTTON_STATE_POSTCLICK &&
         _ruby_sell_count < save_data::ruby_count()) {
@@ -390,10 +379,6 @@ void gem_trade::update() {
         }
     }
     _ruby_increase.set_enabled(_ruby_sell_count < save_data::ruby_count());
-    
-
-
-
 
     _sapphire_decrease.update();
     if (_sapphire_decrease.state() & BUTTON_STATE_POSTCLICK &&
@@ -415,11 +400,8 @@ void gem_trade::update() {
             _sapphire_sell_count = save_data::sapphire_count();
         }
     }
-    _sapphire_increase.set_enabled(_sapphire_sell_count < save_data::sapphire_count());
-
-
-
-
+    _sapphire_increase.set_enabled(_sapphire_sell_count <
+                                   save_data::sapphire_count());
 
     iterator = std::ranges::find_if(
         _items,
@@ -520,14 +502,11 @@ void gem_trade::update() {
         std::get<2>(_items.at(i)).set_y(std::get<1>(_items.at(i)).y());
     }
 
+    price = _pyrite_sell_count * 50 + _wolframite_sell_count * 100 +
+            _carneol_sell_count * 150 + _moldavite_sell_count * 250 +
+            _ruby_sell_count * 400 + _sapphire_sell_count * 650;
     image = wze::assets::create_image(
-        "Összesen: " +
-            std::to_string(
-                _pyrite_sell_count * 50 + _wolframite_sell_count * 100 +
-                _carneol_sell_count * 150 + _moldavite_sell_count * 250 +
-                _ruby_sell_count * 400 + _sapphire_sell_count * 650) +
-            " ST",
-        assets::normal_font());
+        "Összesen: " + std::to_string(price) + " ST", assets::normal_font());
     _summary.set_width((float)image->w / (float)image->h * 45);
     _summary.set_texture(wze::assets::create_texture(image));
 
@@ -556,6 +535,7 @@ void gem_trade::update() {
     _sapphire_sell.set_width((float)image->w / (float)image->h * 30);
     _sapphire_sell.set_texture(wze::assets::create_texture(image));
 
+    _sell.set_enabled(price);
     _sell.update();
     if (_sell.state() & BUTTON_STATE_POSTCLICK) {
         save_data::set_player_money(
