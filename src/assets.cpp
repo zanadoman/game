@@ -91,6 +91,10 @@ std::shared_ptr<wze::texture> assets::_trade_background_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_trade_tier_textures;
 
 std::shared_ptr<wze::texture> assets::_gem_trade_background_texture;
+std::shared_ptr<wze::texture> assets::_damage_upgrade_icon;
+std::shared_ptr<wze::texture> assets::_speed_upgrade_icon;
+std::shared_ptr<wze::texture> assets::_storage_upgrade_icon;
+std::shared_ptr<wze::texture> assets::_health_upgrade_icon;
 
 std::shared_ptr<wze::texture> assets::_hangar_background_texture;
 std::shared_ptr<wze::texture> assets::_hangar_rail_texture;
@@ -385,6 +389,22 @@ std::shared_ptr<wze::texture> const& assets::trade_background_texture() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::trade_tier_textures() {
     return _trade_tier_textures;
+}
+
+std::shared_ptr<wze::texture> const& assets::damage_upgrade_icon() {
+    return _damage_upgrade_icon;
+}
+
+std::shared_ptr<wze::texture> const& assets::speed_upgrade_icon() {
+    return _speed_upgrade_icon;
+}
+
+std::shared_ptr<wze::texture> const& assets::storage_upgrde_icon() {
+    return _storage_upgrade_icon;
+}
+
+std::shared_ptr<wze::texture> const& assets::health_upgrade_icon() {
+    return _health_upgrade_icon;
 }
 
 std::shared_ptr<wze::texture> const& assets::gem_trade_background_texture() {
@@ -1024,6 +1044,9 @@ void assets::initialize() {
             wze::assets::load_image("./assets/trade/tier/2.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/trade/tier/3.png"))};
+    _damage_upgrade_icon = wze::assets::create_texture(
+        wze::assets::load_image("./assets/trade/icons/cannon_icon1.png"));
+        
 
     _gem_trade_background_texture = {wze::assets::create_texture(
         wze::assets::load_image("./assets/gem_trade/background.png"))};
