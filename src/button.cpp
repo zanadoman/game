@@ -85,7 +85,8 @@ void button::update() {
 
     state = this->state();
 
-    if (std::apply(
+    if (enabled() &&
+        std::apply(
             [this](float x, float y) -> bool { return _hitbox.inside(x, y); },
             _appearance.spatial()
                 ? wze::input::cursor_spatial(_appearance.z())

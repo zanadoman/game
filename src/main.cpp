@@ -22,7 +22,7 @@ wze_main(2560, 1440) {
     current_scene = SCENE_TYPE_HANGAR;
 
     wze_while(true) {
-        wze::timer::set_delta_time(std::min(16.f,wze::timer::delta_time()));
+        wze::timer::set_delta_time(std::min(16.f, wze::timer::delta_time()));
         next_scene = scene->update();
         if (current_scene != next_scene) {
             switch (current_scene = next_scene) {

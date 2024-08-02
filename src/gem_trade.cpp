@@ -37,73 +37,85 @@ gem_trade::gem_trade()
                        {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                        assets::placeholder_texture(),
                        assets::placeholder_texture(),
-                       assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                       assets::placeholder_texture(), "", 0, 0, 0,
+                       assets::accept_sound(), assets::refuse_sound()),
       _pyrite_increase(-382.5, -595 - 60, Z, 0, 30, 35, true,
                        std::numeric_limits<uint8_t>::max(),
                        {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                        assets::placeholder_texture(),
                        assets::placeholder_texture(),
-                       assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                       assets::placeholder_texture(), "", 0, 0, 0,
+                       assets::accept_sound(), assets::refuse_sound()),
       _wolframite_decrease(-272.5, -595 - 60, Z, 0, 30, 35, true,
                            std::numeric_limits<uint8_t>::max(),
                            {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                            assets::placeholder_texture(),
                            assets::placeholder_texture(),
-                           assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                           assets::placeholder_texture(), "", 0, 0, 0,
+                           assets::accept_sound(), assets::refuse_sound()),
       _wolframite_increase(-87.5, -595 - 60, Z, 0, 30, 35, true,
                            std::numeric_limits<uint8_t>::max(),
                            {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                            assets::placeholder_texture(),
                            assets::placeholder_texture(),
-                           assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                           assets::placeholder_texture(), "", 0, 0, 0,
+                           assets::accept_sound(), assets::refuse_sound()),
       _carneol_decrease(22.5, -595 - 60, Z, 0, 30, 35, true,
                         std::numeric_limits<uint8_t>::max(),
                         {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                         assets::placeholder_texture(),
                         assets::placeholder_texture(),
-                        assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                        assets::placeholder_texture(), "", 0, 0, 0,
+                        assets::accept_sound(), assets::refuse_sound()),
       _carneol_increase(207.5, -595 - 60, Z, 0, 30, 35, true,
                         std::numeric_limits<uint8_t>::max(),
                         {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                         assets::placeholder_texture(),
                         assets::placeholder_texture(),
-                        assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                        assets::placeholder_texture(), "", 0, 0, 0,
+                        assets::accept_sound(), assets::refuse_sound()),
       _moldavite_decrease(-566.5, -595 + 375, Z, 0, 30, 35, true,
                           std::numeric_limits<uint8_t>::max(),
                           {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                           assets::placeholder_texture(),
                           assets::placeholder_texture(),
-                          assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                          assets::placeholder_texture(), "", 0, 0, 0,
+                          assets::accept_sound(), assets::refuse_sound()),
       _moldavite_increase(-382.5, -595 + 375, Z, 0, 30, 35, true,
                           std::numeric_limits<uint8_t>::max(),
                           {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                           assets::placeholder_texture(),
                           assets::placeholder_texture(),
-                          assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                          assets::placeholder_texture(), "", 0, 0, 0,
+                          assets::accept_sound(), assets::refuse_sound()),
       _ruby_decrease(-272.5, -595 + 375, Z, 0, 30, 35, true,
                      std::numeric_limits<uint8_t>::max(),
                      {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                      assets::placeholder_texture(),
                      assets::placeholder_texture(),
-                     assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                     assets::placeholder_texture(), "", 0, 0, 0,
+                     assets::accept_sound(), assets::refuse_sound()),
       _ruby_increase(-87.5, -595 + 375, Z, 0, 30, 35, true,
                      std::numeric_limits<uint8_t>::max(),
                      {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                      assets::placeholder_texture(),
                      assets::placeholder_texture(),
-                     assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                     assets::placeholder_texture(), "", 0, 0, 0,
+                     assets::accept_sound(), assets::refuse_sound()),
       _sapphire_decrease(22.5, -595 + 375, Z, 0, 30, 35, true,
                          std::numeric_limits<uint8_t>::max(),
                          {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                          assets::placeholder_texture(),
                          assets::placeholder_texture(),
-                         assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                         assets::placeholder_texture(), "", 0, 0, 0,
+                         assets::accept_sound(), assets::refuse_sound()),
       _sapphire_increase(207.5, -595 + 375, Z, 0, 30, 35, true,
                          std::numeric_limits<uint8_t>::max(),
                          {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
                          assets::placeholder_texture(),
                          assets::placeholder_texture(),
-                         assets::placeholder_texture(), "", 0, 0, 0, {}, {}),
+                         assets::placeholder_texture(), "", 0, 0, 0,
+                         assets::accept_sound(), assets::refuse_sound()),
       _sell(507.5, -595 + 440, Z, 0, 310, 70, true,
             std::numeric_limits<uint8_t>::max(),
             {{-155, 35}, {-155, -35}, {155, -35}, {155, 35}},
@@ -253,6 +265,10 @@ void gem_trade::update() {
     _sapphire_count.set_width((float)image->w / (float)image->h * 30);
     _sapphire_count.set_texture(wze::assets::create_texture(image));
 
+
+
+
+
     _pyrite_decrease.update();
     if (_pyrite_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _pyrite_sell_count) {
@@ -263,6 +279,8 @@ void gem_trade::update() {
             _pyrite_sell_count = 0;
         }
     }
+    _pyrite_decrease.set_enabled(_pyrite_sell_count);
+
     _pyrite_increase.update();
     if (_pyrite_increase.state() & BUTTON_STATE_POSTCLICK &&
         _pyrite_sell_count < save_data::pyrite_count()) {
@@ -272,6 +290,11 @@ void gem_trade::update() {
             _pyrite_sell_count = save_data::pyrite_count();
         }
     }
+    _pyrite_increase.set_enabled(_pyrite_sell_count < save_data::pyrite_count());
+
+
+
+
     _wolframite_decrease.update();
     if (_wolframite_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _wolframite_sell_count) {
@@ -281,6 +304,8 @@ void gem_trade::update() {
             _wolframite_sell_count = 0;
         }
     }
+    _wolframite_decrease.set_enabled(_wolframite_sell_count);
+
     _wolframite_increase.update();
     if (_wolframite_increase.state() & BUTTON_STATE_POSTCLICK &&
         _wolframite_sell_count < save_data::wolframite_count()) {
@@ -290,6 +315,10 @@ void gem_trade::update() {
             _wolframite_sell_count = save_data::wolframite_count();
         }
     }
+    _wolframite_increase.set_enabled(_wolframite_sell_count < save_data::wolframite_count());
+   
+
+
     _carneol_decrease.update();
     if (_carneol_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _carneol_sell_count) {
@@ -299,6 +328,8 @@ void gem_trade::update() {
             _carneol_sell_count = 0;
         }
     }
+    _carneol_decrease.set_enabled(_carneol_sell_count);
+
     _carneol_increase.update();
     if (_carneol_increase.state() & BUTTON_STATE_POSTCLICK &&
         _carneol_sell_count < save_data::carneol_count()) {
@@ -308,6 +339,12 @@ void gem_trade::update() {
             _carneol_sell_count = save_data::carneol_count();
         }
     }
+    _carneol_increase.set_enabled(_carneol_sell_count < save_data::carneol_count());
+    
+
+
+
+
     _moldavite_decrease.update();
     if (_moldavite_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _moldavite_sell_count) {
@@ -317,6 +354,8 @@ void gem_trade::update() {
             _moldavite_sell_count = 0;
         }
     }
+    _moldavite_decrease.set_enabled(_moldavite_sell_count);
+    
     _moldavite_increase.update();
     if (_moldavite_increase.state() & BUTTON_STATE_POSTCLICK &&
         _moldavite_sell_count < save_data::moldavite_count()) {
@@ -326,6 +365,11 @@ void gem_trade::update() {
             _moldavite_sell_count = save_data::moldavite_count();
         }
     }
+    _moldavite_increase.set_enabled(_moldavite_sell_count < save_data::moldavite_count());
+    
+
+
+
     _ruby_decrease.update();
     if (_ruby_decrease.state() & BUTTON_STATE_POSTCLICK && _ruby_sell_count) {
         if (9 < _ruby_sell_count) {
@@ -334,6 +378,8 @@ void gem_trade::update() {
             _ruby_sell_count = 0;
         }
     }
+    _ruby_decrease.set_enabled(_ruby_sell_count);
+    
     _ruby_increase.update();
     if (_ruby_increase.state() & BUTTON_STATE_POSTCLICK &&
         _ruby_sell_count < save_data::ruby_count()) {
@@ -343,6 +389,12 @@ void gem_trade::update() {
             _ruby_sell_count = save_data::ruby_count();
         }
     }
+    _ruby_increase.set_enabled(_ruby_sell_count < save_data::ruby_count());
+    
+
+
+
+
     _sapphire_decrease.update();
     if (_sapphire_decrease.state() & BUTTON_STATE_POSTCLICK &&
         _sapphire_sell_count) {
@@ -352,6 +404,8 @@ void gem_trade::update() {
             _sapphire_sell_count = 0;
         }
     }
+    _sapphire_decrease.set_enabled(_sapphire_sell_count);
+
     _sapphire_increase.update();
     if (_sapphire_increase.state() & BUTTON_STATE_POSTCLICK &&
         _sapphire_sell_count < save_data::sapphire_count()) {
@@ -361,6 +415,11 @@ void gem_trade::update() {
             _sapphire_sell_count = save_data::sapphire_count();
         }
     }
+    _sapphire_increase.set_enabled(_sapphire_sell_count < save_data::sapphire_count());
+
+
+
+
 
     iterator = std::ranges::find_if(
         _items,

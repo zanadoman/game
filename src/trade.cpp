@@ -14,7 +14,8 @@ trade::trade(float x, float y, trade_type trade_type)
     _trade_type = trade_type;
     _background = {x,   y,    wze::camera::focus() * 0.95f,      0, 725,
                    390, true, assets::trade_background_texture()};
-    _icon_sprite = {x-147,y-75, wze::camera::focus() * 0.95f, 0, 283, 135, true};
+    _icon_sprite = {x - 147, y - 75, wze::camera::focus() * 0.95f, 0, 283,
+                    135,     true};
 
     switch (_trade_type) {
     case TRADE_TYPE_ARMOR:
@@ -80,9 +81,8 @@ void trade::update() {
         _set_tier(_tier() + 1);
         save_data::set_player_money(save_data::player_money() - _price);
     }
-    if (3 <= _tier()) {
-        _button.set_enabled(false);
-    }
+
+    _button.set_enabled(_price <= save_data::player_money() && _tier() < 3);
 
     _tier_sprite.set_texture(assets::trade_tier_textures().at(_tier()));
     _price = (_tier() + 1) * 1000;
