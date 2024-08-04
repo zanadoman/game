@@ -6,9 +6,9 @@ player::player(float x, float y)
     _appearance = std::shared_ptr<wze::sprite>(
         new wze::sprite(this->x(), this->y(), wze::camera::focus(), 0, 160, 160,
                         true, assets::player_front_idle_animation().at(0),
-                        std::numeric_limits<uint8_t>::max() / 2,
-                        std::numeric_limits<uint8_t>::max() / 2,
-                        std::numeric_limits<uint8_t>::max() / 2,
+                        std::numeric_limits<uint8_t>::max(),
+                        std::numeric_limits<uint8_t>::max(),
+                        std::numeric_limits<uint8_t>::max(),
                         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE,
                         true, std::numeric_limits<uint8_t>::max() / 2, true, 0,
                         -80, 0, true, true, false, false, false));
