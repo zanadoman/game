@@ -101,6 +101,39 @@ std::shared_ptr<wze::texture> assets::_hangar_rail_texture;
 std::shared_ptr<wze::texture> assets::_hangar_ships_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_hangar_door_animation;
 
+std::shared_ptr<wze::texture> assets::_player_backidle1_texture;
+std::shared_ptr<wze::texture> assets::_player_backidle2_texture;
+std::shared_ptr<wze::texture> assets::_player_backidle3_texture;
+std::shared_ptr<wze::texture> assets::_player_backidle4_texture;
+std::shared_ptr<wze::texture> assets::_player_back_texture;
+std::shared_ptr<wze::texture> assets::_player_backwalk1_texture;
+std::shared_ptr<wze::texture> assets::_player_backwalk2_texture;
+std::shared_ptr<wze::texture> assets::_player_frontidle1_texture;
+std::shared_ptr<wze::texture> assets::_player_frontidle2_texture;
+std::shared_ptr<wze::texture> assets::_player_frontidle3_texture;
+std::shared_ptr<wze::texture> assets::_player_frontidle4_texture;
+std::shared_ptr<wze::texture> assets::_player_front_texture;
+std::shared_ptr<wze::texture> assets::_player_frontwalk1_texture;
+std::shared_ptr<wze::texture> assets::_player_frontwalk2_texture;
+std::shared_ptr<wze::texture> assets::_player_leftidle1_texture;
+std::shared_ptr<wze::texture> assets::_player_leftidle2_texture;
+std::shared_ptr<wze::texture> assets::_player_left_texture;
+std::shared_ptr<wze::texture> assets::_player_leftwalk1_texture;
+std::shared_ptr<wze::texture> assets::_player_leftwalk2_texture;
+std::shared_ptr<wze::texture> assets::_player_rightidle1_texture;
+std::shared_ptr<wze::texture> assets::_player_rightidle2_texture;
+std::shared_ptr<wze::texture> assets::_player_right_texture;
+std::shared_ptr<wze::texture> assets::_player_rightwalk1_texture;
+std::shared_ptr<wze::texture> assets::_player_rightwalk2_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_front_idle_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_front_walk_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_back_idle_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_back_walk_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_left_idle_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_left_walk_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_right_idle_animation;
+std::vector<std::shared_ptr<wze::texture>> assets::_player_right_walk_animation;
+
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
 std::shared_ptr<wze::sound> assets::_player_ship_warning_sound;
@@ -426,6 +459,46 @@ std::shared_ptr<wze::texture> const& assets::hangar_ships_texture() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::hangar_door_animation() {
     return _hangar_door_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_front_idle_animation() {
+    return _player_front_idle_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_front_walk_animation() {
+    return _player_front_walk_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_back_idle_animation() {
+    return _player_back_idle_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_back_walk_animation() {
+    return _player_back_walk_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_left_idle_animation() {
+    return _player_left_idle_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_left_walk_animation() {
+    return _player_left_walk_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_right_idle_animation() {
+    return _player_right_idle_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>>
+assets::player_right_walk_animation() {
+    return _player_right_walk_animation;
 }
 
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
@@ -1053,7 +1126,6 @@ void assets::initialize() {
     _health_upgrade_icon = wze::assets::create_texture(
         wze::assets::load_image("./assets/trade/icons/health_icon1.png"));
 
-
     _gem_trade_background_texture = {wze::assets::create_texture(
         wze::assets::load_image("./assets/gem_trade/background.png"))};
 
@@ -1090,6 +1162,89 @@ void assets::initialize() {
             wze::assets::load_image("./assets/hangar/door/12.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/hangar/door/13.png"))};
+
+    _player_backidle1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backidle1.png"));
+    _player_backidle2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backidle2.png"));
+    _player_backidle3_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backidle3.png"));
+    _player_backidle4_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backidle4.png"));
+    _player_back_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/back.png"));
+    _player_backwalk1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backwalk1.png"));
+    _player_backwalk2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/backwalk2.png"));
+    _player_frontidle1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontidle1.png"));
+    _player_frontidle2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontidle2.png"));
+    _player_frontidle3_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontidle3.png"));
+    _player_frontidle4_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontidle4.png"));
+    _player_front_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/front.png"));
+    _player_frontwalk1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontwalk1.png"));
+    _player_frontwalk2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/frontwalk2.png"));
+    _player_leftidle1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/leftidle1.png"));
+    _player_leftidle2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/leftidle2.png"));
+    _player_left_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/left.png"));
+    _player_leftwalk1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/leftwalk1.png"));
+    _player_leftwalk2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/leftwalk2.png"));
+    _player_rightidle1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/rightidle1.png"));
+    _player_rightidle2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/rightidle2.png"));
+    _player_right_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/right.png"));
+    _player_rightwalk1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/rightwalk1.png"));
+    _player_rightwalk2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/player/rightwalk2.png"));
+    _player_front_idle_animation = {
+        _player_frontidle1_texture, _player_frontidle2_texture,
+        _player_frontidle3_texture, _player_frontidle4_texture};
+    _player_front_walk_animation = {
+        _player_frontwalk1_texture,
+        _player_front_texture,
+        _player_frontwalk2_texture,
+        _player_front_texture,
+    };
+    _player_back_idle_animation = {
+        _player_backidle1_texture, _player_backidle2_texture,
+        _player_backidle3_texture, _player_backidle4_texture};
+    _player_back_walk_animation = {
+        _player_backwalk1_texture,
+        _player_back_texture,
+        _player_backwalk2_texture,
+        _player_back_texture,
+    };
+    _player_left_idle_animation = {_player_leftidle1_texture,
+                                   _player_leftidle2_texture};
+    _player_left_walk_animation = {
+        _player_leftwalk1_texture,
+        _player_left_texture,
+        _player_leftwalk2_texture,
+        _player_left_texture,
+    };
+    _player_right_idle_animation = {_player_rightidle1_texture,
+                                    _player_rightidle2_texture};
+    _player_right_walk_animation = {
+        _player_rightwalk1_texture,
+        _player_right_texture,
+        _player_rightwalk2_texture,
+        _player_right_texture,
+    };
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");

@@ -111,6 +111,47 @@ class assets final {
     static std::shared_ptr<wze::texture> _hangar_ships_texture;
     static std::vector<std::shared_ptr<wze::texture>> _hangar_door_animation;
 
+    static std::shared_ptr<wze::texture> _player_backidle1_texture;
+    static std::shared_ptr<wze::texture> _player_backidle2_texture;
+    static std::shared_ptr<wze::texture> _player_backidle3_texture;
+    static std::shared_ptr<wze::texture> _player_backidle4_texture;
+    static std::shared_ptr<wze::texture> _player_back_texture;
+    static std::shared_ptr<wze::texture> _player_backwalk1_texture;
+    static std::shared_ptr<wze::texture> _player_backwalk2_texture;
+    static std::shared_ptr<wze::texture> _player_frontidle1_texture;
+    static std::shared_ptr<wze::texture> _player_frontidle2_texture;
+    static std::shared_ptr<wze::texture> _player_frontidle3_texture;
+    static std::shared_ptr<wze::texture> _player_frontidle4_texture;
+    static std::shared_ptr<wze::texture> _player_front_texture;
+    static std::shared_ptr<wze::texture> _player_frontwalk1_texture;
+    static std::shared_ptr<wze::texture> _player_frontwalk2_texture;
+    static std::shared_ptr<wze::texture> _player_leftidle1_texture;
+    static std::shared_ptr<wze::texture> _player_leftidle2_texture;
+    static std::shared_ptr<wze::texture> _player_left_texture;
+    static std::shared_ptr<wze::texture> _player_leftwalk1_texture;
+    static std::shared_ptr<wze::texture> _player_leftwalk2_texture;
+    static std::shared_ptr<wze::texture> _player_rightidle1_texture;
+    static std::shared_ptr<wze::texture> _player_rightidle2_texture;
+    static std::shared_ptr<wze::texture> _player_right_texture;
+    static std::shared_ptr<wze::texture> _player_rightwalk1_texture;
+    static std::shared_ptr<wze::texture> _player_rightwalk2_texture;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_front_idle_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_front_walk_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_back_idle_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_back_walk_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_left_idle_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_left_walk_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_right_idle_animation;
+    static std::vector<std::shared_ptr<wze::texture>>
+        _player_right_walk_animation;
+
     static std::shared_ptr<wze::sound> _space_ambiance_music_sound;
     static std::shared_ptr<wze::sound> _space_fight_music_sound;
     static std::shared_ptr<wze::sound> _player_ship_warning_sound;
@@ -247,6 +288,23 @@ class assets final {
     static std::shared_ptr<wze::texture> const& hangar_ships_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     hangar_door_animation();
+
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_front_idle_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_front_walk_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_back_idle_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_back_walk_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_left_idle_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_left_walk_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_right_idle_animation();
+    static std::vector<std::shared_ptr<wze::texture>>
+    player_right_walk_animation();
 
     static std::shared_ptr<wze::sound> const& space_ambiance_music_sound();
     static std::shared_ptr<wze::sound> const& space_fight_music_sound();

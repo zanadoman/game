@@ -1,6 +1,13 @@
 #ifndef GAME_ENUMS_HPP
 #define GAME_ENUMS_HPP
 
+enum direction {
+    DIRECTION_FRONT,
+    DIRECTION_BACK,
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT
+};
+
 enum scene_type {
     SCENE_TYPE_SHOP,
     SCENE_TYPE_SPACE,
