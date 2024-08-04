@@ -142,14 +142,11 @@ void player_ship::update_movement() {
 
     moved = false;
 
-    if ((wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP)) &&
-        !(wze::input::key(wze::KEY_S) || wze::input::key(wze::KEY_DOWN))) {
-        set_z(z() + _speed * wze::timer::delta_time());
-        moved = true;
-    } else if ((wze::input::key(wze::KEY_S) ||
-                wze::input::key(wze::KEY_DOWN)) &&
-               !(wze::input::key(wze::KEY_W) || wze::input::key(wze::KEY_UP))) {
+    if (wze::input::key(wze::KEY_S)) {
         set_z(z() - _speed * wze::timer::delta_time());
+        moved = true;
+    } else {
+        set_z(z() + _speed * wze::timer::delta_time());
         moved = true;
     }
 
@@ -392,17 +389,17 @@ player_ship::player_ship() {
     }
     _current_hitpoints = _max_hitpoints;
 
-    switch (save_data::player_ship_storage_tier()){
-        case 0:
+    switch (save_data::player_ship_storage_tier()) {
+    case 0:
         _storage = 50;
         break;
-        case 1:
+    case 1:
         _storage = 80;
         break;
-        case 2:
+    case 2:
         _storage = 120;
         break;
-        default:
+    default:
         _storage = 150;
         break;
     }

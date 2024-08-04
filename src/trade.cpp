@@ -61,7 +61,7 @@ trade::trade(float x, float y, trade_type trade_type)
     _price = 0;
     _price_sprite = {x - 147.5f, y + 115, wze::camera::focus() * 0.95f, 0, 270,
                      60,         true};
-    _text_sprite = {x + 142.5f,
+    _text_sprite = {x + 152.5f,
                     y - 50,
                     wze::camera::focus() * 0.95f,
                     0,

@@ -76,9 +76,16 @@ scene_type hangar::update_door() {
                               (float)std::numeric_limits<uint8_t>::max());
         }
     }
+
     wze::renderer::set_space_color_r(_color);
     wze::renderer::set_space_color_g(_color);
     wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
 
     return !_color ? SCENE_TYPE_SHOP : SCENE_TYPE_HANGAR;
 }
@@ -100,6 +107,12 @@ scene_type hangar::update_ship() {
     wze::renderer::set_space_color_r(_color);
     wze::renderer::set_space_color_g(_color);
     wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
 
     return !_color ? SCENE_TYPE_SPACE : SCENE_TYPE_HANGAR;
 }
@@ -123,6 +136,9 @@ hangar::hangar() : _player(-3637.5, -705) {
     wze::renderer::set_space_color_r(_color);
     wze::renderer::set_space_color_g(_color);
     wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(_color);
+    wze::renderer::set_background_color_g(_color);
+    wze::renderer::set_background_color_b(_color);
 
     _background = {0,
                    0,
@@ -324,6 +340,9 @@ hangar::hangar() : _player(-3637.5, -705) {
 
 hangar::~hangar() {
     wze::renderer::set_space_texture({});
+    wze::renderer::set_background_color_r(0);
+    wze::renderer::set_background_color_g(0);
+    wze::renderer::set_background_color_b(0);
     wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max());
     wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max());
     wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max());
