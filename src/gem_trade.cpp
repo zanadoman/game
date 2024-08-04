@@ -116,7 +116,7 @@ gem_trade::gem_trade()
                          assets::placeholder_texture(),
                          assets::placeholder_texture(), "", 0, 0, 0,
                          assets::accept_sound(), assets::refuse_sound()),
-      _sell(507.5, -595 + 440, Z, 0, 310, 70, true,
+      _sell(507.5, -595 + 450, Z, 0, 310, 70, true,
             std::numeric_limits<uint8_t>::max(),
             {{-155, 35}, {-155, -35}, {155, -35}, {155, 35}},
             assets::button_none_texture(), assets::button_hovered_texture(),
@@ -222,7 +222,7 @@ gem_trade::gem_trade()
                        wze::assets::create_texture(image)};
 
     _summary = {_background.x() + 507.5f,
-                _background.y() + 345,
+                _background.y() + 355,
                 Z,
                 0,
                 0,
@@ -498,7 +498,7 @@ void gem_trade::update() {
     }
 
     for (i = 0; i != _items.size(); ++i) {
-        std::get<1>(_items.at(i)).set_y(_background.y() - 350 + i * 60);
+        std::get<1>(_items.at(i)).set_y(_background.y() - 340 + i * 60);
         std::get<2>(_items.at(i)).set_y(std::get<1>(_items.at(i)).y());
     }
 
