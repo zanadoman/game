@@ -1213,7 +1213,9 @@ void assets::initialize() {
         wze::assets::load_image("./assets/player/rightwalk2.png"));
     _player_front_idle_animation = {
         _player_frontidle1_texture, _player_frontidle2_texture,
-        _player_frontidle3_texture, _player_frontidle4_texture};
+        _player_frontidle3_texture, _player_frontidle4_texture,
+        _player_front_texture,      _player_front_texture,
+        _player_front_texture};
     _player_front_walk_animation = {
         _player_frontwalk1_texture,
         _player_front_texture,
@@ -1222,23 +1224,27 @@ void assets::initialize() {
     };
     _player_back_idle_animation = {
         _player_backidle1_texture, _player_backidle2_texture,
-        _player_backidle3_texture, _player_backidle4_texture};
+        _player_backidle3_texture, _player_backidle4_texture,
+        _player_back_texture,      _player_back_texture,
+        _player_back_texture};
     _player_back_walk_animation = {
         _player_backwalk1_texture,
         _player_back_texture,
         _player_backwalk2_texture,
         _player_back_texture,
     };
-    _player_left_idle_animation = {_player_leftidle1_texture,
-                                   _player_leftidle2_texture};
+    _player_left_idle_animation = {
+        _player_leftidle1_texture, _player_leftidle2_texture,
+        _player_left_texture, _player_left_texture, _player_left_texture};
     _player_left_walk_animation = {
         _player_leftwalk1_texture,
         _player_left_texture,
         _player_leftwalk2_texture,
         _player_left_texture,
     };
-    _player_right_idle_animation = {_player_rightidle1_texture,
-                                    _player_rightidle2_texture};
+    _player_right_idle_animation = {
+        _player_rightidle1_texture, _player_rightidle2_texture,
+        _player_right_texture, _player_right_texture, _player_right_texture};
     _player_right_walk_animation = {
         _player_rightwalk1_texture,
         _player_right_texture,
