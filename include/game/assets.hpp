@@ -105,6 +105,8 @@ class assets final {
     static std::shared_ptr<wze::texture> _health_upgrade_icon;
 
     static std::shared_ptr<wze::texture> _gem_trade_background_texture;
+    static std::shared_ptr<wze::texture> _decrease_button;
+    static std::shared_ptr<wze::texture> _increase_button;
 
     static std::shared_ptr<wze::texture> _hangar_background_texture;
     static std::shared_ptr<wze::texture> _hangar_rail_texture;
@@ -275,6 +277,8 @@ class assets final {
     static std::shared_ptr<wze::texture> const& shop_speed_texture();
 
     static std::shared_ptr<wze::texture> const& trade_background_texture();
+    static std::shared_ptr<wze::texture> const& decrease_button();
+    static std::shared_ptr<wze::texture> const& increase_button();
     static std::vector<std::shared_ptr<wze::texture>> const&
     trade_tier_textures();
     static std::shared_ptr<wze::texture> const& damage_upgrade_icon();

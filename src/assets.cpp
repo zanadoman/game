@@ -88,6 +88,8 @@ std::shared_ptr<wze::texture> assets::_shop_hitpoints_texture;
 std::shared_ptr<wze::texture> assets::_shop_speed_texture;
 
 std::shared_ptr<wze::texture> assets::_trade_background_texture;
+std::shared_ptr<wze::texture> assets::_decrease_button;
+std::shared_ptr<wze::texture> assets::_increase_button;
 std::vector<std::shared_ptr<wze::texture>> assets::_trade_tier_textures;
 
 std::shared_ptr<wze::texture> assets::_gem_trade_background_texture;
@@ -420,6 +422,13 @@ std::shared_ptr<wze::texture> const& assets::trade_background_texture() {
     return _trade_background_texture;
 }
 
+std::shared_ptr<wze::texture> const& assets::decrease_button() {
+    return _decrease_button;
+}
+std::shared_ptr<wze::texture> const& assets::increase_button(){
+    return _increase_button;
+}
+
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::trade_tier_textures() {
     return _trade_tier_textures;
@@ -557,7 +566,7 @@ std::shared_ptr<wze::sound> const& assets::shop_selling_sound() {
     return _shop_selling_sound;
 }
 
-std::shared_ptr<wze::sound> const& assets::space_station_ambiance_sound(){
+std::shared_ptr<wze::sound> const& assets::space_station_ambiance_sound() {
     return _space_station_ambiance_sound;
 }
 
@@ -1133,6 +1142,10 @@ void assets::initialize() {
 
     _gem_trade_background_texture = {wze::assets::create_texture(
         wze::assets::load_image("./assets/gem_trade/background.png"))};
+    _decrease_button = {wze::assets::create_texture(
+        wze::assets::load_image("./assets/decrease_button.png"))};
+    _increase_button = {wze::assets::create_texture(
+        wze::assets::load_image("./assets/increase_button.png"))};
 
     _hangar_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/hangar/background.png"));
