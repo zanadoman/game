@@ -277,6 +277,7 @@ shop::shop() : _player(1615, -397.5) {
 
     _money = {1205, -645, 0, 0, 75, 75, false, assets::stellar_token()};
     _money_count = {0, -645, 0, 0, 0, 70, false, {}};
+    _space_station_ambiance_sound = {assets::space_station_ambiance_sound()};
 }
 
 shop::~shop() {
@@ -291,6 +292,9 @@ shop::~shop() {
 scene_type shop::update() {
     _player.update();
     update_trade();
+    if(!_space_station_ambiance_sound.playing()){
+        _space_station_ambiance_sound.play();
+    }
 
     if (_player.y() < -87.5f) {
         _storage_sprite.set_priority(128);

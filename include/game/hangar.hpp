@@ -53,6 +53,8 @@ class hangar final : public scene {
     wze::sprite _money_count;
     void update_money();
 
+    wze::speaker _space_station_ambiance_sound;
+
   public:
     hangar();
     ~hangar();

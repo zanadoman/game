@@ -336,6 +336,8 @@ hangar::hangar() : _player(-3637.5, -705) {
 
     _money = {1205, -645, 0, 0, 75, 75, false, assets::stellar_token()};
     _money_count = {0, -645, 0, 0, 0, 70, false, {}};
+
+    _space_station_ambiance_sound = {assets::space_station_ambiance_sound()};
 }
 
 hangar::~hangar() {
@@ -353,6 +355,10 @@ scene_type hangar::update() {
     scene_type ship;
 
     _player.update();
+
+    if(!_space_station_ambiance_sound.playing()){
+        _space_station_ambiance_sound.play();
+    }
 
     if (_player.y() < -475) {
         _rail.set_priority(std::numeric_limits<uint8_t>::max() / 2 + 1);

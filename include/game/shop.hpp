@@ -43,6 +43,7 @@ class shop final : public scene {
     wze::sprite _door_light;
     wze::animator _door_animation;
     wze::speaker _door_sound;
+    wze::speaker _space_station_ambiance_sound;
     bool _door_animating;
     bool _door_open;
     scene_type update_door();
