@@ -38,7 +38,21 @@ void menu::update_space() {
     }
 }
 
-menu::menu() {
+menu::menu()
+    : _start_button(0, 0, 0, 0, 100, 20, false,
+                    std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+                    assets::placeholder_texture(),
+                    assets::placeholder_texture(),
+                    assets::placeholder_texture(), "Játék", 0, 0, 0, {}, {}),
+      _restart_button(
+          0, 100, 0, 0, 100, 20, false, std::numeric_limits<uint8_t>::max(),
+          {{}, {}, {}, {}}, assets::placeholder_texture(),
+          assets::placeholder_texture(), assets::placeholder_texture(),
+          "Alaphelyzet", 0, 0, 0, {}, {}),
+      _exit_button(0, 200, 0, 0, 100, 20, false,
+                   std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+                   assets::placeholder_texture(), assets::placeholder_texture(),
+                   assets::placeholder_texture(), "Kilépés", 0, 0, 0, {}, {}) {
     size_t i;
 
     wze::renderer::set_space_texture(assets::space_texture());
@@ -77,6 +91,10 @@ menu::menu() {
             },
             sphere_coordinate(10'000, 100'000));
     }
+
+    _player_sprite = {
+        200, -100, 0,     0,
+        160, 160,  false, assets::player_front_idle_animation().at(0)};
 }
 
 menu::~menu() {
