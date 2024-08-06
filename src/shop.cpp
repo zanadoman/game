@@ -46,38 +46,39 @@ void shop::update_trade() {
     }
 }
 
-scene_type shop::update_door() {
+scene_type shop::update_door_right() {
     float distance;
 
     distance = wze::math::length(_player.x() - 1815, _player.y() + 397.5f);
 
-    if (!_door_animating && (distance <= 500) != _door_open) {
-        _door_animating = true;
-        _door_sound.play();
-        if (!_door_animation.reversed()) {
-            _door_light.set_color_r(137);
-            _door_light.set_color_g(221);
-            _door_light.set_color_b(70);
+    if (!_door_right_animating && (distance <= 500) != _door_right_open) {
+        _door_right_animating = true;
+        _door_right_sound.play();
+        if (!_door_right_animation.reversed()) {
+            _door_right_light.set_color_r(137);
+            _door_right_light.set_color_g(221);
+            _door_right_light.set_color_b(70);
         } else {
-            _door_light.set_color_r(228);
-            _door_light.set_color_g(44);
-            _door_light.set_color_b(56);
+            _door_right_light.set_color_r(228);
+            _door_right_light.set_color_g(44);
+            _door_right_light.set_color_b(56);
         }
     }
 
-    if (_door_animating && _door_animation.play()) {
-        _door->set_texture(_door_animation.frames().back());
-        _door_animation.reverse();
-        _door_animation.reset();
-        _door_open = !_door_open;
-        _door_animating = false;
+    if (_door_right_animating && _door_right_animation.play()) {
+        _door_right->set_texture(_door_right_animation.frames().back());
+        _door_right_animation.reverse();
+        _door_right_animation.reset();
+        _door_right_open = !_door_right_open;
+        _door_right_animating = false;
     }
 
-    if (_door_open && !_door_animating && distance <= 150) {
+    _door_right_proxy = distance <= 150;
+    if (_door_right_open && !_door_right_animating && _door_right_proxy) {
         if (_color != 0) {
             _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
         }
-    } else {
+    } else if (!_door_left_proxy) {
         if (_color != std::numeric_limits<uint8_t>::max()) {
             _color = std::min(_color + 0.2f * wze::timer::delta_time(),
                               (float)std::numeric_limits<uint8_t>::max());
@@ -94,6 +95,57 @@ scene_type shop::update_door() {
         _color / std::numeric_limits<uint8_t>::max() * 38);
 
     return !_color ? SCENE_TYPE_HANGAR : SCENE_TYPE_SHOP;
+}
+
+scene_type shop::update_door_left() {
+    float distance;
+
+    distance = wze::math::length(_player.x() + 1815, _player.y() + 397.5f);
+
+    if (!_door_left_animating && (distance <= 500) != _door_left_open) {
+        _door_left_animating = true;
+        _door_left_sound.play();
+        if (!_door_left_animation.reversed()) {
+            _door_left_light.set_color_r(137);
+            _door_left_light.set_color_g(221);
+            _door_left_light.set_color_b(70);
+        } else {
+            _door_left_light.set_color_r(228);
+            _door_left_light.set_color_g(44);
+            _door_left_light.set_color_b(56);
+        }
+    }
+
+    if (_door_left_animating && _door_left_animation.play()) {
+        _door_left->set_texture(_door_left_animation.frames().back());
+        _door_left_animation.reverse();
+        _door_left_animation.reset();
+        _door_left_open = !_door_left_open;
+        _door_left_animating = false;
+    }
+
+    _door_left_proxy = distance <= 150;
+    if (_door_left_open && !_door_left_animating && _door_left_proxy) {
+        if (_color != 0) {
+            _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
+        }
+    } else if (!_door_right_proxy) {
+        if (_color != std::numeric_limits<uint8_t>::max()) {
+            _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+        }
+    }
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
+
+    return !_color ? SCENE_TYPE_MENU : SCENE_TYPE_SHOP;
 }
 
 void shop::update_money() {
@@ -246,34 +298,67 @@ shop::shop() : _player(1615, -397.5) {
         0,
         0};
 
-    _door = std::shared_ptr<wze::sprite>(new wze::sprite(
+    _door_right = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 5120, 2880, true,
         assets::shop_door_animation().back(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(),
         std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
-    _door_light = {0,
-                   0,
-                   wze::camera::focus(),
-                   0,
-                   5120,
-                   2880,
-                   true,
-                   assets::shop_door_light_texture(),
-                   137,
-                   221,
-                   70};
-    _door_animation = {assets::shop_door_animation(), 100, {_door}};
-    _door_animation.reverse();
-    _door_animating = false;
-    _door_open = true;
-    _door_sound = {assets::door_sound(),
-                   std::numeric_limits<int8_t>::max(),
-                   1500,
-                   true,
-                   1815,
-                   -397.5};
+    _door_right_light = {0,
+                         0,
+                         wze::camera::focus(),
+                         0,
+                         5120,
+                         2880,
+                         true,
+                         assets::shop_door_light_texture(),
+                         137,
+                         221,
+                         70,
+                         std::numeric_limits<uint8_t>::max(),
+                         wze::FLIP_NONE};
+    _door_right_animation = {assets::shop_door_animation(), 100, {_door_right}};
+    _door_right_animation.reverse();
+    _door_right_animating = false;
+    _door_right_open = true;
+    _door_right_sound = {assets::door_sound(),
+                         std::numeric_limits<int8_t>::max(),
+                         1500,
+                         true,
+                         1815,
+                         -397.5};
+
+    _door_left = std::shared_ptr<wze::sprite>(new wze::sprite(
+        0, 0, wze::camera::focus(), 0, 5120, 2880, true,
+        assets::shop_door_animation().back(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(), wze::FLIP_HORIZONTAL, true, 0));
+    _door_left_light = {0,
+                        0,
+                        wze::camera::focus(),
+                        0,
+                        5120,
+                        2880,
+                        true,
+                        assets::shop_door_light_texture(),
+                        137,
+                        221,
+                        70,
+                        std::numeric_limits<uint8_t>::max(),
+                        wze::FLIP_HORIZONTAL};
+    _door_left_animation = {assets::shop_door_animation(), 100, {_door_left}};
+    _door_left_animation.reverse();
+    _door_left_animating = false;
+    _door_left_open = true;
+    _door_left_sound = {assets::door_sound(),
+                        std::numeric_limits<int8_t>::max(),
+                        1500,
+                        true,
+                        -1815,
+                        -397.5};
 
     _money = {1205, -645, 0, 0, 75, 75, false, assets::stellar_token()};
     _money_count = {0, -645, 0, 0, 0, 70, false, {}};
@@ -290,9 +375,12 @@ shop::~shop() {
 }
 
 scene_type shop::update() {
+    scene_type door_right;
+    scene_type door_left;
+
     _player.update();
     update_trade();
-    if(!_space_station_ambiance_sound.playing()){
+    if (!_space_station_ambiance_sound.playing()) {
         _space_station_ambiance_sound.play();
     }
 
@@ -314,5 +402,15 @@ scene_type shop::update() {
 
     update_money();
 
-    return update_door();
+    door_right = update_door_right();
+    if (_door_right_proxy) {
+        return door_right;
+    }
+
+    door_left = update_door_left();
+    if (_door_left_proxy) {
+        return door_left;
+    }
+
+    return SCENE_TYPE_SHOP;
 }
