@@ -11,7 +11,8 @@ enum direction {
 enum scene_type {
     SCENE_TYPE_SHOP,
     SCENE_TYPE_SPACE,
-    SCENE_TYPE_HANGAR
+    SCENE_TYPE_HANGAR,
+    SCENE_TYPE_MENU
 };
 
 enum trade_type {
