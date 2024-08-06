@@ -113,6 +113,8 @@ class assets final {
     static std::shared_ptr<wze::texture> _hangar_ships_texture;
     static std::vector<std::shared_ptr<wze::texture>> _hangar_door_animation;
 
+    static std::shared_ptr<wze::texture> _main_menu_background_texture;
+
     static std::shared_ptr<wze::texture> _player_backidle1_texture;
     static std::shared_ptr<wze::texture> _player_backidle2_texture;
     static std::shared_ptr<wze::texture> _player_backidle3_texture;
@@ -293,6 +295,8 @@ class assets final {
     static std::shared_ptr<wze::texture> const& hangar_ships_texture();
     static std::vector<std::shared_ptr<wze::texture>> const&
     hangar_door_animation();
+
+    static std::shared_ptr<wze::texture> const& main_menu_background_texture();
 
     static std::vector<std::shared_ptr<wze::texture>>
     player_front_idle_animation();

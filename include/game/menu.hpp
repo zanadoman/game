@@ -15,6 +15,8 @@ class menu final : public scene {
     std::vector<wze::sprite> _asteroids;
     std::vector<wze::sprite> _particles;
 
+    wze::sprite _background_texture;
+
     button _start_button;
     button _restart_button;
     button _exit_button;

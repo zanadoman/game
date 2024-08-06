@@ -103,6 +103,8 @@ std::shared_ptr<wze::texture> assets::_hangar_rail_texture;
 std::shared_ptr<wze::texture> assets::_hangar_ships_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_hangar_door_animation;
 
+std::shared_ptr<wze::texture> assets::_main_menu_background_texture;
+
 std::shared_ptr<wze::texture> assets::_player_backidle1_texture;
 std::shared_ptr<wze::texture> assets::_player_backidle2_texture;
 std::shared_ptr<wze::texture> assets::_player_backidle3_texture;
@@ -469,6 +471,10 @@ std::shared_ptr<wze::texture> const& assets::hangar_ships_texture() {
 std::vector<std::shared_ptr<wze::texture>> const&
 assets::hangar_door_animation() {
     return _hangar_door_animation;
+}
+
+std::shared_ptr<wze::texture> const& assets::main_menu_background_texture(){
+    return _main_menu_background_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>>
@@ -1180,6 +1186,8 @@ void assets::initialize() {
             wze::assets::load_image("./assets/hangar/door/12.png")),
         wze::assets::create_texture(
             wze::assets::load_image("./assets/hangar/door/13.png"))};
+
+    _main_menu_background_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/menu_background.png"));
 
     _player_backidle1_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player/backidle1.png"));

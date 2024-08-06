@@ -91,6 +91,8 @@ menu::menu()
             },
             sphere_coordinate(10'000, 100'000));
     }
+    
+    _background_texture = {0,0,0,0,431,243,false,assets::main_menu_background_texture()};
 
     _player_sprite = {
         200, -100, 0,     0,
