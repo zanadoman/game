@@ -53,18 +53,18 @@ void menu::update_space() {
 }
 
 menu::menu()
-    : _start_button(0, 0, 0, 0, 100, 20, false,
-                    std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+    : _start_button(-865, 47 , 0, 0, 550, 142, false,
+                    std::numeric_limits<uint8_t>::max(), {{-1139, 113}, {-1139,-27}, {-589,-27}, {-589,113}},
                     assets::button_none_texture(),
                     assets::button_hovered_texture(),
                     assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
       _restart_button(
-          0, 100, 0, 0, 100, 20, false, std::numeric_limits<uint8_t>::max(),
-          {{}, {}, {}, {}}, assets::button_none_texture(),
+          -865, 275, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
+          {{-1139,347}, {-1139,205}, {-589,205}, {-589,347}}, assets::button_none_texture(),
           assets::button_hovered_texture(), assets::button_hovered_texture(),
           "Alaphelyzet", 0, 0, 0, {}, {}),
-      _exit_button(0, 200, 0, 0, 100, 20, false,
-                   std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+      _exit_button(-865, 503, 0, 0, 550, 142, false,
+                   std::numeric_limits<uint8_t>::max(), {{-1139,575}, {-1139,433}, {-589,433}, {-589,575}},
                    assets::button_none_texture(), assets::button_hovered_texture(),
                    assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}) {
     size_t i;
@@ -125,6 +125,11 @@ menu::~menu() {
 
 scene_type menu::update() {
     update_space();
+    _start_button.update();
+    _restart_button.update();
+    _exit_button.update();
+
+
 
     return SCENE_TYPE_MENU;
 }
