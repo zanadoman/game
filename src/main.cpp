@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/hangar.hpp>
+#include <game/menu.hpp>
 #include <game/save_data.hpp>
 #include <game/scene.hpp>
 #include <game/shop.hpp>
@@ -38,10 +39,13 @@ wze_main(2560, 1440) {
                 scene.reset();
                 scene.reset(new hangar);
                 break;
+            case SCENE_TYPE_MENU:
+                scene.reset();
+                scene.reset(new menu);
+                break;
             }
         }
         std::cout << wze::timer::delta_time() << std::endl;
-       
     };
 
     save_data::save();
