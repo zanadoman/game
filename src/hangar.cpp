@@ -338,6 +338,11 @@ hangar::hangar() : _player(-3637.5, -705) {
     _money_count = {0, -645, 0, 0, 0, 70, false, {}};
 
     _space_station_ambiance_sound = {assets::space_station_ambiance_sound()};
+
+    _quest_npc = std::shared_ptr<wze::sprite>(
+        new wze::sprite(0, 0, wze::camera::focus(), 0, 13105, 6380, true,
+                        assets::quest_npc_animation().front()));
+    _quest_npc_animation = {assets::quest_npc_animation(), 200, {_quest_npc}};
 }
 
 hangar::~hangar() {
@@ -356,7 +361,7 @@ scene_type hangar::update() {
 
     _player.update();
 
-    if(!_space_station_ambiance_sound.playing()){
+    if (!_space_station_ambiance_sound.playing()) {
         _space_station_ambiance_sound.play();
     }
 
@@ -368,6 +373,8 @@ scene_type hangar::update() {
 
     update_space();
     update_money();
+
+    _quest_npc_animation.play();
 
     door = update_door();
     if (_door_proxy) {

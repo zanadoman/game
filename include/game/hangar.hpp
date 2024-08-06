@@ -55,6 +55,9 @@ class hangar final : public scene {
 
     wze::speaker _space_station_ambiance_sound;
 
+    std::shared_ptr<wze::sprite> _quest_npc;
+    wze::animator _quest_npc_animation;
+
   public:
     hangar();
     ~hangar();

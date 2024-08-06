@@ -138,6 +138,13 @@ std::vector<std::shared_ptr<wze::texture>> assets::_player_left_walk_animation;
 std::vector<std::shared_ptr<wze::texture>> assets::_player_right_idle_animation;
 std::vector<std::shared_ptr<wze::texture>> assets::_player_right_walk_animation;
 
+std::shared_ptr<wze::texture> assets::_quest_npc1_texture;
+std::shared_ptr<wze::texture> assets::_quest_npc2_texture;
+std::shared_ptr<wze::texture> assets::_quest_npc3_texture;
+std::shared_ptr<wze::texture> assets::_quest_npc4_texture;
+std::shared_ptr<wze::texture> assets::_quest_npc5_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_quest_npc_animation;
+
 std::shared_ptr<wze::sound> assets::_space_ambiance_music_sound;
 std::shared_ptr<wze::sound> assets::_space_fight_music_sound;
 std::shared_ptr<wze::sound> assets::_player_ship_warning_sound;
@@ -427,7 +434,7 @@ std::shared_ptr<wze::texture> const& assets::trade_background_texture() {
 std::shared_ptr<wze::texture> const& assets::decrease_button() {
     return _decrease_button;
 }
-std::shared_ptr<wze::texture> const& assets::increase_button(){
+std::shared_ptr<wze::texture> const& assets::increase_button() {
     return _increase_button;
 }
 
@@ -473,48 +480,53 @@ assets::hangar_door_animation() {
     return _hangar_door_animation;
 }
 
-std::shared_ptr<wze::texture> const& assets::main_menu_background_texture(){
+std::shared_ptr<wze::texture> const& assets::main_menu_background_texture() {
     return _main_menu_background_texture;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_front_idle_animation() {
     return _player_front_idle_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_front_walk_animation() {
     return _player_front_walk_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_back_idle_animation() {
     return _player_back_idle_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_back_walk_animation() {
     return _player_back_walk_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_left_idle_animation() {
     return _player_left_idle_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_left_walk_animation() {
     return _player_left_walk_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_right_idle_animation() {
     return _player_right_idle_animation;
 }
 
-std::vector<std::shared_ptr<wze::texture>>
+std::vector<std::shared_ptr<wze::texture>> const&
 assets::player_right_walk_animation() {
     return _player_right_walk_animation;
+}
+
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::quest_npc_animation() {
+    return _quest_npc_animation;
 }
 
 std::shared_ptr<wze::sound> const& assets::space_ambiance_music_sound() {
@@ -1187,7 +1199,8 @@ void assets::initialize() {
         wze::assets::create_texture(
             wze::assets::load_image("./assets/hangar/door/13.png"))};
 
-    _main_menu_background_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/menu_background.png"));
+    _main_menu_background_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/main_menu/menu_background.png"));
 
     _player_backidle1_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player/backidle1.png"));
@@ -1277,6 +1290,21 @@ void assets::initialize() {
         _player_rightwalk2_texture,
         _player_right_texture,
     };
+
+    _quest_npc1_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/quest_npc/1.png"));
+    _quest_npc2_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/quest_npc/2.png"));
+    _quest_npc3_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/quest_npc/3.png"));
+    _quest_npc4_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/quest_npc/4.png"));
+    _quest_npc5_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/quest_npc/5.png"));
+    _quest_npc_animation = {_quest_npc1_texture, _quest_npc1_texture,
+                            _quest_npc1_texture, _quest_npc2_texture,
+                            _quest_npc3_texture, _quest_npc4_texture,
+                            _quest_npc5_texture};
 
     _space_ambiance_music_sound =
         wze::assets::load_sound("./assets/sounds/space_ambiance.mp3");
