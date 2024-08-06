@@ -36,23 +36,37 @@ void menu::update_space() {
             particle.set_x(-100'000);
         }
     }
+
+    _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
+
 }
 
 menu::menu()
     : _start_button(0, 0, 0, 0, 100, 20, false,
                     std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
-                    assets::placeholder_texture(),
-                    assets::placeholder_texture(),
-                    assets::placeholder_texture(), "Játék", 0, 0, 0, {}, {}),
+                    assets::button_none_texture(),
+                    assets::button_hovered_texture(),
+                    assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
       _restart_button(
           0, 100, 0, 0, 100, 20, false, std::numeric_limits<uint8_t>::max(),
-          {{}, {}, {}, {}}, assets::placeholder_texture(),
-          assets::placeholder_texture(), assets::placeholder_texture(),
+          {{}, {}, {}, {}}, assets::button_none_texture(),
+          assets::button_hovered_texture(), assets::button_hovered_texture(),
           "Alaphelyzet", 0, 0, 0, {}, {}),
       _exit_button(0, 200, 0, 0, 100, 20, false,
                    std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
-                   assets::placeholder_texture(), assets::placeholder_texture(),
-                   assets::placeholder_texture(), "Kilépés", 0, 0, 0, {}, {}) {
+                   assets::button_none_texture(), assets::button_hovered_texture(),
+                   assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}) {
     size_t i;
 
     wze::renderer::set_space_texture(assets::space_texture());
@@ -92,7 +106,7 @@ menu::menu()
             sphere_coordinate(10'000, 100'000));
     }
     
-    _background_texture = {0,0,0,0,431,243,false,assets::main_menu_background_texture()};
+    _background_texture = {0,0,0,0,(float)wze::window::width(),(float)wze::window::height(),false,assets::main_menu_background_texture()};
 
     _player_sprite = {
         200, -100, 0,     0,
