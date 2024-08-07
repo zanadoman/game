@@ -23,6 +23,12 @@ class menu final : public scene {
     button _volume_button;
     button _mouse_sens_button;
 
+    wze::sprite _made_by_sprite;
+    wze::sprite _doman_sprite;
+    wze::sprite _roland_sprite;
+    wze::sprite _franck_sprite;
+    wze::sprite _lili_sprite;
+
     std::shared_ptr<wze::sprite> _door;
     wze::animator _door_animation;
     bool _door_animating;

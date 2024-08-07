@@ -101,8 +101,7 @@ menu::menu()
           assets::button_none_texture(), assets::button_hovered_texture(),
           assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}),
       _volume_button(1074, -643, 0, 0, 85, 67, false,
-                     std::numeric_limits<uint8_t>::max(),
-                    {{}, {}, {}, {}},
+                     std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
                      assets::sound_button_texture(),
                      assets::sound_button_texture(),
                      assets::sound_button_texture(), "", 0, 0, 0, {}, {}),
@@ -160,8 +159,70 @@ menu::menu()
                            assets::main_menu_background_texture()};
 
     _player_sprite = {
-        200, -100, 0,     0,
-        180.5, 180.5,  false, assets::player_front_idle_animation().at(0)};
+        -55,   248,   0,     0,
+        180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
+
+    _made_by_sprite = {-1058,
+                       685,
+                       0,
+                       0,
+                       163,
+                       22,
+                       false,
+                       wze::assets::create_texture(wze::assets::create_image(
+                           "Készítette:", assets::normal_font())),
+                       0,
+                       0,
+                       0};
+    _doman_sprite = {-556,
+                     685,
+                     0,
+                     0,
+                     164,
+                     22,
+                     false,
+                     wze::assets::create_texture(wze::assets::create_image(
+                         "Zana Domán", assets::normal_font())),
+                     0,
+                     0,
+                     0};
+    _roland_sprite = {-54,
+                      685,
+                      0,
+                      0,
+                      164,
+                      22,
+                      false,
+                      wze::assets::create_texture(wze::assets::create_image(
+                          "Gunics Roland", assets::normal_font())),
+                      0,
+                      0,
+                      0};
+    _franck_sprite = {448,
+                      685,
+                      0,
+                      0,
+                      164,
+                      22,
+                      false,
+                      wze::assets::create_texture(wze::assets::create_image(
+                          "Kiruf Franck", assets::normal_font())),
+                      0,
+                      0,
+                      0};
+    _lili_sprite = {950,
+                    685,
+                    0,
+                    0,
+                    164,
+                    22,
+                    false,
+                    wze::assets::create_texture(wze::assets::create_image(
+                        "Polacsek Lili", assets::normal_font())),
+                    0,
+                    0,
+                    0};
+
     _door = std::shared_ptr<wze::sprite>(
         new wze::sprite(0, 0, wze::camera::focus(), 0, 2560, 1440, false,
                         assets::main_menu_door_animation().front()));
@@ -193,11 +254,10 @@ scene_type menu::update() {
     update_space();
     _start_button.update();
 
-
     _restart_button.update();
 
     _exit_button.update();
-    if(_exit_button.state() & BUTTON_STATE_POSTCLICK){
+    if (_exit_button.state() & BUTTON_STATE_POSTCLICK) {
         quit = true;
     }
 
@@ -207,7 +267,7 @@ scene_type menu::update() {
     door = update_door();
     if (_door_proxy)
         return door;
-    if(quit) {
+    if (quit) {
         return SCENE_TYPE_QUIT;
     }
 
