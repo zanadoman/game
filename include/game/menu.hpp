@@ -20,6 +20,8 @@ class menu final : public scene {
     button _start_button;
     button _restart_button;
     button _exit_button;
+    button _volume_button;
+    button _mouse_sens_button;
 
     wze::sprite _player_sprite;
 

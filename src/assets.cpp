@@ -1211,6 +1211,8 @@ void assets::initialize() {
 
     _main_menu_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/main_menu/menu_background.png"));
+    _sound_button_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/sound_button.png"));
+    _mouse_sens_button_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/mouse_sens_button.png"));
 
     _player_backidle1_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player/backidle1.png"));

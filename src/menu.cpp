@@ -38,7 +38,7 @@ void menu::update_space() {
     }
 
     _color = std::min(_color + 0.2f * wze::timer::delta_time(),
-                              (float)std::numeric_limits<uint8_t>::max());
+                      (float)std::numeric_limits<uint8_t>::max());
 
     wze::renderer::set_space_color_r(_color);
     wze::renderer::set_space_color_g(_color);
@@ -49,24 +49,34 @@ void menu::update_space() {
         _color / std::numeric_limits<uint8_t>::max() * 18);
     wze::renderer::set_background_color_b(
         _color / std::numeric_limits<uint8_t>::max() * 38);
-
 }
 
 menu::menu()
-    : _start_button(-865, 47 , 0, 0, 550, 142, false,
-                    std::numeric_limits<uint8_t>::max(), {{-1139, 113}, {-1139,-27}, {-589,-27}, {-589,113}},
-                    assets::button_none_texture(),
-                    assets::button_hovered_texture(),
-                    assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
+    : _start_button(
+          -865, 47, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
+          {{-1139, 113}, {-1139, -27}, {-589, -27}, {-589, 113}},
+          assets::button_none_texture(), assets::button_hovered_texture(),
+          assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
       _restart_button(
           -865, 275, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
-          {{-1139,347}, {-1139,205}, {-589,205}, {-589,347}}, assets::button_none_texture(),
-          assets::button_hovered_texture(), assets::button_hovered_texture(),
-          "Alaphelyzet", 0, 0, 0, {}, {}),
-      _exit_button(-865, 503, 0, 0, 550, 142, false,
-                   std::numeric_limits<uint8_t>::max(), {{-1139,575}, {-1139,433}, {-589,433}, {-589,575}},
-                   assets::button_none_texture(), assets::button_hovered_texture(),
-                   assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}) {
+          {{-1139, 347}, {-1139, 205}, {-589, 205}, {-589, 347}},
+          assets::button_none_texture(), assets::button_hovered_texture(),
+          assets::button_hovered_texture(), "Alaphelyzet", 0, 0, 0, {}, {}),
+      _exit_button(
+          -865, 503, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
+          {{-1139, 575}, {-1139, 433}, {-589, 433}, {-589, 575}},
+          assets::button_none_texture(), assets::button_hovered_texture(),
+          assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}),
+      _volume_button(1074, -643, 0, 0, 85, 67, false,
+                     std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+                     assets::sound_button_texture(),
+                     assets::sound_button_texture(),
+                     assets::sound_button_texture(), "", 0, 0, 0, {}, {}),
+      _mouse_sens_button(
+          1202, -643, 0, 0, 85, 67, false, std::numeric_limits<uint8_t>::max(),
+          {{}, {}, {}, {}}, assets::mouse_sens_button_texture(),
+          assets::mouse_sens_button_texture(),
+          assets::mouse_sens_button_texture(), "", 0, 0, 0, {}, {}) {
     size_t i;
 
     wze::renderer::set_space_texture(assets::space_texture());
@@ -105,8 +115,15 @@ menu::menu()
             },
             sphere_coordinate(10'000, 100'000));
     }
-    
-    _background_texture = {0,0,0,0,(float)wze::window::width(),(float)wze::window::height(),false,assets::main_menu_background_texture()};
+
+    _background_texture = {0,
+                           0,
+                           0,
+                           0,
+                           (float)wze::window::width(),
+                           (float)wze::window::height(),
+                           false,
+                           assets::main_menu_background_texture()};
 
     _player_sprite = {
         200, -100, 0,     0,
@@ -128,8 +145,8 @@ scene_type menu::update() {
     _start_button.update();
     _restart_button.update();
     _exit_button.update();
-
-
+    _volume_button.update();
+    _mouse_sens_button.update();
 
     return SCENE_TYPE_MENU;
 }
