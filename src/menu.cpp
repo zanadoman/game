@@ -51,6 +51,39 @@ void menu::update_space() {
         _color / std::numeric_limits<uint8_t>::max() * 38);
 }
 
+scene_type menu::update_door() {
+    float distance;
+
+    distance = wze::math::length(_player_sprite.x() - 1815,
+                                 _player_sprite.y() + 397.5f);
+    if (!_door_animating && (distance <= 500) != _door_open) {
+        _door_animating = true;
+        _door_sound.play();
+    }
+
+    if (_door_animating && _door_animation.play()) {
+        _door->set_texture(_door_animation.frames().back());
+        _door_animation.reverse();
+        _door_animation.reset();
+        _door_open = !_door_open;
+        _door_animating = false;
+    }
+
+    _door_proxy = distance <= 150;
+    if (_door_open && !_door_animating && _door_proxy) {
+        if (_color != 0) {
+            _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
+        }
+    } else if (!_door_proxy) {
+        if (_color != std::numeric_limits<uint8_t>::max()) {
+            _color = std::min(_color + 0.2f * wze::timer::delta_time(),
+                              (float)std::numeric_limits<uint8_t>::max());
+        }
+    }
+
+    return !_color ? SCENE_TYPE_MENU : SCENE_TYPE_SHOP;
+};
+
 menu::menu()
     : _start_button(
           -865, 47, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
@@ -128,6 +161,18 @@ menu::menu()
     _player_sprite = {
         200, -100, 0,     0,
         160, 160,  false, assets::player_front_idle_animation().at(0)};
+    _door = std::shared_ptr<wze::sprite>(
+        new wze::sprite(0, 0, wze::camera::focus(), 0, 2560, 1440, false,
+                        assets::main_menu_door_animation().front()));
+    _door_animation = {assets::main_menu_door_animation(), 105, {_door}};
+    _door_animating = false;
+    _door_open = false;
+    _door_sound = {assets::door_sound(),
+                   std::numeric_limits<int8_t>::max(),
+                   1500,
+                   false,
+                   0,
+                   0};
 }
 
 menu::~menu() {
@@ -141,12 +186,18 @@ menu::~menu() {
 }
 
 scene_type menu::update() {
+    scene_type door;
+
     update_space();
     _start_button.update();
     _restart_button.update();
     _exit_button.update();
     _volume_button.update();
     _mouse_sens_button.update();
+
+    door = update_door();
+    if (_door_proxy)
+        return door;
 
     return SCENE_TYPE_MENU;
 }

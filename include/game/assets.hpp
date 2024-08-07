@@ -116,6 +116,7 @@ class assets final {
     static std::shared_ptr<wze::texture> _main_menu_background_texture;
     static std::shared_ptr<wze::texture> _mouse_sens_button_texture;
     static std::shared_ptr<wze::texture> _sound_button_texture;
+    static std::vector<std::shared_ptr<wze::texture>> _main_menu_door_animation;
 
     static std::shared_ptr<wze::texture> _player_backidle1_texture;
     static std::shared_ptr<wze::texture> _player_backidle2_texture;
@@ -308,6 +309,8 @@ class assets final {
     static std::shared_ptr<wze::texture> const& main_menu_background_texture();
     static std::shared_ptr<wze::texture> const& mouse_sens_button_texture();
     static std::shared_ptr<wze::texture> const& sound_button_texture();
+    static std::vector<std::shared_ptr<wze::texture>> const&
+    main_menu_door_animation();
 
     static std::vector<std::shared_ptr<wze::texture>> const&
     player_front_idle_animation();

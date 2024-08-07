@@ -106,6 +106,7 @@ std::vector<std::shared_ptr<wze::texture>> assets::_hangar_door_animation;
 std::shared_ptr<wze::texture> assets::_main_menu_background_texture;
 std::shared_ptr<wze::texture> assets::_mouse_sens_button_texture;
 std::shared_ptr<wze::texture> assets::_sound_button_texture;
+std::vector<std::shared_ptr<wze::texture>> assets::_main_menu_door_animation;
 
 std::shared_ptr<wze::texture> assets::_player_backidle1_texture;
 std::shared_ptr<wze::texture> assets::_player_backidle2_texture;
@@ -486,11 +487,16 @@ std::shared_ptr<wze::texture> const& assets::main_menu_background_texture() {
     return _main_menu_background_texture;
 }
 
-std::shared_ptr<wze::texture> const& assets::mouse_sens_button_texture(){
+std::shared_ptr<wze::texture> const& assets::mouse_sens_button_texture() {
     return _mouse_sens_button_texture;
 }
 
-std::shared_ptr<wze::texture> const& assets::sound_button_texture(){
+std::vector<std::shared_ptr<wze::texture>> const&
+assets::main_menu_door_animation() {
+    return _main_menu_door_animation;
+}
+
+std::shared_ptr<wze::texture> const& assets::sound_button_texture() {
     return _sound_button_texture;
 }
 
@@ -1211,8 +1217,36 @@ void assets::initialize() {
 
     _main_menu_background_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/main_menu/menu_background.png"));
-    _sound_button_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/sound_button.png"));
-    _mouse_sens_button_texture = wze::assets::create_texture(wze::assets::load_image("./assets/main_menu/mouse_sens_button.png"));
+    _sound_button_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/main_menu/sound_button.png"));
+    _mouse_sens_button_texture = wze::assets::create_texture(
+        wze::assets::load_image("./assets/main_menu/mouse_sens_button.png"));
+    _main_menu_door_animation = {
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/1.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/2.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/3.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/4.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/5.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/6.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/7.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/8.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/9.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/10.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/11.png")),
+        wze::assets::create_texture(
+            wze::assets::load_image("./assets/main_menu/door/12.png")),
+    };
 
     _player_backidle1_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/player/backidle1.png"));

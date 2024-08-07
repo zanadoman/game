@@ -23,6 +23,14 @@ class menu final : public scene {
     button _volume_button;
     button _mouse_sens_button;
 
+    std::shared_ptr<wze::sprite> _door;
+    wze::animator _door_animation;
+    bool _door_animating;
+    bool _door_open;
+    wze::speaker _door_sound;
+    bool _door_proxy;
+    scene_type update_door();
+
     wze::sprite _player_sprite;
 
     void update_space();
