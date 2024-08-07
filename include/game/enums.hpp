@@ -12,7 +12,8 @@ enum scene_type {
     SCENE_TYPE_SHOP,
     SCENE_TYPE_SPACE,
     SCENE_TYPE_HANGAR,
-    SCENE_TYPE_MENU
+    SCENE_TYPE_MENU,
+    SCENE_TYPE_QUIT
 };
 
 enum trade_type {

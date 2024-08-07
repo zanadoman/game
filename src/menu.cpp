@@ -161,7 +161,7 @@ menu::menu()
 
     _player_sprite = {
         200, -100, 0,     0,
-        160, 160,  false, assets::player_front_idle_animation().at(0)};
+        180.5, 180.5,  false, assets::player_front_idle_animation().at(0)};
     _door = std::shared_ptr<wze::sprite>(
         new wze::sprite(0, 0, wze::camera::focus(), 0, 2560, 1440, false,
                         assets::main_menu_door_animation().front()));
@@ -188,17 +188,28 @@ menu::~menu() {
 
 scene_type menu::update() {
     scene_type door;
+    bool quit = false;
 
     update_space();
     _start_button.update();
+
+
     _restart_button.update();
+
     _exit_button.update();
+    if(_exit_button.state() & BUTTON_STATE_POSTCLICK){
+        quit = true;
+    }
+
     _volume_button.update();
     _mouse_sens_button.update();
 
     door = update_door();
     if (_door_proxy)
         return door;
+    if(quit) {
+        return SCENE_TYPE_QUIT;
+    }
 
     return SCENE_TYPE_MENU;
 }

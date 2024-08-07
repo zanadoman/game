@@ -12,6 +12,7 @@ wze_main(2560, 1440) {
     std::unique_ptr<scene> scene;
     scene_type current_scene;
     scene_type next_scene;
+    bool run = true;;
 
     assets::initialize();
     save_data::load();
@@ -22,7 +23,7 @@ wze_main(2560, 1440) {
     scene = std::unique_ptr<class scene>(new hangar);
     current_scene = SCENE_TYPE_HANGAR;
 
-    wze_while(true) {
+    wze_while(run) {
         wze::timer::set_delta_time(std::min(16.f, wze::timer::delta_time()));
         next_scene = scene->update();
         if (current_scene != next_scene) {
@@ -42,6 +43,9 @@ wze_main(2560, 1440) {
             case SCENE_TYPE_MENU:
                 scene.reset();
                 scene.reset(new menu);
+                break;
+            case SCENE_TYPE_QUIT:
+                run = false;
                 break;
             }
         }
