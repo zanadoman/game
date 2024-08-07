@@ -1,5 +1,6 @@
 #include <game/assets.hpp>
 #include <game/menu.hpp>
+#include <iostream>
 
 std::tuple<float, float, float> menu::sphere_coordinate(float minimum,
                                                         float maximum) const {
@@ -36,27 +37,15 @@ void menu::update_space() {
             particle.set_x(-120'000);
         }
     }
-
-    _color = std::min(_color + 0.2f * wze::timer::delta_time(),
-                      (float)std::numeric_limits<uint8_t>::max());
-
-    wze::renderer::set_space_color_r(_color);
-    wze::renderer::set_space_color_g(_color);
-    wze::renderer::set_space_color_b(_color);
-    wze::renderer::set_background_color_r(
-        _color / std::numeric_limits<uint8_t>::max() * 18);
-    wze::renderer::set_background_color_g(
-        _color / std::numeric_limits<uint8_t>::max() * 18);
-    wze::renderer::set_background_color_b(
-        _color / std::numeric_limits<uint8_t>::max() * 38);
 }
 
 scene_type menu::update_door() {
     float distance;
 
-    distance = wze::math::length(_player_sprite.x() - 1815,
-                                 _player_sprite.y() + 397.5f);
-    if (!_door_animating && (distance <= 500) != _door_open) {
+    distance =
+        wze::math::length(968 - _player_sprite.x(), _player_sprite.y() - 475);
+    std::cout << distance << std::endl;
+    if (!_door_animating && (distance <= 400) != _door_open) {
         _door_animating = true;
         _door_sound.play();
     }
@@ -69,19 +58,32 @@ scene_type menu::update_door() {
         _door_animating = false;
     }
 
-    _door_proxy = distance <= 150;
-    if (_door_open && !_door_animating && _door_proxy) {
+    if (_door_open && !_door_animating) {
         if (_color != 0) {
             _color = std::max(0.f, _color - 0.2f * wze::timer::delta_time());
         }
-    } else if (!_door_proxy) {
+    } else {
         if (_color != std::numeric_limits<uint8_t>::max()) {
             _color = std::min(_color + 0.2f * wze::timer::delta_time(),
                               (float)std::numeric_limits<uint8_t>::max());
         }
     }
 
-    return !_color ? SCENE_TYPE_MENU : SCENE_TYPE_SHOP;
+    wze::renderer::set_space_color_r(_color);
+    wze::renderer::set_space_color_g(_color);
+    wze::renderer::set_space_color_b(_color);
+    wze::renderer::set_background_color_r(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_g(
+        _color / std::numeric_limits<uint8_t>::max() * 18);
+    wze::renderer::set_background_color_b(
+        _color / std::numeric_limits<uint8_t>::max() * 38);
+    wze::renderer::set_plane_color_r(_color);
+    wze::renderer::set_plane_color_g(_color);
+    wze::renderer::set_plane_color_b(_color);
+    
+
+    return _color ? SCENE_TYPE_MENU : SCENE_TYPE_SHOP;
 };
 
 menu::menu()
@@ -151,15 +153,22 @@ menu::menu()
 
     _background_texture = {0,
                            0,
-                           0,
+                           wze::camera::focus(),
                            0,
                            (float)wze::window::width(),
                            (float)wze::window::height(),
                            false,
-                           assets::main_menu_background_texture()};
+                           assets::main_menu_background_texture(),
+                           std::numeric_limits<uint8_t>::max(),
+                           std::numeric_limits<uint8_t>::max(),
+                           std::numeric_limits<uint8_t>::max(),
+                           std::numeric_limits<uint8_t>::max(),
+                           wze::FLIP_NONE,
+                           true,
+                           1};
 
     _player_sprite = {
-        -55,   248,   0,     0,
+        -55,   459,   0,     0,
         180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
 
     _made_by_sprite = {-1058,
@@ -174,18 +183,20 @@ menu::menu()
                        0,
                        0,
                        0};
-    _doman_sprite = {-556,
-                     685,
-                     0,
-                     0,
-                     164,
-                     22,
-                     false,
-                     wze::assets::create_texture(wze::assets::create_image(
-                         "Zana Domán", assets::normal_font())),
-                     0,
-                     0,
-                     0};
+    _doman_sprite = {
+        -556,
+        685,
+        0,
+        0,
+        164,
+        22,
+        false,
+        wze::assets::create_texture(
+            wze::assets::create_image("Zana Domán", assets::normal_font())),
+        0,
+        0,
+        0,
+    };
     _roland_sprite = {-54,
                       685,
                       0,
@@ -206,7 +217,7 @@ menu::menu()
                       22,
                       false,
                       wze::assets::create_texture(wze::assets::create_image(
-                          "Kiruf Franck", assets::normal_font())),
+                          "Furik Franck", assets::normal_font())),
                       0,
                       0,
                       0};
@@ -223,9 +234,13 @@ menu::menu()
                     0,
                     0};
 
-    _door = std::shared_ptr<wze::sprite>(
-        new wze::sprite(0, 0, wze::camera::focus(), 0, 2560, 1440, false,
-                        assets::main_menu_door_animation().front()));
+    _door = std::shared_ptr<wze::sprite>(new wze::sprite(
+        0, 0, wze::camera::focus(), 0, 2560, 1440, false,
+        assets::main_menu_door_animation().front(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(),
+        std::numeric_limits<uint8_t>::max(), wze::FLIP_NONE, true, 0));
     _door_animation = {assets::main_menu_door_animation(), 105, {_door}};
     _door_animating = false;
     _door_open = false;
@@ -245,6 +260,9 @@ menu::~menu() {
     wze::renderer::set_space_color_r(std::numeric_limits<uint8_t>::max());
     wze::renderer::set_space_color_g(std::numeric_limits<uint8_t>::max());
     wze::renderer::set_space_color_b(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_r(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_g(std::numeric_limits<uint8_t>::max());
+    wze::renderer::set_plane_color_b(std::numeric_limits<uint8_t>::max());
 }
 
 scene_type menu::update() {
@@ -253,6 +271,9 @@ scene_type menu::update() {
 
     update_space();
     _start_button.update();
+    if (_start_button.state() & BUTTON_STATE_POSTCLICK) {
+        _player_sprite.set_x(1050);
+    }
 
     _restart_button.update();
 
@@ -265,11 +286,8 @@ scene_type menu::update() {
     _mouse_sens_button.update();
 
     door = update_door();
-    if (_door_proxy)
-        return door;
     if (quit) {
         return SCENE_TYPE_QUIT;
     }
-
-    return SCENE_TYPE_MENU;
+    return door;
 }

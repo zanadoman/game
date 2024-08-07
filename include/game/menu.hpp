@@ -34,7 +34,6 @@ class menu final : public scene {
     bool _door_animating;
     bool _door_open;
     wze::speaker _door_sound;
-    bool _door_proxy;
     scene_type update_door();
 
     wze::sprite _player_sprite;
