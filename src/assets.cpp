@@ -104,6 +104,8 @@ std::shared_ptr<wze::texture> assets::_hangar_ships_texture;
 std::vector<std::shared_ptr<wze::texture>> assets::_hangar_door_animation;
 
 std::shared_ptr<wze::texture> assets::_main_menu_background_texture;
+std::shared_ptr<wze::texture> assets::_mouse_sens_button_texture;
+std::shared_ptr<wze::texture> assets::_sound_button_texture;
 
 std::shared_ptr<wze::texture> assets::_player_backidle1_texture;
 std::shared_ptr<wze::texture> assets::_player_backidle2_texture;
@@ -482,6 +484,14 @@ assets::hangar_door_animation() {
 
 std::shared_ptr<wze::texture> const& assets::main_menu_background_texture() {
     return _main_menu_background_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::mouse_sens_button_texture(){
+    return _mouse_sens_button_texture;
+}
+
+std::shared_ptr<wze::texture> const& assets::sound_button_texture(){
+    return _sound_button_texture;
 }
 
 std::vector<std::shared_ptr<wze::texture>> const&
