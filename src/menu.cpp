@@ -87,21 +87,22 @@ scene_type menu::update_door() {
 menu::menu()
     : _start_button(
           -865, 47, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
-          {{-1139, 113}, {-1139, -27}, {-589, -27}, {-589, 113}},
+          {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
           assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
       _restart_button(
           -865, 275, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
-          {{-1139, 347}, {-1139, 205}, {-589, 205}, {-589, 347}},
+          {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
           assets::button_hovered_texture(), "Alaphelyzet", 0, 0, 0, {}, {}),
       _exit_button(
           -865, 503, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
-          {{-1139, 575}, {-1139, 433}, {-589, 433}, {-589, 575}},
+          {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
           assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}),
       _volume_button(1074, -643, 0, 0, 85, 67, false,
-                     std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
+                     std::numeric_limits<uint8_t>::max(),
+                    {{}, {}, {}, {}},
                      assets::sound_button_texture(),
                      assets::sound_button_texture(),
                      assets::sound_button_texture(), "", 0, 0, 0, {}, {}),
