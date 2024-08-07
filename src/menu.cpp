@@ -20,20 +20,20 @@ std::tuple<float, float, float> menu::sphere_coordinate(float minimum,
     }
 
     radius = wze::math::random(minimum, maximum);
-    return {x * radius, y * radius, z * radius};
+    return {-40'000 + x * radius, y * radius, z * radius};
 }
 
 void menu::update_space() {
     for (wze::sprite& asteroid : _asteroids) {
         asteroid.set_x(asteroid.x() + wze::timer::delta_time());
-        if (150'000 < asteroid.x()) {
-            asteroid.set_x(-150'000);
+        if (110'000 < asteroid.x()) {
+            asteroid.set_x(-190'000);
         }
     }
     for (wze::sprite& particle : _particles) {
         particle.set_x(particle.x() + wze::timer::delta_time());
-        if (100'000 < particle.x()) {
-            particle.set_x(-100'000);
+        if (80'000 < particle.x()) {
+            particle.set_x(-120'000);
         }
     }
 
