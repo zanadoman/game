@@ -1,6 +1,7 @@
 #include <game/assets.hpp>
 #include <game/menu.hpp>
 #include <iostream>
+#include <game/save_data.hpp>
 
 std::tuple<float, float, float> menu::sphere_coordinate(float minimum,
                                                         float maximum) const {
@@ -284,6 +285,9 @@ scene_type menu::update() {
     }
 
     _restart_button.update();
+    if(_restart_button.state() & BUTTON_STATE_POSTCLICK){
+        save_data::reset();
+    }
 
     _exit_button.update();
     if (_exit_button.state() & BUTTON_STATE_POSTCLICK) {

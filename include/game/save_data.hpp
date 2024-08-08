@@ -67,6 +67,7 @@ class save_data final {
 
     static void load();
     static void save();
+    static void reset();
 };
 
 #endif

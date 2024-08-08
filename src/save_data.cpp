@@ -130,22 +130,7 @@ void save_data::load() {
     file.open("./save_data.bin", std::ios::binary);
 
     if (!file) {
-        _pyrite_count = 2;
-        _wolframite_count = 16;
-        _carneol_count = 34;
-        _moldavite_count = 2;
-        _ruby_count = 1;
-        _sapphire_count = 150;
-
-        _player_ship_speed_tier = 0;
-        _player_ship_damage_tier = 0;
-        _player_ship_hitpoints_tier = 0;
-        _player_ship_storage_tier = 0;
-
-        _player_money = 0;
-
-        _tutorial_completed = false;
-        _final_boss_completed = false;
+        reset();
     } else {
         file.read((char*)&_pyrite_count, sizeof(_pyrite_count));
         file.read((char*)&_wolframite_count, sizeof(_wolframite_count));
@@ -167,6 +152,26 @@ void save_data::load() {
     }
 
     file.close();
+}
+
+void save_data::reset() {
+
+    _pyrite_count = 2;
+    _wolframite_count = 16;
+    _carneol_count = 34;
+    _moldavite_count = 2;
+    _ruby_count = 1;
+    _sapphire_count = 150;
+
+    _player_ship_speed_tier = 0;
+    _player_ship_damage_tier = 0;
+    _player_ship_hitpoints_tier = 0;
+    _player_ship_storage_tier = 0;
+
+    _player_money = 0;
+
+    _tutorial_completed = false;
+    _final_boss_completed = false;
 }
 
 void save_data::save() {
@@ -195,6 +200,5 @@ void save_data::save() {
         file.write((char const*)&_final_boss_completed,
                    sizeof(_final_boss_completed));
     }
-
     file.close();
 }
