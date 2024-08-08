@@ -313,7 +313,9 @@ hangar::hangar() : _player(-3637.5, -705) {
                 float diameter;
                 diameter = wze::math::random(4'000.f, 8'000.f);
                 _asteroids.push_back(
-                    {x, y, abs(z), 0, diameter, diameter, true,
+                    {x, y, abs(z),
+                     wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                     diameter, diameter, true,
                      wze::math::random<bool>(0.5)
                          ? assets::asteroids_pyrite_texture()
                          : assets::asteroids_wolframite_texture()});

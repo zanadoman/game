@@ -1,7 +1,7 @@
 #include <game/assets.hpp>
 #include <game/menu.hpp>
-#include <iostream>
 #include <game/save_data.hpp>
+#include <iostream>
 
 std::tuple<float, float, float> menu::sphere_coordinate(float minimum,
                                                         float maximum) const {
@@ -82,7 +82,6 @@ scene_type menu::update_door() {
     wze::renderer::set_plane_color_r(_color);
     wze::renderer::set_plane_color_g(_color);
     wze::renderer::set_plane_color_b(_color);
-    
 
     return _color ? SCENE_TYPE_MENU : SCENE_TYPE_SHOP;
 };
@@ -132,7 +131,9 @@ menu::menu()
                 float diameter;
                 diameter = wze::math::random(4'000.f, 8'000.f);
                 _asteroids.push_back(
-                    {x, y, abs(z), 0, diameter, diameter, true,
+                    {x, y, abs(z),
+                     wze::math::to_radians(wze::math::random(0.f, 360.f)),
+                     diameter, diameter, true,
                      wze::math::random<bool>(0.5)
                          ? assets::asteroids_pyrite_texture()
                          : assets::asteroids_wolframite_texture()});
@@ -173,12 +174,15 @@ menu::menu()
         -55,   459,   0,     0,
         180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
 
-    image = wze::assets::create_image("Stellarion", assets::title_font());
-    _title = {
-        -500,-477,0,0,(float)image->w/(float)image->h*258,258,false,
-        wze::assets::create_texture(
-           image)
-    };
+    image = wze::assets::create_image("STELLARION", assets::title_font());
+    _title = {-500,
+              -477,
+              0,
+              0,
+              (float)image->w / (float)image->h * 175,
+              175,
+              false,
+              wze::assets::create_texture(image)};
 
     _made_by_sprite = {-1058,
                        685,
@@ -285,7 +289,7 @@ scene_type menu::update() {
     }
 
     _restart_button.update();
-    if(_restart_button.state() & BUTTON_STATE_POSTCLICK){
+    if (_restart_button.state() & BUTTON_STATE_POSTCLICK) {
         save_data::reset();
     }
 
