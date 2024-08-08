@@ -13,7 +13,7 @@ void gem_trade::add_item(
     _items.push_back(
         {material,
          {_background.x() + 365, 0, Z, 0, 45, 45, true, texture()},
-         {_background.x() + 507.5f, 0, Z, 0, 0, 45, true, {}, 0, 0, 0}});
+         {_background.x() + 507.5f, 0, Z, 0, 0, 30, true, {}, 0, 0, 0}});
 }
 
 void gem_trade::update_item(
@@ -25,7 +25,7 @@ void gem_trade::update_item(
     image = wze::assets::create_image(" x " + std::to_string(count) + " = " +
                                           std::to_string(count * price) + " ST",
                                       assets::normal_font());
-    std::get<2>(*iterator).set_width((float)image->w / (float)image->h * 45);
+    std::get<2>(*iterator).set_width((float)image->w / (float)image->h * 30);
     std::get<2>(*iterator).set_x(_background.x() + 380 +
                                  std::get<2>(*iterator).width() / 2);
     std::get<2>(*iterator).set_texture(wze::assets::create_texture(image));
@@ -35,85 +35,73 @@ gem_trade::gem_trade()
     : _pyrite_decrease(-566.5, -595 - 60, Z, 0, 30, 35, true,
                        std::numeric_limits<uint8_t>::max(),
                        {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                       assets::decrease_button(),
-                       assets::decrease_button(),
+                       assets::decrease_button(), assets::decrease_button(),
                        assets::decrease_button(), "", 0, 0, 0,
                        assets::accept_sound(), assets::refuse_sound()),
       _pyrite_increase(-382.5, -595 - 60, Z, 0, 30, 35, true,
                        std::numeric_limits<uint8_t>::max(),
                        {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                       assets::increase_button(),
-                       assets::increase_button(),
+                       assets::increase_button(), assets::increase_button(),
                        assets::increase_button(), "", 0, 0, 0,
                        assets::accept_sound(), assets::refuse_sound()),
       _wolframite_decrease(-272.5, -595 - 60, Z, 0, 30, 35, true,
                            std::numeric_limits<uint8_t>::max(),
                            {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                           assets::decrease_button(),
-                           assets::decrease_button(),
+                           assets::decrease_button(), assets::decrease_button(),
                            assets::decrease_button(), "", 0, 0, 0,
                            assets::accept_sound(), assets::refuse_sound()),
       _wolframite_increase(-87.5, -595 - 60, Z, 0, 30, 35, true,
                            std::numeric_limits<uint8_t>::max(),
                            {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                           assets::increase_button(),
-                           assets::increase_button(),
+                           assets::increase_button(), assets::increase_button(),
                            assets::increase_button(), "", 0, 0, 0,
                            assets::accept_sound(), assets::refuse_sound()),
       _carneol_decrease(22.5, -595 - 60, Z, 0, 30, 35, true,
                         std::numeric_limits<uint8_t>::max(),
                         {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                        assets::decrease_button(),
-                        assets::decrease_button(),
+                        assets::decrease_button(), assets::decrease_button(),
                         assets::decrease_button(), "", 0, 0, 0,
                         assets::accept_sound(), assets::refuse_sound()),
       _carneol_increase(207.5, -595 - 60, Z, 0, 30, 35, true,
                         std::numeric_limits<uint8_t>::max(),
                         {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                        assets::increase_button(),
-                        assets::increase_button(),
+                        assets::increase_button(), assets::increase_button(),
                         assets::increase_button(), "", 0, 0, 0,
                         assets::accept_sound(), assets::refuse_sound()),
       _moldavite_decrease(-566.5, -595 + 375, Z, 0, 30, 35, true,
                           std::numeric_limits<uint8_t>::max(),
                           {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                          assets::decrease_button(),
-                          assets::decrease_button(),
+                          assets::decrease_button(), assets::decrease_button(),
                           assets::decrease_button(), "", 0, 0, 0,
                           assets::accept_sound(), assets::refuse_sound()),
       _moldavite_increase(-382.5, -595 + 375, Z, 0, 30, 35, true,
                           std::numeric_limits<uint8_t>::max(),
                           {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                          assets::increase_button(),
-                          assets::increase_button(),
+                          assets::increase_button(), assets::increase_button(),
                           assets::increase_button(), "", 0, 0, 0,
                           assets::accept_sound(), assets::refuse_sound()),
       _ruby_decrease(-272.5, -595 + 375, Z, 0, 30, 35, true,
                      std::numeric_limits<uint8_t>::max(),
                      {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                     assets::decrease_button(),
-                     assets::decrease_button(),
+                     assets::decrease_button(), assets::decrease_button(),
                      assets::decrease_button(), "", 0, 0, 0,
                      assets::accept_sound(), assets::refuse_sound()),
       _ruby_increase(-87.5, -595 + 375, Z, 0, 30, 35, true,
                      std::numeric_limits<uint8_t>::max(),
                      {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                     assets::increase_button(),
-                     assets::increase_button(),
+                     assets::increase_button(), assets::increase_button(),
                      assets::increase_button(), "", 0, 0, 0,
                      assets::accept_sound(), assets::refuse_sound()),
       _sapphire_decrease(22.5, -595 + 375, Z, 0, 30, 35, true,
                          std::numeric_limits<uint8_t>::max(),
                          {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                         assets::decrease_button(),
-                         assets::decrease_button(),
+                         assets::decrease_button(), assets::decrease_button(),
                          assets::decrease_button(), "", 0, 0, 0,
                          assets::accept_sound(), assets::refuse_sound()),
       _sapphire_increase(207.5, -595 + 375, Z, 0, 30, 35, true,
                          std::numeric_limits<uint8_t>::max(),
                          {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
-                         assets::increase_button(),
-                         assets::increase_button(),
+                         assets::increase_button(), assets::increase_button(),
                          assets::increase_button(), "", 0, 0, 0,
                          assets::accept_sound(), assets::refuse_sound()),
       _sell(507.5, -595 + 450, Z, 0, 310, 70, true,
@@ -128,17 +116,17 @@ gem_trade::gem_trade()
                    1395, 1005, true, assets::gem_trade_background_texture()};
 
     _pyrite_count = {
-        _background.x() - 412.5f, _background.y() - 370, Z, 0, 0, 30, true};
+        _background.x() - 412.5f, _background.y() - 367.5f, Z, 0, 0, 25, true};
     _wolframite_count = {
-        _background.x() - 117.5f, _background.y() - 370, Z, 0, 0, 30, true};
+        _background.x() - 117.5f, _background.y() - 367.5f, Z, 0, 0, 25, true};
     _carneol_count = {
-        _background.x() + 177.5f, _background.y() - 370, Z, 0, 0, 30, true};
+        _background.x() + 177.5f, _background.y() - 367.5f, Z, 0, 0, 25, true};
     _moldavite_count = {
-        _background.x() - 412.5f, _background.y() + 65, Z, 0, 0, 30, true};
+        _background.x() - 412.5f, _background.y() + 67.5f, Z, 0, 0, 25, true};
     _ruby_count = {
-        _background.x() - 117.5f, _background.y() + 65, Z, 0, 0, 30, true};
+        _background.x() - 117.5f, _background.y() + 67.5f, Z, 0, 0, 25, true};
     _sapphire_count = {
-        _background.x() + 177.5f, _background.y() + 65, Z, 0, 0, 30, true};
+        _background.x() + 177.5f, _background.y() + 67.5f, Z, 0, 0, 25, true};
 
     _pyrite_sell_count = 0;
     _wolframite_sell_count = 0;
@@ -148,85 +136,85 @@ gem_trade::gem_trade()
     _sapphire_sell_count = 0;
 
     _pyrite_sell = {
-        _background.x() - 474.5f, _background.y() - 62.5f, Z, 0, 0, 35, true};
+        _background.x() - 474.5f, _background.y() - 60, Z, 0, 0, 25, true};
     _wolframite_sell = {
-        _background.x() - 180, _background.y() - 62.5f, Z, 0, 0, 35, true};
+        _background.x() - 180, _background.y() - 60, Z, 0, 0, 25, true};
     _carneol_sell = {
-        _background.x() + 115, _background.y() - 62.5f, Z, 0, 0, 35, true};
+        _background.x() + 115, _background.y() - 60, Z, 0, 0, 25, true};
     _moldavite_sell = {
-        _background.x() - 474.5f, _background.y() + 372.5f, Z, 0, 0, 35, true};
+        _background.x() - 474.5f, _background.y() + 375, Z, 0, 0, 25, true};
     _ruby_sell = {
-        _background.x() - 180, _background.y() + 372.5f, Z, 0, 0, 35, true};
+        _background.x() - 180, _background.y() + 375, Z, 0, 0, 25, true};
     _sapphire_sell = {
-        _background.x() + 115, _background.y() + 372.5f, Z, 0, 0, 35, true};
+        _background.x() + 115, _background.y() + 375, Z, 0, 0, 25, true};
 
     image = wze::assets::create_image(std::to_string(50) + " ST",
                                       assets::bold_font());
     _pyrite_price = {_background.x() - 474.5f,
-                     _background.y() - 135,
+                     _background.y() - 132.5f,
                      Z,
                      0,
-                     (float)image->w / (float)image->h * 45,
-                     45,
+                     (float)image->w / (float)image->h * 35,
+                     35,
                      true,
                      wze::assets::create_texture(image)};
     image = wze::assets::create_image(std::to_string(100) + " ST",
                                       assets::bold_font());
     _wolframite_price = {_background.x() - 180,
-                         _background.y() - 135,
+                         _background.y() - 132.5f,
                          Z,
                          0,
-                         (float)image->w / (float)image->h * 45,
-                         45,
+                         (float)image->w / (float)image->h * 35,
+                         35,
                          true,
                          wze::assets::create_texture(image)};
     image = wze::assets::create_image(std::to_string(150) + " ST",
                                       assets::bold_font());
     _carneol_price = {_background.x() + 115,
-                      _background.y() - 135,
+                      _background.y() - 132.5f,
                       Z,
                       0,
-                      (float)image->w / (float)image->h * 45,
-                      45,
+                      (float)image->w / (float)image->h * 35,
+                      35,
                       true,
                       wze::assets::create_texture(image)};
     image = wze::assets::create_image(std::to_string(250) + " ST",
                                       assets::bold_font());
     _moldavite_price = {_background.x() - 474.5f,
-                        _background.y() + 300,
+                        _background.y() + 297.5f,
                         Z,
                         0,
-                        (float)image->w / (float)image->h * 45,
-                        45,
+                        (float)image->w / (float)image->h * 35,
+                        35,
                         true,
                         wze::assets::create_texture(image)};
     image = wze::assets::create_image(std::to_string(400) + " ST",
                                       assets::bold_font());
     _ruby_price = {_background.x() - 180,
-                   _background.y() + 300,
+                   _background.y() + 297.5f,
                    Z,
                    0,
-                   (float)image->w / (float)image->h * 45,
-                   45,
+                   (float)image->w / (float)image->h * 35,
+                   35,
                    true,
                    wze::assets::create_texture(image)};
     image = wze::assets::create_image(std::to_string(650) + " ST",
                                       assets::bold_font());
     _sapphire_price = {_background.x() + 115,
-                       _background.y() + 300,
+                       _background.y() + 297.5f,
                        Z,
                        0,
-                       (float)image->w / (float)image->h * 45,
-                       45,
+                       (float)image->w / (float)image->h * 35,
+                       35,
                        true,
                        wze::assets::create_texture(image)};
 
     _summary = {_background.x() + 507.5f,
-                _background.y() + 355,
+                _background.y() + 357.5f,
                 Z,
                 0,
                 0,
-                45,
+                35,
                 true,
                 {},
                 0,
@@ -243,27 +231,27 @@ void gem_trade::update() {
 
     image = wze::assets::create_image(std::to_string(save_data::pyrite_count()),
                                       assets::bold_font());
-    _pyrite_count.set_width((float)image->w / (float)image->h * 30);
+    _pyrite_count.set_width((float)image->w / (float)image->h * 25);
     _pyrite_count.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(
         std::to_string(save_data::wolframite_count()), assets::bold_font());
-    _wolframite_count.set_width((float)image->w / (float)image->h * 30);
+    _wolframite_count.set_width((float)image->w / (float)image->h * 25);
     _wolframite_count.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(
         std::to_string(save_data::carneol_count()), assets::bold_font());
-    _carneol_count.set_width((float)image->w / (float)image->h * 30);
+    _carneol_count.set_width((float)image->w / (float)image->h * 25);
     _carneol_count.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(
         std::to_string(save_data::moldavite_count()), assets::bold_font());
-    _moldavite_count.set_width((float)image->w / (float)image->h * 30);
+    _moldavite_count.set_width((float)image->w / (float)image->h * 25);
     _moldavite_count.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(save_data::ruby_count()),
                                       assets::bold_font());
-    _ruby_count.set_width((float)image->w / (float)image->h * 30);
+    _ruby_count.set_width((float)image->w / (float)image->h * 25);
     _ruby_count.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(
         std::to_string(save_data::sapphire_count()), assets::bold_font());
-    _sapphire_count.set_width((float)image->w / (float)image->h * 30);
+    _sapphire_count.set_width((float)image->w / (float)image->h * 25);
     _sapphire_count.set_texture(wze::assets::create_texture(image));
 
     _pyrite_decrease.update();
@@ -499,7 +487,7 @@ void gem_trade::update() {
 
     for (i = 0; i != _items.size(); ++i) {
         std::get<1>(_items.at(i)).set_y(_background.y() - 340 + i * 60);
-        std::get<2>(_items.at(i)).set_y(std::get<1>(_items.at(i)).y());
+        std::get<2>(_items.at(i)).set_y(std::get<1>(_items.at(i)).y() + 2.5f);
     }
 
     price = _pyrite_sell_count * 50 + _wolframite_sell_count * 100 +
@@ -507,32 +495,32 @@ void gem_trade::update() {
             _ruby_sell_count * 400 + _sapphire_sell_count * 650;
     image = wze::assets::create_image(
         "Összesen: " + std::to_string(price) + " ST", assets::normal_font());
-    _summary.set_width((float)image->w / (float)image->h * 45);
+    _summary.set_width((float)image->w / (float)image->h * 35);
     _summary.set_texture(wze::assets::create_texture(image));
 
     image = wze::assets::create_image(std::to_string(_pyrite_sell_count),
                                       assets::bold_font());
-    _pyrite_sell.set_width((float)image->w / (float)image->h * 30);
+    _pyrite_sell.set_width((float)image->w / (float)image->h * 25);
     _pyrite_sell.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(_wolframite_sell_count),
                                       assets::bold_font());
-    _wolframite_sell.set_width((float)image->w / (float)image->h * 30);
+    _wolframite_sell.set_width((float)image->w / (float)image->h * 25);
     _wolframite_sell.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(_carneol_sell_count),
                                       assets::bold_font());
-    _carneol_sell.set_width((float)image->w / (float)image->h * 30);
+    _carneol_sell.set_width((float)image->w / (float)image->h * 25);
     _carneol_sell.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(_moldavite_sell_count),
                                       assets::bold_font());
-    _moldavite_sell.set_width((float)image->w / (float)image->h * 30);
+    _moldavite_sell.set_width((float)image->w / (float)image->h * 25);
     _moldavite_sell.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(_ruby_sell_count),
                                       assets::bold_font());
-    _ruby_sell.set_width((float)image->w / (float)image->h * 30);
+    _ruby_sell.set_width((float)image->w / (float)image->h * 25);
     _ruby_sell.set_texture(wze::assets::create_texture(image));
     image = wze::assets::create_image(std::to_string(_sapphire_sell_count),
                                       assets::bold_font());
-    _sapphire_sell.set_width((float)image->w / (float)image->h * 30);
+    _sapphire_sell.set_width((float)image->w / (float)image->h * 25);
     _sapphire_sell.set_texture(wze::assets::create_texture(image));
 
     _sell.set_enabled(price);

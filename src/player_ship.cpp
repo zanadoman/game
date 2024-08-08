@@ -278,26 +278,26 @@ player_ship::player_ship() {
 
     _pyrite_icon = {-70, 492, 0,     0,
                     60,  60,  false, assets::asteroids_pyrite_gem_ui_texture()};
-    _pyrite_count = {-70, 534, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _pyrite_count = {-70, 536.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
     _wolframite_icon = {
         0,  492, 0,     0,
         60, 60,  false, assets::asteroids_wolframite_gem_ui_texture()};
-    _wolframite_count = {0, 534, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _wolframite_count = {0, 536.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
     _carneol_icon = {
         70, 492, 0,     0,
         60, 60,  false, assets::asteroids_carneol_gem_ui_texture()};
-    _carneol_count = {70, 534, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _carneol_count = {70, 536.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
     _moldavite_icon = {
         -70, 588, 0,     0,
         60,  60,  false, assets::asteroids_moldavite_gem_ui_texture()};
-    _moldavite_count = {-70, 630, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _moldavite_count = {-70, 632.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
     _ruby_icon = {0,  588, 0,     0,
                   60, 60,  false, assets::asteroids_ruby_gem_ui_texture()};
-    _ruby_count = {0, 630, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _ruby_count = {0, 632.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
     _sapphire_icon = {
         70, 588, 0,     0,
         60, 60,  false, assets::asteroids_sapphire_gem_ui_texture()};
-    _sapphire_count = {70, 630, 0, 0, 90, 35, false, {}, 14, 12, 21};
+    _sapphire_count = {70, 632.5, 0, 0, 90, 25, false, {}, 14, 12, 21};
 
     _hitpoints_count = {0,
                         0,
