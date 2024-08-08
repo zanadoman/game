@@ -114,6 +114,7 @@ menu::menu()
           assets::mouse_sens_button_texture(),
           assets::mouse_sens_button_texture(), "", 0, 0, 0, {}, {}) {
     size_t i;
+    std::shared_ptr<wze::image> image;
 
     wze::renderer::set_space_texture(assets::space_texture());
 
@@ -172,12 +173,11 @@ menu::menu()
         -55,   459,   0,     0,
         180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
 
+    image = wze::assets::create_image("Stellarion", assets::title_font());
     _title = {
-        -638,-477,0,0,1000,258,false,
+        -500,-477,0,0,(float)image->w/(float)image->h*258,258,false,
         wze::assets::create_texture(
-            wze::assets::create_image(
-                "Stellarion", assets::title_font())
-        )
+           image)
     };
 
     _made_by_sprite = {-1058,
