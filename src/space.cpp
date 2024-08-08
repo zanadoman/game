@@ -34,7 +34,7 @@ void space::update_difficulty() {
             (save_data::pyrite_count() * 1 + save_data::wolframite_count() * 2 +
              save_data::carneol_count() * 3 + save_data::moldavite_count() * 4 +
              save_data::ruby_count() * 5 + save_data::sapphire_count() * 6) /
-            250.f * 5),
+            200.f * 5),
         0.f, 5.f);
 }
 
@@ -64,27 +64,27 @@ void space::update_enemy_ships() {
         case 1:
             enemy_difficulty = ENEMY_DIFFICULTY_EASY;
             count = wze::math::random(1, 2);
-            _spawn_time = wze::math::random(60'000, 80'000);
+            _spawn_time = wze::math::random(30'000, 50'000);
             break;
         case 2:
             enemy_difficulty = ENEMY_DIFFICULTY_EASY;
             count = wze::math::random(1, 2);
-            _spawn_time = wze::math::random(50'000, 70'000);
+            _spawn_time = wze::math::random(30'000, 50'000);
             break;
         case 3:
             enemy_difficulty = ENEMY_DIFFICULTY_NORMAL;
             count = wze::math::random(2, 3);
-            _spawn_time = wze::math::random(40'000, 60'000);
+            _spawn_time = wze::math::random(20'000, 40'000);
             break;
         case 4:
             enemy_difficulty = ENEMY_DIFFICULTY_NORMAL;
             count = wze::math::random(2, 3);
-            _spawn_time = wze::math::random(30'000, 50'000);
+            _spawn_time = wze::math::random(20'000, 40'000);
             break;
         case 5:
             enemy_difficulty = ENEMY_DIFFICULTY_HARD;
             count = wze::math::random(3, 4);
-            _spawn_time = wze::math::random(20'000, 40'000);
+            _spawn_time = wze::math::random(10'000, 30'000);
             break;
         default:
             return;
