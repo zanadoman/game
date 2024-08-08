@@ -156,12 +156,12 @@ void save_data::load() {
 
 void save_data::reset() {
 
-    _pyrite_count = 2;
-    _wolframite_count = 16;
-    _carneol_count = 34;
-    _moldavite_count = 2;
-    _ruby_count = 1;
-    _sapphire_count = 150;
+    _pyrite_count = 0;
+    _wolframite_count = 0;
+    _carneol_count = 0;
+    _moldavite_count = 0;
+    _ruby_count = 0;
+    _sapphire_count = 0;
 
     _player_ship_speed_tier = 0;
     _player_ship_damage_tier = 0;
