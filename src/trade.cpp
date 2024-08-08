@@ -85,7 +85,7 @@ void trade::update() {
     _button.set_enabled(_price <= save_data::player_money() && _tier() < 3);
 
     _tier_sprite.set_texture(assets::trade_tier_textures().at(_tier()));
-    _price = (_tier() + 1) * 5000;
+    _price = (_tier() + 1) * 2500;
 
     image = wze::assets::create_image(
         _tier() < 3 ? std::to_string(_price) + " ST" : "Elfogyott",
