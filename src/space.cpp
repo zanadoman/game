@@ -34,7 +34,7 @@ void space::update_difficulty() {
             (save_data::pyrite_count() * 1 + save_data::wolframite_count() * 2 +
              save_data::carneol_count() * 3 + save_data::moldavite_count() * 4 +
              save_data::ruby_count() * 5 + save_data::sapphire_count() * 6) /
-            400.f * 5),
+            250.f * 5),
         0.f, 5.f);
 }
 
