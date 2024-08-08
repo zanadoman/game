@@ -7,6 +7,7 @@ class assets final {
   private:
     static std::shared_ptr<wze::font> _normal_font;
     static std::shared_ptr<wze::font> _bold_font;
+    static std::shared_ptr<wze::font> _title_font;
 
     static std::shared_ptr<wze::texture> _placeholder_texture;
     static std::shared_ptr<wze::texture> _space_texture;
@@ -191,6 +192,7 @@ class assets final {
   public:
     static std::shared_ptr<wze::font> const& normal_font();
     static std::shared_ptr<wze::font> const& bold_font();
+    static std::shared_ptr<wze::font> const& title_font();
 
     static std::shared_ptr<wze::texture> const& placeholder_texture();
     static std::shared_ptr<wze::texture> const& space_texture();

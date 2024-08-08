@@ -2,6 +2,7 @@
 
 std::shared_ptr<wze::font> assets::_normal_font;
 std::shared_ptr<wze::font> assets::_bold_font;
+std::shared_ptr<wze::font> assets::_title_font;
 
 std::shared_ptr<wze::texture> assets::_placeholder_texture;
 std::shared_ptr<wze::texture> assets::_space_texture;
@@ -172,6 +173,10 @@ std::shared_ptr<wze::font> const& assets::normal_font() {
 
 std::shared_ptr<wze::font> const& assets::bold_font() {
     return _bold_font;
+}
+
+std::shared_ptr<wze::font> const& assets::title_font(){
+    return _title_font;
 }
 
 std::shared_ptr<wze::texture> const& assets::placeholder_texture() {
@@ -619,10 +624,12 @@ std::shared_ptr<wze::sound> const& assets::refuse_sound() {
 
 void assets::initialize() {
     _normal_font = wze::assets::load_font(
-        "./assets/PixelifySans-VariableFont_wght.ttf", 48);
+        "./assets/Aldrich-Regular.ttf", 48);
     _bold_font =
-        wze::assets::load_font("./assets/PixelifySans-VariableFont_wght.ttf",
+        wze::assets::load_font("./assets/Aldrich-Regular.ttf",
                                48, wze::FONT_STYLE_BOLD);
+    _title_font =
+        wze::assets::load_font("./assets/BMjapan.ttf");
 
     _placeholder_texture = wze::assets::create_texture(
         wze::assets::load_image("./assets/placeholder.png"));
