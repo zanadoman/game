@@ -153,7 +153,7 @@ void shop::update_money() {
 
     image = wze::assets::create_image(std::to_string(save_data::player_money()),
                                       assets::bold_font());
-    _money_count.set_width((float)image->w / (float)image->h * 70);
+    _money_count.set_width((float)image->w / (float)image->h * 60);
     _money_count.set_x(1205 - _money_count.width() / 2 - 50);
     _money_count.set_texture(wze::assets::create_texture(image));
 }
@@ -361,7 +361,7 @@ shop::shop() : _player(1615, -397.5) {
                         -397.5};
 
     _money = {1205, -645, 0, 0, 75, 75, false, assets::stellar_token()};
-    _money_count = {0, -645, 0, 0, 0, 70, false, {}};
+    _money_count = {0, -637.5, 0, 0, 0, 60, false, {}};
     _space_station_ambiance_sound = {assets::space_station_ambiance_sound()};
 }
 

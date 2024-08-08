@@ -59,8 +59,8 @@ trade::trade(float x, float y, trade_type trade_type)
     _tier_sprite = {x - 145, y + 42.5f, wze::camera::focus() * 0.95f, 0, 165,
                     25,      true};
     _price = 0;
-    _price_sprite = {x - 147.5f, y + 115, wze::camera::focus() * 0.95f, 0, 270,
-                     60,         true};
+    _price_sprite = {x - 147.5f, y + 120, wze::camera::focus() * 0.95f, 0, 270,
+                     50,         true};
     _text_sprite = {x + 152.5f,
                     y - 50,
                     wze::camera::focus() * 0.95f,
@@ -90,6 +90,6 @@ void trade::update() {
     image = wze::assets::create_image(
         _tier() < 3 ? std::to_string(_price) + " ST" : "Elfogyott",
         _tier() < 3 ? assets::bold_font() : assets::normal_font());
-    _price_sprite.set_width((float)image->w / (float)image->h * 60);
+    _price_sprite.set_width((float)image->w / (float)image->h * 50);
     _price_sprite.set_texture(wze::assets::create_texture(image));
 }
