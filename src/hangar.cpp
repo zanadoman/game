@@ -127,7 +127,7 @@ void hangar::update_money() {
     _money_count.set_texture(wze::assets::create_texture(image));
 }
 
-hangar::hangar() : _player(-3637.5, -705) {
+hangar::hangar(float x, float y) : _player(x, y) {
     size_t i;
 
     wze::renderer::set_space_texture(assets::space_texture());

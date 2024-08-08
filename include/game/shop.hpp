@@ -64,7 +64,7 @@ class shop final : public scene {
     wze::speaker _space_station_ambiance_sound;
 
   public:
-    shop();
+    shop(float x, float y);
     ~shop();
     scene_type update() final;
 };

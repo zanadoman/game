@@ -158,7 +158,7 @@ void shop::update_money() {
     _money_count.set_texture(wze::assets::create_texture(image));
 }
 
-shop::shop() : _player(1615, -397.5) {
+shop::shop(float x, float y) : _player(x, y) {
     _color = 0.2;
     wze::renderer::set_space_color_r(_color);
     wze::renderer::set_space_color_g(_color);

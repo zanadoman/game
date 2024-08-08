@@ -111,4 +111,6 @@ void player::update() {
 
     wze::camera::set_x(x());
     wze::camera::set_y(y() - 80);
+
+    printf("%f %f\n", (double)x(), (double)y());
 }

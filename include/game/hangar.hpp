@@ -59,7 +59,7 @@ class hangar final : public scene {
     wze::animator _quest_npc_animation;
 
   public:
-    hangar();
+    hangar(float x, float y);
     ~hangar();
     scene_type update() final;
 };
