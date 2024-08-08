@@ -171,6 +171,14 @@ menu::menu()
         -55,   459,   0,     0,
         180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
 
+    _title = {
+        -638,-477,0,0,1000,258,false,
+        wze::assets::create_texture(
+            wze::assets::create_image(
+                "Stellarion", assets::title_font())
+        )
+    };
+
     _made_by_sprite = {-1058,
                        685,
                        0,

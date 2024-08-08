@@ -624,9 +624,9 @@ std::shared_ptr<wze::sound> const& assets::refuse_sound() {
 
 void assets::initialize() {
     _normal_font = wze::assets::load_font(
-        "./assets/Aldrich-Regular.ttf", 48);
+        "./assets/Aldrich_Regular.ttf", 48);
     _bold_font =
-        wze::assets::load_font("./assets/Aldrich-Regular.ttf",
+        wze::assets::load_font("./assets/Aldrich_Regular.ttf",
                                48, wze::FONT_STYLE_BOLD);
     _title_font =
         wze::assets::load_font("./assets/BMjapan.ttf");

@@ -23,6 +23,7 @@ class menu final : public scene {
     button _volume_button;
     button _mouse_sens_button;
 
+    wze::sprite _title;
     wze::sprite _made_by_sprite;
     wze::sprite _doman_sprite;
     wze::sprite _roland_sprite;
