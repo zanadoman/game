@@ -322,7 +322,11 @@ menu::~menu() {
 }
 
 scene_type menu::update() {
-    std::cout << wze::input::cursor_absolute_x() << std::endl;
+    //std::cout << wze::input::cursor_absolute_x() << std::endl;
+    std::cout << _volume << std::endl;
+    std::cout << _mouse_sens << std::endl;
+    
+    std::shared_ptr<wze::image> image;
 
     scene_type door;
     bool quit = false;
@@ -343,10 +347,61 @@ scene_type menu::update() {
         quit = true;
     }
 
+
+    image = wze::assets::create_image(
+        std::to_string((save_data::volume_setting())), assets::normal_font());
+    _volume_value.set_width((float)image->w / (float)image->h * 25);
+    _volume_value.set_texture(wze::assets::create_texture(image));
+
+    image = wze::assets::create_image(
+        std::to_string((save_data::mouse_sensitivity())), assets::normal_font());
+    _sens_value.set_width((float)image->w / (float)image->h * 25);
+    _sens_value.set_texture(wze::assets::create_texture(image));
+
     _volume_decrease.update();
+    if(_volume_decrease.state() & BUTTON_STATE_POSTCLICK && _volume){
+        --_volume;
+        save_data::set_volume_setting(_volume);
+        wze::audio::set_volume(_volume);
+    }
+    if(std::numeric_limits<int8_t>::min()){
+        _volume_decrease.set_enabled(false);
+    }
+    else{
+        _volume_decrease.set_enabled(true);
+    }
+
     _volume_increase.update();
+    if(_volume_increase.state() & BUTTON_STATE_POSTCLICK && _volume < std::numeric_limits<int8_t>::max()){
+        ++_volume;
+        save_data::set_volume_setting(_volume);
+        wze::audio::set_volume(_volume);
+    }
+    if(_volume ==std::numeric_limits<int8_t>::max() ){
+        _volume_increase.set_enabled(false);
+    }
+    else{
+        _volume_increase.set_enabled(true);
+    }
+
     _sens_decrease.update();
+    if(_sens_decrease.state() & BUTTON_STATE_POSTCLICK && _mouse_sens){
+        _mouse_sens -= (float)0.1;
+        save_data::set_mouse_sensitivity(_mouse_sens);
+        wze::input::set_mouse_sensitivity(_mouse_sens);
+    }
+    _sens_decrease.set_enabled((int8_t)_mouse_sens);
+
     _sens_increase.update();
+    if(_sens_increase.state() & BUTTON_STATE_POSTCLICK && _mouse_sens < 2){
+        _mouse_sens += (float)0.1;
+        save_data::set_mouse_sensitivity(_mouse_sens);
+        wze::input::set_mouse_sensitivity(_mouse_sens);
+    }
+    if((int8_t)_mouse_sens == 2){
+        _sens_increase.set_enabled(false);
+    }
+    else{_sens_increase.set_enabled(true);}
 
     door = update_door();
     if (quit) {
