@@ -172,10 +172,10 @@ menu::menu()
 
     _player_sprite = {
         -55,   459,   0,     0,
-        180.5, 180.5, false, assets::player_front_idle_animation().at(0)};
+        230, 230, false, assets::player_front_idle_animation().at(0)};
 
     image = wze::assets::create_image("STELLARION", assets::title_font());
-    _title = {-500,
+    _title = {-475,
               -477,
               0,
               0,

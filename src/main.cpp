@@ -18,7 +18,6 @@ wze_main(2560, 1440) {
     save_data::load();
 
     // wze::timer::set_frame_time(50);
-    wze::audio::set_volume(std::numeric_limits<int8_t>::max() / 2);
 
     scene = std::unique_ptr<class scene>(new hangar(-3637.5, -705));
     current_scene = SCENE_TYPE_HANGAR;

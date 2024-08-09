@@ -19,6 +19,9 @@ uint64_t save_data::_player_money;
 bool save_data::_tutorial_completed;
 bool save_data::_final_boss_completed;
 
+int8_t save_data::_volume_setting;
+float save_data::_mouse_sensitivity;
+
 int16_t save_data::pyrite_count() {
     return _pyrite_count;
 }
@@ -124,6 +127,22 @@ void save_data::set_final_boss_completed(bool final_boss_completed) {
     _final_boss_completed = final_boss_completed;
 }
 
+int8_t save_data::volume_setting() {
+    return _volume_setting;
+}
+
+void save_data::set_volume_setting(int8_t volume_setting) {
+    _volume_setting = volume_setting;
+}
+
+float save_data::mouse_sensitivity() {
+    return _mouse_sensitivity;
+}
+
+void save_data::set_mouse_sensitivity(float mouse_sensitivity) {
+    _mouse_sensitivity = mouse_sensitivity;
+}
+
 void save_data::load() {
     std::ifstream file;
 
@@ -149,6 +168,8 @@ void save_data::load() {
         file.read((char*)&_player_money, sizeof(_player_money));
         file.read((char*)&_tutorial_completed, sizeof(_tutorial_completed));
         file.read((char*)&_final_boss_completed, sizeof(_final_boss_completed));
+        file.read((char*)&_volume_setting, sizeof(_volume_setting));
+        file.read((char*)&_mouse_sensitivity, sizeof(_mouse_sensitivity));
     }
 
     file.close();
@@ -172,6 +193,9 @@ void save_data::reset() {
 
     _tutorial_completed = false;
     _final_boss_completed = false;
+
+    _volume_setting = std::numeric_limits<int8_t>::max() / 2;
+    _mouse_sensitivity = 1;
 }
 
 void save_data::save() {
@@ -199,6 +223,9 @@ void save_data::save() {
                    sizeof(_tutorial_completed));
         file.write((char const*)&_final_boss_completed,
                    sizeof(_final_boss_completed));
+        file.write((char const*)&_volume_setting, sizeof(_volume_setting));
+        file.write((char const*)&_mouse_sensitivity,
+                   sizeof(_mouse_sensitivity));
     }
     file.close();
 }

@@ -22,6 +22,9 @@ class save_data final {
     static bool _tutorial_completed;
     static bool _final_boss_completed;
 
+    static int8_t _volume_setting;
+    static float _mouse_sensitivity;
+
     save_data() = default;
 
   public:
@@ -64,6 +67,12 @@ class save_data final {
 
     static bool final_boss_completed();
     static void set_final_boss_completed(bool final_boss_completed);
+
+    static int8_t volume_setting();
+    static void set_volume_setting(int8_t volume_setting);
+
+    static float mouse_sensitivity();
+    static void set_mouse_sensitivity(float mouse_sensitivity);
 
     static void load();
     static void save();
