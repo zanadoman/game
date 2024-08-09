@@ -20,8 +20,17 @@ class menu final : public scene {
     button _start_button;
     button _restart_button;
     button _exit_button;
-    button _volume_button;
-    button _mouse_sens_button;
+    button _volume_decrease;
+    button _sens_decrease;
+    button _volume_increase;
+    button _sens_increase;
+
+    wze::sprite _volume_sprite;
+    wze::sprite _mouse_sens_sprite;
+    wze::sprite _volume_value;
+    wze::sprite _sens_value;
+    int8_t _volume;
+    float _mouse_sens;
 
     wze::sprite _title;
     wze::sprite _made_by_sprite;

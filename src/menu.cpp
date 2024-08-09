@@ -45,7 +45,6 @@ scene_type menu::update_door() {
 
     distance =
         wze::math::length(968 - _player_sprite.x(), _player_sprite.y() - 475);
-    std::cout << distance << std::endl;
     if (!_door_animating && (distance <= 400) != _door_open) {
         _door_animating = true;
         _door_sound.play();
@@ -102,16 +101,30 @@ menu::menu()
           {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
           assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}),
-      _volume_button(1074, -643, 0, 0, 85, 67, false,
-                     std::numeric_limits<uint8_t>::max(), {{}, {}, {}, {}},
-                     assets::sound_button_texture(),
-                     assets::sound_button_texture(),
-                     assets::sound_button_texture(), "", 0, 0, 0, {}, {}),
-      _mouse_sens_button(
-          1202, -643, 0, 0, 85, 67, false, std::numeric_limits<uint8_t>::max(),
-          {{}, {}, {}, {}}, assets::mouse_sens_button_texture(),
-          assets::mouse_sens_button_texture(),
-          assets::mouse_sens_button_texture(), "", 0, 0, 0, {}, {}) {
+      _volume_decrease(895 - 89, -623 + 63, -1, 0, 25, 35, false,
+                       std::numeric_limits<uint8_t>::max(),
+                       {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
+                       assets::decrease_button(), assets::decrease_button(),
+                       assets::decrease_button(), "", 0, 0, 0,
+                       assets::accept_sound(), assets::refuse_sound()),
+      _sens_decrease(1150 - 90, -623 + 63, -10, 0, 25, 35, false,
+                     std::numeric_limits<uint8_t>::max(),
+                     {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
+                     assets::decrease_button(), assets::decrease_button(),
+                     assets::decrease_button(), "", 0, 0, 0,
+                     assets::accept_sound(), assets::refuse_sound()),
+      _volume_increase(895 + 91, -623 + 63, -1, 0, 25, 35, false,
+                       std::numeric_limits<uint8_t>::max(),
+                       {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
+                       assets::increase_button(), assets::increase_button(),
+                       assets::increase_button(), "", 0, 0, 0,
+                       assets::accept_sound(), assets::refuse_sound()),
+      _sens_increase(1150 + 91, -623 + 63, -1, 0, 25, 35, false,
+                     std::numeric_limits<uint8_t>::max(),
+                     {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
+                     assets::increase_button(), assets::increase_button(),
+                     assets::increase_button(), "", 0, 0, 0,
+                     assets::accept_sound(), assets::refuse_sound()) {
     size_t i;
     std::shared_ptr<wze::image> image;
 
@@ -171,7 +184,7 @@ menu::menu()
                            1};
 
     _player_sprite = {
-        -55,   459,   0,     0,
+        -55, 459, 0,     0,
         230, 230, false, assets::player_front_idle_animation().at(0)};
 
     image = wze::assets::create_image("STELLARION", assets::title_font());
@@ -247,6 +260,36 @@ menu::menu()
                     0,
                     0};
 
+    _volume_sprite = {895, -623, 0,     0,
+                      205, 160,  false, assets::sound_button_texture()};
+    _mouse_sens_sprite = {
+        1150, -623, 0, 0, 205, 160, false, assets::mouse_sens_button_texture()};
+
+    _volume = save_data::volume_setting();
+    _mouse_sens = save_data::mouse_sensitivity();
+
+    image = wze::assets::create_image(
+        std::to_string((save_data::volume_setting())), assets::normal_font());
+    _volume_value = {895,
+                     -623+65,
+                     0,
+                     0,
+                     (float)image->w / (float)image->h * 25,
+                     25,
+                     false,
+                     wze::assets::create_texture(image)};
+    image = wze::assets::create_image(
+        std::to_string((save_data::mouse_sensitivity())),
+        assets::normal_font());
+    _sens_value = {1150,
+                   -623+65,
+                   0,
+                   0,
+                   (float)image->w / (float)image->h * 25,
+                   25,
+                   false,
+                   wze::assets::create_texture(image)};
+
     _door = std::shared_ptr<wze::sprite>(new wze::sprite(
         0, 0, wze::camera::focus(), 0, 2560, 1440, false,
         assets::main_menu_door_animation().front(),
@@ -279,6 +322,8 @@ menu::~menu() {
 }
 
 scene_type menu::update() {
+    std::cout << wze::input::cursor_absolute_x() << std::endl;
+
     scene_type door;
     bool quit = false;
 
@@ -298,8 +343,10 @@ scene_type menu::update() {
         quit = true;
     }
 
-    _volume_button.update();
-    _mouse_sens_button.update();
+    _volume_decrease.update();
+    _volume_increase.update();
+    _sens_decrease.update();
+    _sens_increase.update();
 
     door = update_door();
     if (quit) {
