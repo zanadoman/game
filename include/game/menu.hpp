@@ -1,8 +1,8 @@
 #ifndef GAME_MENU_HPP
 #define GAME_MENU_HPP
 
-#include <game/scene.hpp>
 #include <game/button.hpp>
+#include <game/scene.hpp>
 #include <wizard_engine/wizard_engine.hpp>
 
 class menu final : public scene {
@@ -29,7 +29,7 @@ class menu final : public scene {
     wze::sprite _mouse_sens_sprite;
     wze::sprite _volume_value;
     wze::sprite _sens_value;
-    int8_t _volume;
+    float _volume;
     float _mouse_sens;
 
     wze::sprite _title;

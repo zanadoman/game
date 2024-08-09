@@ -19,8 +19,8 @@ wze_main(2560, 1440) {
 
     // wze::timer::set_frame_time(50);
 
-    scene = std::unique_ptr<class scene>(new hangar(-3637.5, -705));
-    current_scene = SCENE_TYPE_HANGAR;
+    scene = std::unique_ptr<class scene>(new menu);
+    current_scene = SCENE_TYPE_MENU;
 
     wze_while(run) {
         wze::timer::set_delta_time(std::min(16.f, wze::timer::delta_time()));

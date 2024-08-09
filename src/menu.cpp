@@ -90,17 +90,20 @@ menu::menu()
           -865, 47, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
           {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
-          assets::button_hovered_texture(), "Játék", 0, 0, 0, {}, {}),
+          assets::button_hovered_texture(), "Játék", 0, 0, 0,
+          assets::accept_sound(), assets::refuse_sound()),
       _restart_button(
           -865, 275, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
           {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
-          assets::button_hovered_texture(), "Alaphelyzet", 0, 0, 0, {}, {}),
+          assets::button_hovered_texture(), "Alaphelyzet", 0, 0, 0,
+          assets::accept_sound(), assets::refuse_sound()),
       _exit_button(
           -865, 503, 0, 0, 550, 142, false, std::numeric_limits<uint8_t>::max(),
           {{-275, 71}, {-275, -71}, {275, -71}, {275, 71}},
           assets::button_none_texture(), assets::button_hovered_texture(),
-          assets::button_hovered_texture(), "Kilépés", 0, 0, 0, {}, {}),
+          assets::button_hovered_texture(), "Kilépés", 0, 0, 0,
+          assets::accept_sound(), assets::refuse_sound()),
       _volume_decrease(895 - 89, -623 + 63, -1, 0, 25, 35, false,
                        std::numeric_limits<uint8_t>::max(),
                        {{-15, 15}, {-15, -15}, {15, -15}, {15, 15}},
@@ -266,12 +269,14 @@ menu::menu()
         1150, -623, 0, 0, 205, 160, false, assets::mouse_sens_button_texture()};
 
     _volume = save_data::volume_setting();
+    wze::audio::set_volume(_volume);
     _mouse_sens = save_data::mouse_sensitivity();
+    wze::input::set_mouse_sensitivity(_mouse_sens);
 
     image = wze::assets::create_image(
         std::to_string((save_data::volume_setting())), assets::normal_font());
     _volume_value = {895,
-                     -623+65,
+                     -623 + 65,
                      0,
                      0,
                      (float)image->w / (float)image->h * 25,
@@ -282,7 +287,7 @@ menu::menu()
         std::to_string((save_data::mouse_sensitivity())),
         assets::normal_font());
     _sens_value = {1150,
-                   -623+65,
+                   -623 + 65,
                    0,
                    0,
                    (float)image->w / (float)image->h * 25,
@@ -322,10 +327,10 @@ menu::~menu() {
 }
 
 scene_type menu::update() {
-    //std::cout << wze::input::cursor_absolute_x() << std::endl;
+    // std::cout << wze::input::cursor_absolute_x() << std::endl;
     std::cout << _volume << std::endl;
     std::cout << _mouse_sens << std::endl;
-    
+
     std::shared_ptr<wze::image> image;
 
     scene_type door;
@@ -335,11 +340,17 @@ scene_type menu::update() {
     _start_button.update();
     if (_start_button.state() & BUTTON_STATE_POSTCLICK) {
         _player_sprite.set_x(1050);
+        _restart_button.set_enabled(false);
+        _exit_button.set_enabled(false);
     }
 
     _restart_button.update();
     if (_restart_button.state() & BUTTON_STATE_POSTCLICK) {
         save_data::reset();
+        _volume = save_data::volume_setting();
+        wze::audio::set_volume(_volume);
+        _mouse_sens = save_data::mouse_sensitivity();
+        wze::input::set_mouse_sensitivity(_mouse_sens);
     }
 
     _exit_button.update();
@@ -347,61 +358,53 @@ scene_type menu::update() {
         quit = true;
     }
 
-
     image = wze::assets::create_image(
-        std::to_string((save_data::volume_setting())), assets::normal_font());
+        std::to_string((uint8_t)roundf(
+            _volume / std::numeric_limits<int8_t>::max() * 100)) +
+            '%',
+        assets::normal_font());
     _volume_value.set_width((float)image->w / (float)image->h * 25);
     _volume_value.set_texture(wze::assets::create_texture(image));
 
     image = wze::assets::create_image(
-        std::to_string((save_data::mouse_sensitivity())), assets::normal_font());
+        std::to_string((uint8_t)(_mouse_sens * 100)) + '%',
+        assets::normal_font());
     _sens_value.set_width((float)image->w / (float)image->h * 25);
     _sens_value.set_texture(wze::assets::create_texture(image));
 
     _volume_decrease.update();
-    if(_volume_decrease.state() & BUTTON_STATE_POSTCLICK && _volume){
-        --_volume;
-        save_data::set_volume_setting(_volume);
-        wze::audio::set_volume(_volume);
+    if (_volume_decrease.state() & BUTTON_STATE_POSTCLICK) {
+        _volume = std::max(_volume - 12.7f, 0.f);
+        save_data::set_volume_setting(roundf(_volume));
+        wze::audio::set_volume(roundf(_volume));
     }
-    if(std::numeric_limits<int8_t>::min()){
-        _volume_decrease.set_enabled(false);
-    }
-    else{
-        _volume_decrease.set_enabled(true);
-    }
+    _volume_decrease.set_enabled(0 < _volume);
 
     _volume_increase.update();
-    if(_volume_increase.state() & BUTTON_STATE_POSTCLICK && _volume < std::numeric_limits<int8_t>::max()){
-        ++_volume;
-        save_data::set_volume_setting(_volume);
-        wze::audio::set_volume(_volume);
+    if (_volume_increase.state() & BUTTON_STATE_POSTCLICK &&
+        _volume < std::numeric_limits<int8_t>::max()) {
+        _volume = std::min(_volume + 12.7f,
+                           (float)std::numeric_limits<int8_t>::max());
+        save_data::set_volume_setting(roundf(_volume));
+        wze::audio::set_volume(roundf(_volume));
     }
-    if(_volume ==std::numeric_limits<int8_t>::max() ){
-        _volume_increase.set_enabled(false);
-    }
-    else{
-        _volume_increase.set_enabled(true);
-    }
+    _volume_increase.set_enabled(_volume < std::numeric_limits<int8_t>::max());
 
     _sens_decrease.update();
-    if(_sens_decrease.state() & BUTTON_STATE_POSTCLICK && _mouse_sens){
-        _mouse_sens -= (float)0.1;
+    if (_sens_decrease.state() & BUTTON_STATE_POSTCLICK) {
+        _mouse_sens = std::max(_mouse_sens - 0.1f, 0.1f);
         save_data::set_mouse_sensitivity(_mouse_sens);
         wze::input::set_mouse_sensitivity(_mouse_sens);
     }
-    _sens_decrease.set_enabled((int8_t)_mouse_sens);
+    _sens_decrease.set_enabled(0.1f < _mouse_sens);
 
     _sens_increase.update();
-    if(_sens_increase.state() & BUTTON_STATE_POSTCLICK && _mouse_sens < 2){
-        _mouse_sens += (float)0.1;
+    if (_sens_increase.state() & BUTTON_STATE_POSTCLICK) {
+        _mouse_sens = std::min(_mouse_sens + 0.1f, 2.f);
         save_data::set_mouse_sensitivity(_mouse_sens);
         wze::input::set_mouse_sensitivity(_mouse_sens);
     }
-    if((int8_t)_mouse_sens == 2){
-        _sens_increase.set_enabled(false);
-    }
-    else{_sens_increase.set_enabled(true);}
+    _sens_increase.set_enabled(_mouse_sens < 2);
 
     door = update_door();
     if (quit) {
